@@ -5,7 +5,7 @@ import {
     useRef
 } from 'react';
 import {
-    Tag,
+    HStack,
     Box,
     Text,
     Input,
@@ -20,6 +20,8 @@ import {
     Container,
     Image,
     Spinner,
+    RadioGroup,
+    Radio
 } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
 import ImageListVoid from '../assets/images/character-spirited-away.png';
@@ -31,7 +33,7 @@ export default function Home() {
 
     const [records, setRecords] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [typeSearch, setTypeSearch] = useState<'people' | 'films'>('people');
+    const [typeSearch, setTypeSearch] = useState('people');
     const [name, setName] = useState('');
 
     async function consultPerson() {
@@ -83,12 +85,14 @@ export default function Home() {
                 w={"100%"}
                 align={"center"}
                 justify={"center"}
-            >
+                backdropFilter={"blur(5px)"}
+            >                
                 <Text
                     fontSize='6xl'
                     as='b'
                     color={'white'}
-                    fontFamily={"cursive"}
+                    fontFamily={"fantasy"}
+                    w='auto'
                 >
                     Studio Ghibli Finder
                 </Text>
@@ -100,15 +104,53 @@ export default function Home() {
                     p={10}
                     pos={"relative"}
                 >
-                    <FormControl fontFamily={"sans-serif"}>
+                    <FormControl 
+                        fontFamily={"sans-serif"} 
+                        w={'100%'}
+                        justifyContent={'center'}
+                        alignItems={'center'}
+                    >
                         <Flex
                             align={"center"}
-                            justify={"flex-start"}
+                            justify={"center"}
                             w={"100%"}
+                            whiteSpace={'nowrap'}
                         >
-                            <FormLabel fontWeight={'bold'}>
-                                Search any character from Studio Ghibli
-                            </FormLabel>
+                            <HStack
+                                w={'100%'}
+                                align={'center'}
+                                pos={'relative'}
+                                m={'auto'}
+                                justifyContent={'space-between'}
+                                p={'0px 5px'}          
+                                mb={2}                      
+                            >                            
+                                <FormLabel fontWeight={'bold'} textAlign={'center'} mb={0}>
+                                    Search any character or movie from Studio Ghibli
+                                </FormLabel>
+                                <RadioGroup 
+                                    onChange={setTypeSearch} 
+                                    value={typeSearch}
+                                    name={'radio-group'}
+                                >
+                                    <HStack>
+                                        <Radio 
+                                            colorScheme='white' 
+                                            value='people'
+                                            boxShadow={typeSearch === 'people' ? '0px 0px 22px 1px' : '0px'}
+                                        >
+                                            Characters
+                                        </Radio>
+                                        <Radio 
+                                            colorScheme='white' 
+                                            value='films'
+                                            boxShadow={typeSearch === 'films' ? '0px 0px 22px 1px' : '0px'}
+                                        >
+                                            Movies
+                                        </Radio>
+                                    </HStack>
+                                </RadioGroup>
+                            </HStack>
                         </Flex>
                         <InputGroup>
                             <Input
@@ -116,7 +158,7 @@ export default function Home() {
                                 htmlSize={5}
                                 color={"black"}
                                 focusBorderColor={"black"}
-                                placeholder={"Press in the key Enter in your keyboard to search ;)"}
+                                placeholder={"Press Enter to search ;)"}
                                 value={name}
                                 onKeyDown={(e) => {
                                     if (e.key === "Enter") {
@@ -141,6 +183,7 @@ export default function Home() {
                                     <Search2Icon
                                         color={"black"}
                                         cursor={"pointer"}
+                                        mr={2}
                                         _hover={{
                                             opacity: 0.5
                                         }}
@@ -186,7 +229,7 @@ export default function Home() {
                                             textDecoration={"underline"}
                                             fontSize={"xl"}
                                         >
-                                            Was not found records :(
+                                            Not found records :(
                                         </Text>
                                     </VStack>
                                     : (loading) ? <VStack 

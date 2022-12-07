@@ -1,5 +1,10 @@
 * {
   box-sizing: border-box;
+  margin: auto;
+}
+
+html {
+  overflow: hidden;
 }
 
 body {
