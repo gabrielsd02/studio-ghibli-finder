@@ -1,7 +1,7 @@
 import './App.css';
 import { ChakraProvider } from '@chakra-ui/react';
 import AxiosConfig from './AxiosConfig';
-import Home from './Home';
+import Home from './pages/Home';
 
 export default function App() {
   return (
