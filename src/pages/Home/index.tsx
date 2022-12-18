@@ -13,6 +13,7 @@ import {
     VStack,
     Tooltip,
     FormLabel,
+    Icon,
     InputGroup,
     FormControl,
     InputRightElement,
@@ -23,15 +24,25 @@ import {
     RadioGroup,
     Radio
 } from "@chakra-ui/react";
-import { Search2Icon } from "@chakra-ui/icons";
-import ImageListVoid from '../assets/images/character-spirited-away.png';
+import { Search2Icon } from '@chakra-ui/icons';
 import axios from 'axios';
 
-import ImagemBackground from '../assets/images/image-background.jpg';
+import ImageListVoid from '../../assets/images/character-spirited-away.png';
+import ImageBackground from '../../assets/images/image-background.jpg';
+import { List } from '../../components/List';
+import { MoviesProps, PeopleProps } from '../../interfaces';
+
+interface RecordsProps {
+    records: PeopleProps[] | MoviesProps[];
+    total: number;
+}
 
 export default function Home() {
 
-    const [records, setRecords] = useState([]);
+    const [data, setData] = useState<RecordsProps>({
+        records: [],
+        total: 0
+    });
     const [loading, setLoading] = useState(false);
     const [typeSearch, setTypeSearch] = useState('people');
     const [name, setName] = useState('');
@@ -47,13 +58,10 @@ export default function Home() {
         try {
 
             const { data } = await axios.get(`/${typeSearch}`, {
-                params: {
-                    name,
-                    page: 1                    
-                }
+                params: { name }
             });
 
-            console.log(data);
+            setData(data);
 
         } catch(e: any) {
             console.error(e);
@@ -62,7 +70,7 @@ export default function Home() {
 
                 const error = e.response.data;
 
-
+                
 
             }
 
@@ -75,30 +83,32 @@ export default function Home() {
     return (
 
         <Center
-            bgImage={ImagemBackground}
-            h={"100%"}
-            w={"100%"}
+            bgImage={ImageBackground}
+            backgroundSize={"cover"}
+            h={"100vh"}
+            w={"100vw"}
             pos={"relative"}
-        >
+        >            
             <VStack
-                h={"100%"}
                 w={"100%"}
+                h={"100%"}
+                flex={1}
                 align={"center"}
                 justify={"center"}
-                backdropFilter={"blur(5px)"}
-            >                
+                backdropFilter={"blur(5px)"}                
+            >        
                 <Text
                     fontSize='6xl'
                     as='b'
                     color={'white'}
-                    fontFamily={"fantasy"}
+                    fontFamily={"cursive"}
                     w='auto'
                 >
                     Studio Ghibli Finder
-                </Text>
+                </Text>   
                 <VStack
                     h={'700px'}
-                    w={'50%'}
+                    w={'55%'}
                     border={"1px solid black"}
                     borderRadius={"50px"}
                     p={10}
@@ -125,7 +135,7 @@ export default function Home() {
                                 p={'0px 5px'}          
                                 mb={2}                      
                             >                            
-                                <FormLabel fontWeight={'bold'} textAlign={'center'} mb={0}>
+                                <FormLabel fontWeight={'bold'} flex={1} mb={0}>
                                     Search any character or movie from Studio Ghibli
                                 </FormLabel>
                                 <RadioGroup 
@@ -154,22 +164,21 @@ export default function Home() {
                         </Flex>
                         <InputGroup>
                             <Input
-                                variant='filled'
+                                variant='flushed'
                                 htmlSize={5}
                                 color={"black"}
+                                borderColor={"black"}
                                 focusBorderColor={"black"}
-                                placeholder={"Press Enter to search ;)"}
-                                value={name}
+                                placeholder={"Press Enter to search ;)"}                                
+                                value={name}                                
+                                onChange={(e) => setName(e.target.value)}
                                 onKeyDown={(e) => {
                                     if (e.key === "Enter") {
                                         consultPerson();
                                     }
                                 }}
-                                onChange={(e) => setName(e.target.value)}
-                                borderColor={"black"}
-                                backgroundColor={"	rgba(255,255,255, 0.3)"}
-                                _hover={{
-                                    background: 'transparent'
+                                _placeholder={{
+                                    color: 'rgba(0, 0, 0, 0.3)'
                                 }}
                             />
                             <InputRightElement>
@@ -197,25 +206,28 @@ export default function Home() {
                         flexGrow={1}
                         w={"100%"}
                         borderRadius={5}
+                        overflowX={"hidden"}
+                        overflowY={loading ? "hidden" : "auto"}
+                        maxH={"100%"}
                     >
                         <Container
                             centerContent
                             maxW={'container.xl'}
-                            alignItems={"center"}
+                            h={'100%'}
                             justifyContent={"center"}
                             flexDirection={"column"}
                             bg={"transparent"}
+                            p={0}
+                            mt={5}                            
                         >
-                            <Box
+                            <VStack
                                 flex={1}
-                                w={"100%"}
-                                overflowX={"hidden"}
-                                overflowY={loading ? "hidden" : "auto"}
+                                w={"100%"}                                
                                 alignItems={"center"}
-                                justifyContent={"center"}
+                                justifyContent={"flex-start"}
                             >
                                 {
-                                    (records.length === 0 && !loading) ? <VStack flex={1}>
+                                    (data.total === 0 && !loading) ? <VStack flex={1}>
                                         <Image
                                             alt={"Gif Spirited Away"}
                                             borderRadius={"5px"}
@@ -252,9 +264,12 @@ export default function Home() {
                                             Searching...
                                         </Text>
                                     </VStack>
-                                    : <></>
+                                    : data.total > 0 ? <List 
+                                        recordsList={data.records}
+                                        type={typeSearch}
+                                    /> : <></>
                                 }
-                            </Box>
+                            </VStack>
                         </Container>
                     </Center>
                 </VStack>
