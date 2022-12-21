@@ -1,8 +1,16 @@
 import { camelCase } from "lodash";
-import { MoviesProps, PeopleProps } from "../src/interfaces";
+import { 
+    MoviesProps, 
+    PeopleProps,
+    SpeciesProps 
+} from "../src/interfaces";
 
 type RecordMovieProps = MoviesProps & { characters: PeopleProps[] };
-type RecordPeopleProps = PeopleProps & { films: MoviesProps[] };
+type RecordPeopleProps = PeopleProps & { films: MoviesProps[]; species: SpeciesProps[] };
+
+function isEmpty(str: string): boolean {
+    return (!str || str.length === 0);
+}
 
 export function camelizeKeys(obj: any): any {
 
@@ -21,13 +29,13 @@ export function camelizeKeys(obj: any): any {
 
 };
 
-export async function consultPeople(people: PeopleProps[], movies?: MoviesProps[], nameCharacter?: string) {
+export async function consultPeople(people: PeopleProps[], movies?: MoviesProps[], species?: SpeciesProps[], nameCharacter?: string) {
 
-    let records = [] as RecordPeopleProps[]; 
+    let records = people as RecordPeopleProps[]; 
     
-	if(nameCharacter) {
+	if(nameCharacter && !isEmpty(nameCharacter)) {
         
-        records = people.filter((data) => {      
+        records = records.filter((data) => {      
             const name = data.name.toLocaleUpperCase().trim();
             const nameSearched = nameCharacter.toLocaleUpperCase().trim();
             const position = name.search(nameSearched);
@@ -35,34 +43,63 @@ export async function consultPeople(people: PeopleProps[], movies?: MoviesProps[
             if(position !== -1) return true;
 
             return false;                  
-        })
-        .map((character) => {
+        })        
 
-            let peopleMovies = [] as MoviesProps[];
+    };  
 
-            if(movies && character.films.length > 0) {
-                    
-                character.films.map(async (film) => {
+    records = records
+    .map((character) => {
 
-                    const moviesPerson = await consultMoviesId(movies, film);
-                    
-                    if(moviesPerson) peopleMovies.push(moviesPerson);
+        let peopleMovies = [] as MoviesProps[];
+        let peopleSpecies = [] as SpeciesProps[];
 
-                });                    
+        if(movies && character.films.length > 0) {
+                
+            character.films.map(async (film) => {
 
-            } 
+                const moviesPerson = await consultMoviesId(movies, film);
+                
+                if(moviesPerson) peopleMovies.push(moviesPerson);
 
-            const mountRecord = {
-                ...character,
-                films: peopleMovies
-            } as RecordPeopleProps
+            });                    
 
-            return mountRecord;
+        } 
+        
+        if(species && character.species) {
 
-        })
-        .sort();
+            // const speciePerson = consultaSpeciesId(species, character.species);
+            consultSpeciesId(species, character.species) 
+            .then((speciePerson) => {
 
-	};  
+                if(speciePerson) peopleSpecies.push(speciePerson); 
+
+            })           
+
+        };  
+
+        const mountRecord = {
+            ...character,
+            films: peopleMovies,
+            species: peopleSpecies
+        } as RecordPeopleProps
+
+        return mountRecord;
+
+    })
+    .sort((a, b) => {
+
+        let str1 = a.name.toLowerCase();            
+        let str2 = b.name.toLowerCase();            
+
+        if (str1 < str2) {
+            return -1;
+        }
+        if (str1 > str2) {
+            return 1;
+        }
+        return 0;
+        
+    });
 
 	return { 
         records,    
@@ -82,13 +119,23 @@ export async function consultPeopleId(people: PeopleProps[], id: string) {
 
 }
 
+export async function consultSpeciesId(species: SpeciesProps[], id: string) {
+
+    let specie: SpeciesProps | null | undefined = null;
+
+    specie = species.find((p) => p.id === id);
+
+    return specie;
+
+}
+
 export async function consultMovies(movies: MoviesProps[], people?: PeopleProps[], nameMovie?: string) {
     
-    let records = [] as RecordMovieProps[];        
+    let records = movies as RecordMovieProps[];        
     
-    if(nameMovie) {
+    if(nameMovie && !isEmpty(nameMovie)) {
         
-        records = movies.filter((data) => {      
+        records = records.filter((data) => {      
             const name = data.title.toLocaleUpperCase().trim();
             const nameSearched = nameMovie.toLocaleUpperCase().trim();
             const position = name.search(nameSearched);

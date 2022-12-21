@@ -11,13 +11,15 @@ import {
 } from './functions';
 import {
   PeopleProps,
-  MoviesProps
+  MoviesProps,
+  SpeciesProps
 } from '../src/interfaces';
 
 const PORT = 3001;
 
 const people: PeopleProps[] = camelizeKeys(datas.people);
 const films: MoviesProps[] = camelizeKeys(datas.films);
+const species: SpeciesProps[] = camelizeKeys(datas.species);
 
 const app = express();
 
@@ -29,7 +31,7 @@ app.get("/people",
     
         const name = query.name as string | undefined;
         
-        const result = await consultPeople(people, films ,name);
+        const result = await consultPeople(people, films , species, name);
 
         res.json(result);
     }

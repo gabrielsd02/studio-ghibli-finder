@@ -1,9 +1,10 @@
 import { 
-    Box, 
     Flex, 
     HStack, 
     Text,
-    VStack
+    VStack,
+    Image,
+    Box
 } from '@chakra-ui/react';
 import {
     InfoIcon
@@ -29,14 +30,15 @@ export function List({
 }: ListProps) {
 
     const records = recordsList;    
-    
+     
     return <>
 
         {records.map((record: any, index: number) => (
             
             <Flex 
-                w={"100%"} 
-                h={150}
+                w={"100%"}
+                minH={'180px'}
+                h={200}
                 backgroundColor={"rgba(0, 0, 0, 0.7)"}
                 color={"white"}
                 alignItems={"center"}
@@ -50,19 +52,29 @@ export function List({
                     h={"100%"}
                     pos={"relative"}
                 >
-                    <Flex 
-                        width={"25%"} 
+                    <Box 
+                        flex={1}
+                        maxW={'27%'}
                         h={"100%"} 
                         alignItems={"center"} 
                         justifyContent={"center"}
                         borderRightWidth={1}
-                        borderColor={"gray"}                        
+                        borderColor={"gray"} 
+                        overflow={"hidden"}
+                        p={'1px 0px'}
                     >
-                        {record.id}
-                    </Flex>
+                        {(record.films.length > 0) && <Image 
+                            alt={'Image'}
+                            boxSize={'100%'}          
+                            objectFit={'fill'}                            
+                            borderTopLeftRadius={10}
+                            borderBottomLeftRadius={10}
+                            src={record.films[0].image}
+                        />}
+                    </Box>
                     <VStack 
                         flex={1}
-                        maxW={"60%"}
+                        w={"60%"}
                         h={"100%"} 
                         fontFamily={"cursive"}
                         p={1}
@@ -108,11 +120,11 @@ export function List({
                                     </Text>                           
                                 </Text>
                                 <Text display={"flex"}>
-                                <Text fontWeight={'bold' }>
-                                        Hair Color:
+                                    <Text fontWeight={'bold' }>
+                                        Specie:
                                     </Text> 
                                     <Text ml={2}>
-                                        {record.hairColor}
+                                        {(record.species && record.species.length > 0) ? record.species[0].name : '?'}
                                     </Text>
                                 </Text>
                             </HStack>
@@ -147,8 +159,7 @@ export function List({
                             maxH={"20%"}
                             w={"100%"}
                             maxW={"100%"}                          
-                            flex={1}          
-                            p={2}
+                            flex={1}
                             borderTopWidth={1}
                             borderColor={"white"}
                             fontFamily={"cursive"}     
@@ -162,7 +173,9 @@ export function List({
                             >
                                 Films: 
                             </Text>             
-                            {record.films.map((record: MoviesProps) => {
+                            {record.films.map((film: MoviesProps, key: number) => {
+                                
+                                const title = (record.films.length - 1) === key ? film.title : `${film.title} |`
 
                                 return <Text 
                                     overflow={"hidden"} 
@@ -170,7 +183,7 @@ export function List({
                                     ml={2} 
                                     mr={2}
                                 >
-                                    {record.title}
+                                    {title}
                                 </Text>
 
                             })}

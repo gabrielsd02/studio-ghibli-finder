@@ -24,13 +24,19 @@ import {
     RadioGroup,
     Radio
 } from "@chakra-ui/react";
-import { Search2Icon } from '@chakra-ui/icons';
+import { Search2Icon, CloseIcon } from '@chakra-ui/icons';
+import CountUp from 'react-countup';
 import axios from 'axios';
 
-import ImageListVoid from '../../assets/images/character-spirited-away.png';
-import ImageBackground from '../../assets/images/image-background.jpg';
+
+import { 
+    MoviesProps, 
+    PeopleProps 
+} from '../../interfaces';
 import { List } from '../../components/List';
-import { MoviesProps, PeopleProps } from '../../interfaces';
+import ImageBackground from '../../assets/images/image-background.jpg';
+import EmptyList from '../../components/EmptyList';
+import Loading from '../../components/Loading';
 
 interface RecordsProps {
     records: PeopleProps[] | MoviesProps[];
@@ -45,7 +51,7 @@ export default function Home() {
     });
     const [loading, setLoading] = useState(false);
     const [typeSearch, setTypeSearch] = useState('people');
-    const [name, setName] = useState('');
+    const [name, setName] = useState<string | null>(null);
 
     async function consultPerson() {
 
@@ -61,7 +67,7 @@ export default function Home() {
                 params: { name }
             });
 
-            setData(data);
+            setData(data);            
 
         } catch(e: any) {
             console.error(e);
@@ -79,6 +85,10 @@ export default function Home() {
         }
 
     }
+
+    useEffect(() => {
+        if(!name) setData({ records: [], total: 0 });
+    }, [name]);
 
     return (
 
@@ -103,6 +113,7 @@ export default function Home() {
                     color={'white'}
                     fontFamily={"cursive"}
                     w='auto'
+                    textShadow={"5px 2px black"}
                 >
                     Studio Ghibli Finder
                 </Text>   
@@ -170,15 +181,26 @@ export default function Home() {
                                 borderColor={"black"}
                                 focusBorderColor={"black"}
                                 placeholder={"Press Enter to search ;)"}                                
-                                value={name}                                
-                                onChange={(e) => setName(e.target.value)}
+                                value={name || ''}                         
+                                autoComplete={"off"}       
+                                onChange={(e) => {
+                                    
+                                    let nameUpdate: null | string = e.target.value;
+
+                                    if(nameUpdate === "") {
+                                        nameUpdate = null;
+                                    }
+
+                                    setName(e.target.value);
+
+                                }}
                                 onKeyDown={(e) => {
                                     if (e.key === "Enter") {
                                         consultPerson();
                                     }
                                 }}
                                 _placeholder={{
-                                    color: 'rgba(0, 0, 0, 0.3)'
+                                    color: 'rgba(0, 0, 0, 0.5)'
                                 }}
                             />
                             <InputRightElement>
@@ -199,72 +221,71 @@ export default function Home() {
                                         onClick={consultPerson}
                                     />
                                 </Tooltip>
+                                {(name && name.length > 0) && <Tooltip
+                                    label={"Click to erase the search"}
+                                    fontSize={"md"}
+                                    hasArrow
+                                    placement='top'
+                                    maxW={"700px"}
+                                >
+                                    <CloseIcon
+                                        color={"black"}
+                                        cursor={"pointer"}
+                                        ml={2}
+                                        mr={2}
+                                        _hover={{
+                                            opacity: 0.5
+                                        }}
+                                        onClick={() => setName(null)}
+                                    />
+                                </Tooltip>}
                             </InputRightElement>
                         </InputGroup>
                     </FormControl>
                     <Center
                         flexGrow={1}
                         w={"100%"}
-                        borderRadius={5}
-                        overflowX={"hidden"}
-                        overflowY={loading ? "hidden" : "auto"}
-                        maxH={"100%"}
+                        borderRadius={5}       
+                        maxH={"90%"}                                         
                     >
                         <Container
                             centerContent
-                            maxW={'container.xl'}
+                            maxW={'container.xl'}                            
                             h={'100%'}
-                            justifyContent={"center"}
+                            justifyContent={data.total > 0 ? "flex-start" : "center"}
                             flexDirection={"column"}
                             bg={"transparent"}
                             p={0}
-                            mt={5}                            
+                            mt={5}                                        
+                            overflowX={"hidden"}
+                            overflowY={"auto"}                                  
+                            css={{
+                                '&::-webkit-scrollbar': {
+                                    width: '10px',
+                                    height: '10px',
+                                    backgroundColor: "rgba(0, 0, 0, 0.2)",
+                                    borderRadius: "5px"
+                                },
+                                '&::-webkit-scrollbar-thumb': {
+                                    height: '70px',
+                                    background: "black",
+                                    borderRadius: '10px',
+                                }
+                            }}           
                         >
                             <VStack
-                                flex={1}
-                                w={"100%"}                                
+                                w={"100%"}
+                                display={"flex"}                                                        
                                 alignItems={"center"}
-                                justifyContent={"flex-start"}
+                                justifyContent={"flex-start"}  
+                                maxH={"100%"}    
+                                spacing={4}
+                                paddingRight={2}                      
                             >
                                 {
-                                    (data.total === 0 && !loading) ? <VStack flex={1}>
-                                        <Image
-                                            alt={"Gif Spirited Away"}
-                                            borderRadius={"5px"}
-                                            boxSize={'400px'}
-                                            src={ImageListVoid}
-                                        />
-                                        <Text
-                                            fontWeight={'bold'}
-                                            bottom={"240px"}
-                                            pos={"absolute"}
-                                            textDecoration={"underline"}
-                                            fontSize={"xl"}
-                                        >
-                                            Not found records :(
-                                        </Text>
-                                    </VStack>
-                                    : (loading) ? <VStack 
-                                        w={"100%"} 
-                                        h={"100%"} 
-                                        align={"center"} 
-                                        justify={"center"}
-                                    >
-                                        <Spinner 
-                                            speed='0.65s'
-                                            emptyColor='gray.200'
-                                            color='black'
-                                            maxW={'auto'}
-                                            w={"100px"}
-                                            h={"100px"}
-                                        />
-                                        <Text 
-                                            fontSize={30}            
-                                        >
-                                            Searching...
-                                        </Text>
-                                    </VStack>
-                                    : data.total > 0 ? <List 
+                                    (data.total === 0 && !loading) ? <EmptyList />
+                                    : (loading) ? <Loading />
+                                    : (data.total > 0) ? <List 
                                         recordsList={data.records}
                                         type={typeSearch}
                                     /> : <></>
@@ -273,6 +294,19 @@ export default function Home() {
                         </Container>
                     </Center>
                 </VStack>
+                <Text 
+                    fontSize={'4xl'}
+                    as='b'
+                    color={'white'}
+                    fontFamily={"cursive"}
+                    w='auto'
+                    textShadow={"2px 1px black"}
+                >
+                    <CountUp 
+                        end={data.total}
+                        duration={0.5}
+                    />
+                </Text>
             </VStack>
         </Center>
 
