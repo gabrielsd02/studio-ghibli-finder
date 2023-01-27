@@ -1,33 +1,43 @@
 import { 
     VStack, 
     Image, 
-    Text 
+    Fade
 } from "@chakra-ui/react";
+
 import ImageListVoid from '../../assets/images/character-spirited-away.png';
+import './style.scss';
 
 export default function EmptyList() {
 
-    return <VStack 
-        flex={1}
-        align={"center"}
-        justify={"center"}
-        pos={"relative"}
+    return <Fade 
+        in={true} 
+        transition={{
+            enter: { 
+                opacity: 1,
+                duration: 0.3
+            },
+            exit: { 
+                opacity: 0,
+                duration: 0.5 
+            }
+        }}
     >
-        <Image
-            alt={"Image character from Spirited Away"}
-            borderRadius={"5px"}
-            boxSize={'400px'}
-            src={ImageListVoid}
-        />
-        <Text
-            fontWeight={'bold'}
-            bottom={"130px"}
-            pos={"absolute"}
-            textDecoration={"underline"}
-            fontSize={"xl"}
+        <VStack 
+            flex={1}
+            align={"center"}
+            justify={"center"}
+            pos={"relative"}
         >
-            Not found records :(
-        </Text>
-    </VStack>
+            <Image
+                alt={"Image character from Spirited Away"}
+                borderRadius={"5px"}
+                boxSize={'400px'}
+                src={ImageListVoid}
+            />
+            <h1>
+                <span className="left">Not found </span><span className="right"> records:(</span>
+            </h1>            
+        </VStack>
+    </Fade>
 
 }

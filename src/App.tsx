@@ -1,14 +1,14 @@
 import './App.css';
 import { ChakraProvider } from '@chakra-ui/react';
 import AxiosConfig from './AxiosConfig';
-import Home from './pages/Home';
+import Routes from './routes';
 
 export default function App() {
   return (
     <div className="App">
         <ChakraProvider>
-          <AxiosConfig />
-          <Home />
+            <AxiosConfig />
+            <Routes />
         </ChakraProvider>
     </div>
   );

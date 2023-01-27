@@ -44,7 +44,10 @@
         "release_date": "1988",
         "running_time": "89",
         "rt_score": "97",
-        "people": [""],
+        "people": [
+          "06f9102d-8d11-459a-9646-3992d7fd6389",
+          "7b9e384c-cb73-4736-beec-109963d5c173"
+        ],
         "species": [
           "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2"
         ],
@@ -1291,6 +1294,32 @@
         ],
         "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
         "url": "835f8c7c-2fc6-4f54-b545-c02ab066cd69"
+      },
+      {
+        "id": "06f9102d-8d11-459a-9646-3992d7fd6389",
+        "name": "Seita Yokokawa",
+        "gender": "Male",
+        "age": "14",
+        "eye_color": "Black",
+        "hair_color": "Black",
+        "films": [
+          "12cfb892-aac0-4c5b-94af-521852e46d6a"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "06f9102d-8d11-459a-9646-3992d7fd6389"
+      },
+      {
+        "id": "7b9e384c-cb73-4736-beec-109963d5c173",
+        "name": "Setsuko Yokokawa",
+        "gender": "Female",
+        "age": "4",
+        "eye_color": "Black",
+        "hair_color": "Black",
+        "films": [
+          "12cfb892-aac0-4c5b-94af-521852e46d6a"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "7b9e384c-cb73-4736-beec-109963d5c173"
       }
     ],
     "locations": [

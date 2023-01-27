@@ -1,30 +1,30 @@
 import {
     useState,
-    useEffect,
-    ReactNode,
-    useRef
+    useEffect
 } from 'react';
 import {
+    useNavigate
+} from 'react-router-dom';
+import {
     HStack,
-    Box,
     Text,
     Input,
     Center,
     VStack,
     Tooltip,
     FormLabel,
-    Icon,
     InputGroup,
     FormControl,
     InputRightElement,
     Flex,
     Container,
-    Image,
-    Spinner,
     RadioGroup,
     Radio
 } from "@chakra-ui/react";
-import { Search2Icon, CloseIcon } from '@chakra-ui/icons';
+import { 
+    Search2Icon, 
+    CloseIcon 
+} from '@chakra-ui/icons';
 import CountUp from 'react-countup';
 import axios from 'axios';
 
@@ -44,6 +44,8 @@ interface RecordsProps {
 }
 
 export default function Home() {
+
+    const navigate = useNavigate();
 
     const [data, setData] = useState<RecordsProps>({
         records: [],
@@ -83,6 +85,24 @@ export default function Home() {
         } finally {
             setLoading(false);
         }
+
+    }
+ 
+    function verifyComponentToRender() {
+        
+        if(data.total === 0 && !loading) {
+            return <EmptyList />
+        } else if(loading) {
+            return <Loading />
+        } else if(data.total > 0) {            
+            return <List 
+                recordsList={data.records}
+                type={typeSearch}
+                navigate={navigate}
+            />
+        }
+
+        return <></>
 
     }
 
@@ -146,15 +166,29 @@ export default function Home() {
                                 p={'0px 5px'}          
                                 mb={2}                      
                             >                            
-                                <FormLabel fontWeight={'bold'} flex={1} mb={0}>
-                                    Search any character or movie from Studio Ghibli
+                                <FormLabel 
+                                    fontWeight={'bold'} 
+                                    flex={1} 
+                                    mb={0}
+                                    textDecoration={'underline'}
+                                    textShadow={'1px 0px black'}
+                                    fontSize={'lg'}
+                                >
+                                    {`Search any ${typeSearch === 'people' ? 'character' : 'movie'} from Studio Ghibli`}
                                 </FormLabel>
                                 <RadioGroup 
-                                    onChange={setTypeSearch} 
+                                    onChange={(nextValue) => {
+                                        setData({
+                                            records: [],
+                                            total: 0
+                                        });
+                                        setName(null);
+                                        setTypeSearch(nextValue);
+                                    }} 
                                     value={typeSearch}
                                     name={'radio-group'}
                                 >
-                                    <HStack>
+                                    <HStack fontWeight={600}>
                                         <Radio 
                                             colorScheme='white' 
                                             value='people'
@@ -176,8 +210,11 @@ export default function Home() {
                         <InputGroup>
                             <Input
                                 variant='flushed'
+                                textOverflow={'ellipsis'}         
+                                overflow={'hidden'}                       
                                 htmlSize={5}
                                 color={"black"}
+                                pl={2}
                                 borderColor={"black"}
                                 focusBorderColor={"black"}
                                 placeholder={"Press Enter to search ;)"}                                
@@ -200,7 +237,7 @@ export default function Home() {
                                     }
                                 }}
                                 _placeholder={{
-                                    color: 'rgba(0, 0, 0, 0.5)'
+                                    color: 'rgba(0, 0, 0, 0.6)'
                                 }}
                             />
                             <InputRightElement>
@@ -215,6 +252,7 @@ export default function Home() {
                                         color={"black"}
                                         cursor={"pointer"}
                                         mr={2}
+                                        ml={5}
                                         _hover={{
                                             opacity: 0.5
                                         }}
@@ -247,10 +285,11 @@ export default function Home() {
                         w={"100%"}
                         borderRadius={5}       
                         maxH={"90%"}                                         
-                    >
+                    >                        
                         <Container
                             centerContent
-                            maxW={'container.xl'}                            
+                            maxWidth={'100%'}
+                            w={'100%'}                            
                             h={'100%'}
                             justifyContent={data.total > 0 ? "flex-start" : "center"}
                             flexDirection={"column"}
@@ -282,14 +321,7 @@ export default function Home() {
                                 spacing={4}
                                 paddingRight={2}                      
                             >
-                                {
-                                    (data.total === 0 && !loading) ? <EmptyList />
-                                    : (loading) ? <Loading />
-                                    : (data.total > 0) ? <List 
-                                        recordsList={data.records}
-                                        type={typeSearch}
-                                    /> : <></>
-                                }
+                                {verifyComponentToRender()}
                             </VStack>
                         </Container>
                     </Center>

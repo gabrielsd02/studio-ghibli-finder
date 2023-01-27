@@ -74,7 +74,12 @@ app.get("/films/:id",
 
         const id = params.id;
 
-        const result = await consultMoviesId(films, id);
+        const result = await consultMoviesId({
+            movies: films, 
+            id,
+            characters: people,
+            returnCharacters: true
+        });
 
         if(!result) {
 

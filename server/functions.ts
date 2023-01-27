@@ -5,6 +5,14 @@ import {
     SpeciesProps 
 } from "../src/interfaces";
 
+interface ConsultMoviesIdProps {
+    movies: MoviesProps[]; 
+    id: string;
+    characters?: PeopleProps[];
+    returnCharacters?: boolean;
+}
+
+
 type RecordMovieProps = MoviesProps & { characters: PeopleProps[] };
 type RecordPeopleProps = PeopleProps & { films: MoviesProps[]; species: SpeciesProps[] };
 
@@ -57,9 +65,9 @@ export async function consultPeople(people: PeopleProps[], movies?: MoviesProps[
                 
             character.films.map(async (film) => {
 
-                const moviesPerson = await consultMoviesId(movies, film);
+                const moviesPerson = await consultMoviesId({movies, id: film});
                 
-                if(moviesPerson) peopleMovies.push(moviesPerson);
+                if(moviesPerson.film) peopleMovies.push(moviesPerson.film);
 
             });                    
 
@@ -143,34 +151,36 @@ export async function consultMovies(movies: MoviesProps[], people?: PeopleProps[
             if(position !== -1) return true;
 
             return false;
-        })
-        .map((movie) => {
-
-            let peoplesMovie = [] as PeopleProps[];
-
-            if(people && movie.people.length > 0) {
-                    
-                movie.people.map(async (person) => {
-
-                    const moviesPerson = await consultPeopleId(people, person);
-                    
-                    if(moviesPerson) peoplesMovie.push(moviesPerson);
-
-                });                    
-
-            }
-
-            const mountRecord = {
-                ...movie,
-                characters: peoplesMovie
-            } as RecordMovieProps
-
-            return mountRecord;
-
-        })
-        .sort();
+        })        
 
     };  
+
+    records = records
+    .map((movie) => {
+
+        let peoplesMovie = [] as PeopleProps[];
+
+        if(people && movie.people.length > 0) {
+                
+            movie.people.map(async (person) => {
+
+                const moviesPerson = await consultPeopleId(people, person);
+                
+                if(moviesPerson) peoplesMovie.push(moviesPerson);
+
+            });                    
+
+        }
+
+        const mountRecord = {
+            ...movie,
+            characters: peoplesMovie
+        } as RecordMovieProps
+
+        return mountRecord;
+
+    })
+    .sort();
 
     return { 
         records,        
@@ -179,12 +189,37 @@ export async function consultMovies(movies: MoviesProps[], people?: PeopleProps[
 
 }
 
-export async function consultMoviesId(movies: MoviesProps[], id: string) {
+export async function consultMoviesId({
+    movies, 
+    id, 
+    characters=[],
+    returnCharacters=false
+}: ConsultMoviesIdProps) {
 
-    let character: MoviesProps | null | undefined = null;
+    let film: MoviesProps | null | undefined = null;
+    let peoplesMovie = [] as PeopleProps[];
 
-    character = movies.find((m) => m.id === id);
+    film = movies.find((m) => m.id === id);
 
-    return character;
+    if(returnCharacters && characters.length > 0) {
+
+        if(film?.people && film.people.length > 0) {
+                
+            film.people.map(async (person) => {
+
+                const moviesPerson = await consultPeopleId(characters, person);
+                
+                if(moviesPerson) peoplesMovie.push(moviesPerson);
+
+            });                    
+
+        }
+        
+    }
+
+    return {
+        film,
+        characters: peoplesMovie
+    };
 
 }
