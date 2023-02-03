@@ -150,7 +150,7 @@ export function List({
                                         {isPeople ? 
                                             (
                                                 record.gender === "NA" ? '?' : record.gender
-                                            ) : record.originalTitle
+                                            ) : record.originalTitleRomanised
                                         }
                                     </TextResults>                           
                                 </TextContainer>
@@ -229,7 +229,7 @@ export function List({
                             >
                                 {isPeople ? "Movies:" : "Characters:"} 
                             </Text>             
-                            {record[typeContrary].map((item: { title?: string; name?: string}, key: number) => {                                
+                            {record[typeContrary].map((item: { title?: string; name?: string; id: string}, key: number) => {                                
 
                                 const assistant: 'title' | 'name' = item.title ? 'title' : 'name';
                                 let name = (record[typeContrary].length - 1) === key ? item[assistant] : `${item[assistant]} |`                                
@@ -248,6 +248,11 @@ export function List({
                                     textOverflow={"ellipsis"} 
                                     ml={2} 
                                     mr={2}
+                                    textDecoration={isPeople ? 'underline' : 'unset'}
+                                    cursor={isPeople ? 'pointer' : 'none'}
+                                    onClick={() => {
+                                        if(navigate && isPeople) navigate(`movie-details/${item.id}`)
+                                    }}
                                 >
                                     {name}
                                 </Text>

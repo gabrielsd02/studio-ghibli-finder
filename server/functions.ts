@@ -180,7 +180,20 @@ export async function consultMovies(movies: MoviesProps[], people?: PeopleProps[
         return mountRecord;
 
     })
-    .sort();
+    .sort((a, b) => {
+
+        let str1 = a.title.toLowerCase();            
+        let str2 = b.title.toLowerCase();            
+
+        if (str1 < str2) {
+            return -1;
+        }
+        if (str1 > str2) {
+            return 1;
+        }
+        return 0;
+        
+    });
 
     return { 
         records,        

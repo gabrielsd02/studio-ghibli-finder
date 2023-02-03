@@ -140,7 +140,7 @@ export default function Home() {
                 <VStack
                     h={'700px'}
                     w={'55%'}
-                    border={"1px solid black"}
+                    background={'#1ca0d15e'}
                     borderRadius={"50px"}
                     p={10}
                     pos={"relative"}
