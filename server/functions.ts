@@ -12,6 +12,13 @@ interface ConsultMoviesIdProps {
     returnCharacters?: boolean;
 }
 
+interface ConsultPeopleProps {
+    people: PeopleProps[]; 
+    movies?: MoviesProps[]; 
+    species?: SpeciesProps[]; 
+    nameCharacter?: string
+    firstToLast?: string;
+}
 
 type RecordMovieProps = MoviesProps & { characters: PeopleProps[] };
 type RecordPeopleProps = PeopleProps & { films: MoviesProps[]; species: SpeciesProps[] };
@@ -37,8 +44,15 @@ export function camelizeKeys(obj: any): any {
 
 };
 
-export async function consultPeople(people: PeopleProps[], movies?: MoviesProps[], species?: SpeciesProps[], nameCharacter?: string) {
+export async function consultPeople({
+    people, 
+    movies, 
+    species,
+    firstToLast='true', 
+    nameCharacter
+}: ConsultPeopleProps) {
 
+    const first = firstToLast === 'true' ? true : false;
     let records = people as RecordPeopleProps[]; 
     
 	if(nameCharacter && !isEmpty(nameCharacter)) {
@@ -54,7 +68,7 @@ export async function consultPeople(people: PeopleProps[], movies?: MoviesProps[
         })        
 
     };  
-
+    
     records = records
     .map((character) => {
 
@@ -97,14 +111,16 @@ export async function consultPeople(people: PeopleProps[], movies?: MoviesProps[
     .sort((a, b) => {
 
         let str1 = a.name.toLowerCase();            
-        let str2 = b.name.toLowerCase();            
+        let str2 = b.name.toLowerCase();                    
+        
+        if(first) {
+            if (str1 < str2) return -1;        
+            if (str1 > str2) return 1;
+        } else {
+            if (str1 > str2) return -1;        
+            if (str1 < str2) return 1;
+        }
 
-        if (str1 < str2) {
-            return -1;
-        }
-        if (str1 > str2) {
-            return 1;
-        }
         return 0;
         
     });

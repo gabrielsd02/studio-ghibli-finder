@@ -30,8 +30,15 @@ app.get("/people",
     async ({ query }, res) => {
     
         const name = query.name as string | undefined;
+        const firstToLast = query.firstToLast as boolean | undefined;
         
-        const result = await consultPeople(people, films , species, name);
+        const result = await consultPeople({
+            people, 
+            movies: films , 
+            species, 
+            firstToLast,
+            nameCharacter: name
+        });
 
         res.json(result);
     }

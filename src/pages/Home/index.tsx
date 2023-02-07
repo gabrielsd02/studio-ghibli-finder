@@ -6,8 +6,11 @@ import {
     useNavigate
 } from 'react-router-dom';
 import {
+    FaSortAlphaUpAlt,
+    FaSortAlphaDown
+} from 'react-icons/fa'
+import {
     HStack,
-    Text,
     Input,
     Center,
     VStack,
@@ -19,7 +22,8 @@ import {
     Flex,
     Container,
     RadioGroup,
-    Radio
+    Radio,
+    Icon
 } from "@chakra-ui/react";
 import { 
     Search2Icon, 
@@ -28,13 +32,18 @@ import {
 import CountUp from 'react-countup';
 import axios from 'axios';
 
-
 import { 
     MoviesProps, 
     PeopleProps 
 } from '../../interfaces';
+import {
+    Title,
+    ContainerList,
+    ContainerHome,
+    ContainerStack,
+    ContainerTextCount
+} from './styles';
 import { List } from '../../components/List';
-import ImageBackground from '../../assets/images/image-background.jpg';
 import EmptyList from '../../components/EmptyList';
 import Loading from '../../components/Loading';
 
@@ -51,11 +60,15 @@ export default function Home() {
         records: [],
         total: 0
     });
+    const [consultParams, setConsultParams] = useState({
+        order: 'alphabetically',
+        firstToLast: true
+    } as any);
     const [loading, setLoading] = useState(false);
     const [typeSearch, setTypeSearch] = useState('people');
     const [name, setName] = useState<string | null>(null);
 
-    async function consultPerson() {
+    async function consult() {
 
         // if loading stop execution
         if(loading) return;
@@ -66,7 +79,10 @@ export default function Home() {
         try {
 
             const { data } = await axios.get(`/${typeSearch}`, {
-                params: { name }
+                params: { 
+                    name,
+                    ...consultParams
+                }
             });
 
             setData(data);            
@@ -107,240 +123,242 @@ export default function Home() {
     }
 
     useEffect(() => {
+        if(data.total > 0) consult();
+    }, [consultParams]);
+
+    useEffect(() => {
         if(!name) setData({ records: [], total: 0 });
     }, [name]);
 
     return (
 
-        <Center
-            bgImage={ImageBackground}
-            backgroundSize={"cover"}
-            h={"100vh"}
-            w={"100vw"}
-            pos={"relative"}
-        >            
-            <VStack
-                w={"100%"}
-                h={"100%"}
-                flex={1}
-                align={"center"}
-                justify={"center"}
-                backdropFilter={"blur(5px)"}                
-            >        
-                <Text
-                    fontSize='6xl'
-                    as='b'
-                    color={'white'}
-                    fontFamily={"cursive"}
-                    w='auto'
-                    textShadow={"5px 2px black"}
-                >
+        <ContainerHome>            
+            <ContainerStack>        
+                <Title>
                     Studio Ghibli Finder
-                </Text>   
-                <VStack
+                </Title>   
+                <HStack
                     h={'700px'}
-                    w={'55%'}
-                    background={'#1ca0d15e'}
-                    borderRadius={"50px"}
-                    p={10}
-                    pos={"relative"}
+                    w={'60%'}
+                    align={'center'}
+                    justify={'center'}
+                    spacing={'-5px'}
                 >
-                    <FormControl 
-                        fontFamily={"sans-serif"} 
-                        w={'100%'}
-                        justifyContent={'center'}
+                    <VStack
+                        h={'100%'}
+                        flex={1}
+                        background={'#1ca0d15e'}
+                        borderRadius={"50px"}
+                        p={10}
+                        pos={"relative"}
+                    >
+                        <FormControl 
+                            fontFamily={"sans-serif"} 
+                            w={'100%'}
+                            justifyContent={'center'}
+                            alignItems={'center'}
+                        >
+                            <Flex
+                                align={"center"}
+                                justify={"center"}
+                                w={"100%"}
+                                whiteSpace={'nowrap'}
+                            >
+                                <HStack
+                                    w={'100%'}
+                                    align={'center'}
+                                    pos={'relative'}
+                                    m={'auto'}
+                                    justifyContent={'space-between'}
+                                    p={'0px 5px'}          
+                                    mb={2}                      
+                                >                            
+                                    <FormLabel 
+                                        fontWeight={'bold'} 
+                                        flex={1} 
+                                        mb={0}
+                                        textDecoration={'underline'}
+                                        textShadow={'1px 0px black'}
+                                        fontSize={'lg'}
+                                    >
+                                        {`Search any ${typeSearch === 'people' ? 'character' : 'movie'} from Studio Ghibli`}
+                                    </FormLabel>
+                                    <RadioGroup 
+                                        onChange={(nextValue) => {
+                                            setData({
+                                                records: [],
+                                                total: 0
+                                            });
+                                            setName(null);
+                                            setTypeSearch(nextValue);
+                                        }} 
+                                        value={typeSearch}
+                                        name={'radio-group'}
+                                    >
+                                        <HStack fontWeight={600}>
+                                            <Radio 
+                                                colorScheme='white' 
+                                                value='people'
+                                                boxShadow={typeSearch === 'people' ? '0px 0px 22px 1px' : '0px'}
+                                            >
+                                                Characters
+                                            </Radio>
+                                            <Radio 
+                                                colorScheme='white' 
+                                                value='films'
+                                                boxShadow={typeSearch === 'films' ? '0px 0px 22px 1px' : '0px'}
+                                            >
+                                                Movies
+                                            </Radio>
+                                        </HStack>
+                                    </RadioGroup>
+                                </HStack>
+                            </Flex>
+                            <InputGroup>
+                                <Input
+                                    variant='flushed'
+                                    textOverflow={'ellipsis'}         
+                                    overflow={'hidden'}                       
+                                    htmlSize={5}
+                                    color={"black"}
+                                    pl={2}
+                                    borderColor={"black"}
+                                    focusBorderColor={"black"}
+                                    placeholder={"Press Enter to search ;)"}                                
+                                    value={name || ''}                         
+                                    autoComplete={"off"}       
+                                    onChange={(e) => {
+                                        
+                                        let nameUpdate: null | string = e.target.value;
+
+                                        if(nameUpdate === "") {
+                                            nameUpdate = null;
+                                        }
+
+                                        setName(e.target.value);
+
+                                    }}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                            consult();
+                                        }
+                                    }}
+                                    _placeholder={{
+                                        color: 'rgba(0, 0, 0, 0.6)'
+                                    }}
+                                />
+                                <InputRightElement>
+                                    <Tooltip
+                                        label={"Click to search"}
+                                        fontSize={"md"}
+                                        hasArrow
+                                        placement='top'
+                                        maxW={"700px"}
+                                    >
+                                        <Search2Icon
+                                            color={"black"}
+                                            cursor={"pointer"}
+                                            mr={2}
+                                            ml={5}
+                                            _hover={{
+                                                opacity: 0.5
+                                            }}
+                                            onClick={consult}
+                                        />
+                                    </Tooltip>
+                                    {(name && name.length > 0) && <Tooltip
+                                        label={"Click to erase the search"}
+                                        fontSize={"md"}
+                                        hasArrow
+                                        placement='top'
+                                        maxW={"700px"}
+                                    >
+                                        <CloseIcon
+                                            color={"black"}
+                                            cursor={"pointer"}
+                                            ml={2}
+                                            mr={2}
+                                            _hover={{
+                                                opacity: 0.5
+                                            }}
+                                            onClick={() => setName(null)}
+                                        />
+                                    </Tooltip>}
+                                </InputRightElement>
+                            </InputGroup>
+                        </FormControl>
+                        <Center
+                            flexGrow={1}
+                            w={"100%"}
+                            borderRadius={5}       
+                            maxH={"90%"}                                         
+                        >                        
+                            <Container
+                                centerContent
+                                maxWidth={'100%'}
+                                w={'100%'}                            
+                                h={'100%'}
+                                justifyContent={data.total > 0 ? "flex-start" : "center"}
+                                flexDirection={"column"}
+                                bg={"transparent"}
+                                p={0}
+                                mt={5}                                        
+                                overflowX={"hidden"}
+                                overflowY={"auto"}                                  
+                                css={{
+                                    '&::-webkit-scrollbar': {
+                                        width: '10px',
+                                        height: '10px',
+                                        backgroundColor: "rgba(0, 0, 0, 0.2)",
+                                        borderRadius: "5px"
+                                    },
+                                    '&::-webkit-scrollbar-thumb': {
+                                        height: '70px',
+                                        background: "black",
+                                        borderRadius: '10px',
+                                    }
+                                }}           
+                            >
+                                <ContainerList>
+                                    {verifyComponentToRender()}
+                                </ContainerList>
+                            </Container>
+                        </Center>
+                    </VStack>
+                    {(data.total > 0) && <VStack
                         alignItems={'center'}
+                        justify={'flex-start'}
+                        height={'85%'}
+                        width={'100px'}
+                        p={2}
                     >
                         <Flex
-                            align={"center"}
-                            justify={"center"}
-                            w={"100%"}
-                            whiteSpace={'nowrap'}
-                        >
-                            <HStack
-                                w={'100%'}
-                                align={'center'}
-                                pos={'relative'}
-                                m={'auto'}
-                                justifyContent={'space-between'}
-                                p={'0px 5px'}          
-                                mb={2}                      
-                            >                            
-                                <FormLabel 
-                                    fontWeight={'bold'} 
-                                    flex={1} 
-                                    mb={0}
-                                    textDecoration={'underline'}
-                                    textShadow={'1px 0px black'}
-                                    fontSize={'lg'}
-                                >
-                                    {`Search any ${typeSearch === 'people' ? 'character' : 'movie'} from Studio Ghibli`}
-                                </FormLabel>
-                                <RadioGroup 
-                                    onChange={(nextValue) => {
-                                        setData({
-                                            records: [],
-                                            total: 0
-                                        });
-                                        setName(null);
-                                        setTypeSearch(nextValue);
-                                    }} 
-                                    value={typeSearch}
-                                    name={'radio-group'}
-                                >
-                                    <HStack fontWeight={600}>
-                                        <Radio 
-                                            colorScheme='white' 
-                                            value='people'
-                                            boxShadow={typeSearch === 'people' ? '0px 0px 22px 1px' : '0px'}
-                                        >
-                                            Characters
-                                        </Radio>
-                                        <Radio 
-                                            colorScheme='white' 
-                                            value='films'
-                                            boxShadow={typeSearch === 'films' ? '0px 0px 22px 1px' : '0px'}
-                                        >
-                                            Movies
-                                        </Radio>
-                                    </HStack>
-                                </RadioGroup>
-                            </HStack>
-                        </Flex>
-                        <InputGroup>
-                            <Input
-                                variant='flushed'
-                                textOverflow={'ellipsis'}         
-                                overflow={'hidden'}                       
-                                htmlSize={5}
-                                color={"black"}
-                                pl={2}
-                                borderColor={"black"}
-                                focusBorderColor={"black"}
-                                placeholder={"Press Enter to search ;)"}                                
-                                value={name || ''}                         
-                                autoComplete={"off"}       
-                                onChange={(e) => {
-                                    
-                                    let nameUpdate: null | string = e.target.value;
-
-                                    if(nameUpdate === "") {
-                                        nameUpdate = null;
-                                    }
-
-                                    setName(e.target.value);
-
-                                }}
-                                onKeyDown={(e) => {
-                                    if (e.key === "Enter") {
-                                        consultPerson();
-                                    }
-                                }}
-                                _placeholder={{
-                                    color: 'rgba(0, 0, 0, 0.6)'
-                                }}
+                            background={'rgba(0, 0, 0, 0.5)'}
+                            borderRadius={50}
+                            ml={2}
+                            p={3}
+                            cursor={'pointer'}
+                            _hover={{
+                                opacity: 0.7
+                            }}
+                            onClick={() => setConsultParams({ ...consultParams, firstToLast: !consultParams.firstToLast })}
+                        >                        
+                            <Icon
+                                as={consultParams.firstToLast ? FaSortAlphaDown : FaSortAlphaUpAlt}
+                                fontSize={'30px'}
+                                color={'gray.200'}
                             />
-                            <InputRightElement>
-                                <Tooltip
-                                    label={"Click to search"}
-                                    fontSize={"md"}
-                                    hasArrow
-                                    placement='top'
-                                    maxW={"700px"}
-                                >
-                                    <Search2Icon
-                                        color={"black"}
-                                        cursor={"pointer"}
-                                        mr={2}
-                                        ml={5}
-                                        _hover={{
-                                            opacity: 0.5
-                                        }}
-                                        onClick={consultPerson}
-                                    />
-                                </Tooltip>
-                                {(name && name.length > 0) && <Tooltip
-                                    label={"Click to erase the search"}
-                                    fontSize={"md"}
-                                    hasArrow
-                                    placement='top'
-                                    maxW={"700px"}
-                                >
-                                    <CloseIcon
-                                        color={"black"}
-                                        cursor={"pointer"}
-                                        ml={2}
-                                        mr={2}
-                                        _hover={{
-                                            opacity: 0.5
-                                        }}
-                                        onClick={() => setName(null)}
-                                    />
-                                </Tooltip>}
-                            </InputRightElement>
-                        </InputGroup>
-                    </FormControl>
-                    <Center
-                        flexGrow={1}
-                        w={"100%"}
-                        borderRadius={5}       
-                        maxH={"90%"}                                         
-                    >                        
-                        <Container
-                            centerContent
-                            maxWidth={'100%'}
-                            w={'100%'}                            
-                            h={'100%'}
-                            justifyContent={data.total > 0 ? "flex-start" : "center"}
-                            flexDirection={"column"}
-                            bg={"transparent"}
-                            p={0}
-                            mt={5}                                        
-                            overflowX={"hidden"}
-                            overflowY={"auto"}                                  
-                            css={{
-                                '&::-webkit-scrollbar': {
-                                    width: '10px',
-                                    height: '10px',
-                                    backgroundColor: "rgba(0, 0, 0, 0.2)",
-                                    borderRadius: "5px"
-                                },
-                                '&::-webkit-scrollbar-thumb': {
-                                    height: '70px',
-                                    background: "black",
-                                    borderRadius: '10px',
-                                }
-                            }}           
-                        >
-                            <VStack
-                                w={"100%"}
-                                display={"flex"}                                                        
-                                alignItems={"center"}
-                                justifyContent={"flex-start"}  
-                                maxH={"100%"}    
-                                spacing={4}
-                                paddingRight={2}                      
-                            >
-                                {verifyComponentToRender()}
-                            </VStack>
-                        </Container>
-                    </Center>
-                </VStack>
-                <Text 
-                    fontSize={'4xl'}
-                    as='b'
-                    color={'white'}
-                    fontFamily={"cursive"}
-                    w='auto'
-                    textShadow={"2px 1px black"}
-                >
+                        </Flex>
+                    </VStack>}
+                </HStack>
+                <ContainerTextCount>
                     <CountUp 
                         end={data.total}
                         duration={0.5}
                     />
-                </Text>
-            </VStack>
-        </Center>
+                </ContainerTextCount>
+            </ContainerStack>
+        </ContainerHome>
 
     );
 
