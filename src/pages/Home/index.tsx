@@ -319,7 +319,7 @@ export default function Home() {
                                     }
                                 }}           
                             >
-                                <ContainerList>
+                                <ContainerList w={'100%'} pr={2} mr={2}>
                                     {verifyComponentToRender()}
                                 </ContainerList>
                             </Container>

@@ -40,13 +40,11 @@ export const ContainerStack = chakra(VStack, {
 });
 
 export const ContainerList = chakra(VStack, {
-    width: "100%",
     display: "flex",                                                       
     alignItems: "center",
     justifyContent: "flex-start" ,
     maxHeight: "100%",
-    spacing: 4,
-    paddingRight: 2
+    spacing: 4
 }); 
 
 export const Title = chakra(Text, {
