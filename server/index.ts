@@ -28,9 +28,9 @@ app.use(express.json());
 
 app.get("/people",  
     async ({ query }, res) => {
-    
+                        
         const name = query.name as string | undefined;
-        const firstToLast = query.firstToLast as boolean | undefined;
+        const firstToLast: boolean = JSON.parse(query.firstToLast as string);
         
         const result = await consultPeople({
             people, 
