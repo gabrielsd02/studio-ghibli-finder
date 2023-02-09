@@ -4,7 +4,13 @@ import {
     Text 
 } from '@chakra-ui/react';
 
-export default function Loading() {
+interface LoadingProps {
+    message?: string;
+}
+
+export default function Loading({
+    message
+}: LoadingProps) {
 
     return <VStack 
         w={"100%"} 
@@ -23,7 +29,7 @@ export default function Loading() {
         <Text 
             fontSize={30}            
         >
-            Searching...
+            {message || 'Searching...'}
         </Text>
     </VStack>
 
