@@ -17,7 +17,7 @@ interface ConsultPeopleProps {
     movies?: MoviesProps[]; 
     species?: SpeciesProps[]; 
     nameCharacter?: string
-    firstToLast?: string;
+    firstToLast?: boolean;
 }
 
 type RecordMovieProps = MoviesProps & { characters: PeopleProps[] };
@@ -48,11 +48,10 @@ export async function consultPeople({
     people, 
     movies, 
     species,
-    firstToLast='true', 
+    firstToLast=true, 
     nameCharacter
 }: ConsultPeopleProps) {
-
-    const first = firstToLast === 'true' ? true : false;
+    
     let records = people as RecordPeopleProps[]; 
     
 	if(nameCharacter && !isEmpty(nameCharacter)) {
@@ -113,7 +112,7 @@ export async function consultPeople({
         let str1 = a.name.toLowerCase();            
         let str2 = b.name.toLowerCase();                    
         
-        if(first) {
+        if(firstToLast) {
             if (str1 < str2) return -1;        
             if (str1 > str2) return 1;
         } else {
