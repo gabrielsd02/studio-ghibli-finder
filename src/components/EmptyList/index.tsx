@@ -31,7 +31,7 @@ export default function EmptyList() {
             <Image
                 alt={"Image character from Spirited Away"}
                 borderRadius={"5px"}
-                boxSize={'400px'}
+                boxSize={'420px'}              
                 src={ImageListVoid}
             />
             <h1>

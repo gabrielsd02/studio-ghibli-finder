@@ -149,7 +149,7 @@ export default function Home() {
                         flex={1}
                         background={'#1ca0d15e'}
                         borderRadius={"50px"}
-                        border={'1px solid black'}
+                        boxShadow={'0px 0px 10px black'}
                         p={10}
                         pos={"relative"}
                     >

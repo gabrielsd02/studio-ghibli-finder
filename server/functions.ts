@@ -20,6 +20,13 @@ interface ConsultPeopleProps {
     firstToLast?: boolean;
 }
 
+interface ConsultMoviesProps {
+    movies: MoviesProps[]; 
+    people?: PeopleProps[]; 
+    firstToLast?: boolean;
+    nameMovie?: string;
+}
+
 type RecordMovieProps = MoviesProps & { characters: PeopleProps[] };
 type RecordPeopleProps = PeopleProps & { films: MoviesProps[]; species: SpeciesProps[] };
 
@@ -152,7 +159,12 @@ export async function consultSpeciesId(species: SpeciesProps[], id: string) {
 
 }
 
-export async function consultMovies(movies: MoviesProps[], people?: PeopleProps[], nameMovie?: string) {
+export async function consultMovies({
+    movies, 
+    people, 
+    firstToLast=true,
+    nameMovie
+}: ConsultMoviesProps) {
     
     let records = movies as RecordMovieProps[];        
     
@@ -198,14 +210,16 @@ export async function consultMovies(movies: MoviesProps[], people?: PeopleProps[
     .sort((a, b) => {
 
         let str1 = a.title.toLowerCase();            
-        let str2 = b.title.toLowerCase();            
+        let str2 = b.title.toLowerCase();                    
+        
+        if(firstToLast) {
+            if (str1 < str2) return -1;        
+            if (str1 > str2) return 1;
+        } else {
+            if (str1 > str2) return -1;        
+            if (str1 < str2) return 1;
+        }
 
-        if (str1 < str2) {
-            return -1;
-        }
-        if (str1 > str2) {
-            return 1;
-        }
         return 0;
         
     });
