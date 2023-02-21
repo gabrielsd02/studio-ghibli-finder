@@ -18,13 +18,14 @@ interface ConsultPeopleProps {
     species?: SpeciesProps[]; 
     nameCharacter?: string
     firstToLast?: boolean;
+    gender?: string | null;
 }
 
 interface ConsultMoviesProps {
     movies: MoviesProps[]; 
     people?: PeopleProps[]; 
     firstToLast?: boolean;
-    nameMovie?: string;
+    nameMovie?: string;    
 }
 
 type RecordMovieProps = MoviesProps & { characters: PeopleProps[] };
@@ -56,7 +57,8 @@ export async function consultPeople({
     movies, 
     species,
     firstToLast=true, 
-    nameCharacter
+    nameCharacter,
+    gender
 }: ConsultPeopleProps) {
     
     let records = people as RecordPeopleProps[]; 
@@ -130,6 +132,24 @@ export async function consultPeople({
         return 0;
         
     });
+
+    if(gender && !isEmpty(gender)) {
+
+        records = records.filter((record) => {
+            
+            if(gender === 'F') {
+                return record.gender === 'Female';
+            }
+
+            if(gender === 'M') {
+                return record.gender === 'Male';
+            }
+
+            return record.gender === 'NA';
+
+        });
+
+    }
 
 	return { 
         records,    

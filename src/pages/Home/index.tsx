@@ -6,13 +6,16 @@ import {
     useNavigate
 } from 'react-router-dom';
 import {
-    FaSortAlphaUpAlt,
-    FaSortAlphaDown
+    FaMale,
+    FaFemale,
+    FaSortAlphaDown,
+    FaSortAlphaUpAlt
 } from 'react-icons/fa'
 import {
     HStack,
     Input,
     Center,
+    Checkbox,
     VStack,
     Tooltip,
     FormLabel,
@@ -62,7 +65,9 @@ export default function Home() {
     });
     const [consultParams, setConsultParams] = useState({
         order: 'alphabetically',
-        firstToLast: true
+        firstToLast: true,
+        masculineCheck: true,
+        femaleCheck: true
     } as any);
     const [loading, setLoading] = useState(false);
     const [typeSearch, setTypeSearch] = useState('people');
@@ -70,17 +75,29 @@ export default function Home() {
 
     async function consult() {
 
-        // if loading stop execution
+        // if loading => stop execution
         if(loading) return;
 
         // set state of loading
         setLoading(true);
 
-        try {
+        // make verifications to send a gender param
+        const mountGenderParam = () => {
 
+            if(consultParams.masculineCheck && consultParams.femaleCheck) return '';
+            if(!consultParams.masculineCheck && consultParams.femaleCheck) return 'F';
+            if(consultParams.masculineCheck && !consultParams.femaleCheck) return 'M';
+            return '?';
+
+        };
+
+        try {            
+
+            // make a requisition
             const { data } = await axios.get(`/${typeSearch}`, {
                 params: { 
                     name,
+                    gender: mountGenderParam(),
                     ...consultParams
                 }
             });
@@ -152,6 +169,7 @@ export default function Home() {
                         boxShadow={'0px 0px 10px black'}
                         p={10}
                         pos={"relative"}
+                        overflow={'hidden'}
                     >
                         <FormControl 
                             fontFamily={"sans-serif"} 
@@ -292,7 +310,8 @@ export default function Home() {
                             flexGrow={1}
                             w={"100%"}
                             borderRadius={5}       
-                            maxH={"90%"}                                         
+                            maxH={"90%"}      
+                            m={'auto'}                                   
                         >                        
                             <Container
                                 centerContent
@@ -331,6 +350,7 @@ export default function Home() {
                         justify={'flex-start'}
                         height={'85%'}
                         width={'100px'}
+                        spacing={5}
                         p={2}
                     >
                         <Flex
@@ -350,6 +370,69 @@ export default function Home() {
                                 color={'gray.200'}
                             />
                         </Flex>
+                        <VStack                      
+                            align={'center'}
+                            justify={'center'}
+                            spacing={5}
+                            ml={'0.7rem !important'}
+                        >
+                            <VStack
+                                align={'center'}
+                                justify={'center'}
+                            >
+                                <Icon
+                                    as={FaMale}
+                                    fontSize={'35px'}
+                                    color={'black'}
+                                />
+                                <Checkbox 
+                                    borderColor={'rgba(0, 0, 0, 0.7)'}
+                                    background={'rgba(0, 0, 0, 0.7)'}
+                                    colorScheme={'rgba(0, 0, 0, 0.7)'}
+                                    iconColor={'white'}
+                                    size={'lg'}
+                                    isChecked={consultParams.masculineCheck}
+                                    onChange={() => setConsultParams({
+                                        ...consultParams, 
+                                        masculineCheck: !consultParams.masculineCheck
+                                    })}
+                                    _hover={{
+                                        boxShadow: '0px 0px 5px white'
+                                    }}
+                                    _active={{
+                                        opacity: 0.7
+                                    }}
+                                />
+                            </VStack>
+                            <VStack
+                                align={'center'}
+                                justify={'center'}
+                            >
+                                <Icon
+                                    as={FaFemale}
+                                    fontSize={'35px'}
+                                    color={'black'}
+                                />
+                                <Checkbox                                     
+                                    borderColor={'rgba(0, 0, 0, 0.7)'}
+                                    background={'rgba(0, 0, 0, 0.7)'}
+                                    colorScheme={'rgba(0, 0, 0, 0.7)'}
+                                    iconColor={'white'}
+                                    size={'lg'}
+                                    isChecked={consultParams.femaleCheck}
+                                    onChange={() => setConsultParams({
+                                        ...consultParams, 
+                                        femaleCheck: !consultParams.femaleCheck
+                                    })}
+                                    _hover={{
+                                        boxShadow: '0px 0px 5px white'
+                                    }}
+                                    _active={{
+                                        opacity: 0.7
+                                    }}
+                                />
+                            </VStack>
+                        </VStack>
                     </VStack>}
                 </HStack>
                 <ContainerTextCount>

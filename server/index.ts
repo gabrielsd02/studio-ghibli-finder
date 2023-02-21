@@ -30,12 +30,14 @@ app.get("/people",
     async ({ query }, res) => {
                         
         const name = query.name as string | undefined;
-        const firstToLast: boolean = query.firstToLast ? JSON.parse(query.firstToLast as string) : null;
+        const firstToLast: boolean = query.firstToLast ? JSON.parse(query.firstToLast as string) : true;
+        const gender: string | null = query.gender ? query.gender as string : null;
         
         const result = await consultPeople({
             people, 
             movies: films , 
             species, 
+            gender,
             firstToLast,
             nameCharacter: name
         });
