@@ -6,12 +6,6 @@ import {
     useNavigate
 } from 'react-router-dom';
 import {
-    FaMale,
-    FaFemale,
-    FaSortAlphaDown,
-    FaSortAlphaUpAlt
-} from 'react-icons/fa'
-import {
     HStack,
     Input,
     Center,
@@ -49,10 +43,18 @@ import {
 import { List } from '../../components/List';
 import EmptyList from '../../components/EmptyList';
 import Loading from '../../components/Loading';
+import ParamsList from '../../components/ParamsList';
 
 interface RecordsProps {
     records: PeopleProps[] | MoviesProps[];
     total: number;
+}
+
+export interface ConsultParamsProps {
+    order: string;
+    firstToLast: boolean;
+    masculineCheck: boolean;
+    femaleCheck: boolean;
 }
 
 export default function Home() {
@@ -68,7 +70,7 @@ export default function Home() {
         firstToLast: true,
         masculineCheck: true,
         femaleCheck: true
-    } as any);
+    } as ConsultParamsProps);
     const [loading, setLoading] = useState(false);
     const [typeSearch, setTypeSearch] = useState('people');
     const [name, setName] = useState<string | null>(null);
@@ -156,10 +158,9 @@ export default function Home() {
                 </Title>   
                 <HStack
                     h={'700px'}
-                    w={'60%'}
+                    w={'65%'}
                     align={'center'}
                     justify={'center'}
-                    spacing={'-5px'}
                 >
                     <VStack
                         h={'100%'}
@@ -345,95 +346,11 @@ export default function Home() {
                             </Container>
                         </Center>
                     </VStack>
-                    {(data.total > 0) && <VStack
-                        alignItems={'center'}
-                        justify={'flex-start'}
-                        height={'85%'}
-                        width={'100px'}
-                        spacing={5}
-                        p={2}
-                    >
-                        <Flex
-                            background={'rgba(0, 0, 0, 0.5)'}
-                            borderRadius={50}
-                            ml={2}
-                            p={3}
-                            cursor={'pointer'}
-                            _hover={{
-                                opacity: 0.7
-                            }}
-                            onClick={() => setConsultParams({ ...consultParams, firstToLast: !consultParams.firstToLast })}
-                        >                        
-                            <Icon
-                                as={consultParams.firstToLast ? FaSortAlphaDown : FaSortAlphaUpAlt}
-                                fontSize={'30px'}
-                                color={'gray.200'}
-                            />
-                        </Flex>
-                        <VStack                      
-                            align={'center'}
-                            justify={'center'}
-                            spacing={5}
-                            ml={'0.7rem !important'}
-                        >
-                            <VStack
-                                align={'center'}
-                                justify={'center'}
-                            >
-                                <Icon
-                                    as={FaMale}
-                                    fontSize={'35px'}
-                                    color={'black'}
-                                />
-                                <Checkbox 
-                                    borderColor={'rgba(0, 0, 0, 0.7)'}
-                                    background={'rgba(0, 0, 0, 0.7)'}
-                                    colorScheme={'rgba(0, 0, 0, 0.7)'}
-                                    iconColor={'white'}
-                                    size={'lg'}
-                                    isChecked={consultParams.masculineCheck}
-                                    onChange={() => setConsultParams({
-                                        ...consultParams, 
-                                        masculineCheck: !consultParams.masculineCheck
-                                    })}
-                                    _hover={{
-                                        boxShadow: '0px 0px 5px white'
-                                    }}
-                                    _active={{
-                                        opacity: 0.7
-                                    }}
-                                />
-                            </VStack>
-                            <VStack
-                                align={'center'}
-                                justify={'center'}
-                            >
-                                <Icon
-                                    as={FaFemale}
-                                    fontSize={'35px'}
-                                    color={'black'}
-                                />
-                                <Checkbox                                     
-                                    borderColor={'rgba(0, 0, 0, 0.7)'}
-                                    background={'rgba(0, 0, 0, 0.7)'}
-                                    colorScheme={'rgba(0, 0, 0, 0.7)'}
-                                    iconColor={'white'}
-                                    size={'lg'}
-                                    isChecked={consultParams.femaleCheck}
-                                    onChange={() => setConsultParams({
-                                        ...consultParams, 
-                                        femaleCheck: !consultParams.femaleCheck
-                                    })}
-                                    _hover={{
-                                        boxShadow: '0px 0px 5px white'
-                                    }}
-                                    _active={{
-                                        opacity: 0.7
-                                    }}
-                                />
-                            </VStack>
-                        </VStack>
-                    </VStack>}
+                    {(data.total > 0) && <ParamsList
+                        typeList={typeSearch}
+                        consultParams={consultParams}
+                        setConsultParams={setConsultParams}
+                    />}
                 </HStack>
                 <ContainerTextCount>
                     <CountUp 

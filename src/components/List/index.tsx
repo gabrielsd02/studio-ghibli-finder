@@ -83,6 +83,13 @@ export function List({
                             borderTopLeftRadius={10}
                             borderBottomLeftRadius={10}
                             src={isPeople ? record[typeContrary][0].image : record.image}
+                            cursor={!isPeople ? 'pointer' : 'normal'}
+                            onClick={() => {
+                                if(!isPeople) window.open(record.image);
+                            }}
+                            _hover={{
+                                opacity: !isPeople ? 0.3 : 1
+                            }}                                                        
                         />
                     </Box>
                     <VStack 
