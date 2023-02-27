@@ -25,7 +25,13 @@ interface ConsultMoviesProps {
     movies: MoviesProps[]; 
     people?: PeopleProps[]; 
     firstToLast?: boolean;
-    nameMovie?: string;    
+    nameMovie?: string;   
+    yearMovieRelease?: string | null;
+    fromYearMovieRelease?: boolean;
+    durationMovie?: string | null;
+    fromDurationMovie?: boolean;
+    scoreMovie?: string | null;
+    fromScoreMovie?: boolean; 
 }
 
 type RecordMovieProps = MoviesProps & { characters: PeopleProps[] };
@@ -183,7 +189,13 @@ export async function consultMovies({
     movies, 
     people, 
     firstToLast=true,
-    nameMovie
+    nameMovie,
+    yearMovieRelease,
+    durationMovie,
+    scoreMovie,
+    fromScoreMovie,
+    fromDurationMovie,
+    fromYearMovieRelease,
 }: ConsultMoviesProps) {
     
     let records = movies as RecordMovieProps[];        
@@ -226,12 +238,63 @@ export async function consultMovies({
 
         return mountRecord;
 
-    })
-    .sort((a, b) => {
+    });    
 
-        let str1 = a.title.toLowerCase();            
-        let str2 = b.title.toLowerCase();                    
-        
+    if(
+        yearMovieRelease || 
+        durationMovie || 
+        scoreMovie
+    ) {
+
+        records = records.filter((movie) => {
+
+            if(yearMovieRelease) {
+                if(fromYearMovieRelease) {
+                    return parseInt(movie.releaseDate) >= parseInt(yearMovieRelease);
+                }
+                return parseInt(movie.releaseDate) === parseInt(yearMovieRelease);
+            }
+
+            if(durationMovie) {
+                if(fromDurationMovie) {
+                    return parseInt(movie.runningTime) >= parseInt(durationMovie);
+                }
+                return parseInt(movie.runningTime) === parseInt(durationMovie);
+            }
+
+            if(scoreMovie) {
+                if(fromScoreMovie) {
+                    return parseInt(movie.rtScore) >= parseInt(scoreMovie);
+                }
+                return parseInt(movie.rtScore) === parseInt(scoreMovie);
+            }
+
+            return movie;
+
+        })        
+
+    }
+
+    records.sort((a, b) => {
+
+        let objectToSort: 'title' | 'releaseDate' | 'runningTime' | 'rtScore' = 'title';
+
+        if(yearMovieRelease) objectToSort = 'releaseDate';
+        if(durationMovie) objectToSort = 'runningTime';
+        if(scoreMovie) objectToSort = 'rtScore';        
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        let str1: string | number = a[objectToSort] ;           
+        let str2: string | number = b[objectToSort];
+
+        if(objectToSort !== 'title') {
+            str1 = parseInt(str1);
+            str2 = parseInt(str2);
+        } else {
+            str1 = str1.toLowerCase();
+            str2 = str2.toLowerCase();
+        }
+
         if(firstToLast) {
             if (str1 < str2) return -1;        
             if (str1 > str2) return 1;

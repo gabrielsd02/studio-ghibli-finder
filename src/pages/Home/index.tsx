@@ -9,7 +9,6 @@ import {
     HStack,
     Input,
     Center,
-    Checkbox,
     VStack,
     Tooltip,
     FormLabel,
@@ -19,13 +18,16 @@ import {
     Flex,
     Container,
     RadioGroup,
-    Radio,
-    Icon
+    Radio
 } from "@chakra-ui/react";
 import { 
     Search2Icon, 
     CloseIcon 
 } from '@chakra-ui/icons';
+import { 
+    useQuery, 
+    useQueryClient 
+} from 'react-query';
 import CountUp from 'react-countup';
 import axios from 'axios';
 
@@ -44,10 +46,18 @@ import { List } from '../../components/List';
 import EmptyList from '../../components/EmptyList';
 import Loading from '../../components/Loading';
 import ParamsList from '../../components/ParamsList';
+import ModalParamsMovie from '../../components/ModalParamsMovie';
 
 interface RecordsProps {
     records: PeopleProps[] | MoviesProps[];
     total: number;
+}
+
+interface CacheData extends RecordsProps {
+    alreadyExecuted?: boolean;
+    consultParams?: ConsultParamsProps;
+    typeSearch?: string;
+    name?: string | null;
 }
 
 export interface ConsultParamsProps {
@@ -55,81 +65,133 @@ export interface ConsultParamsProps {
     firstToLast: boolean;
     masculineCheck: boolean;
     femaleCheck: boolean;
+    yearMovieRelease: string | null;
+    fromYearMovieRelease: boolean;
+    durationMovie: string | null;
+    fromDurationMovie: boolean;
+    scoreMovie: string | null;
+    fromScoreMovie: boolean;
 }
 
 export default function Home() {
 
     const navigate = useNavigate();
 
-    const [data, setData] = useState<RecordsProps>({
-        records: [],
-        total: 0
-    });
-    const [consultParams, setConsultParams] = useState({
+    const paramsStandard = {
         order: 'alphabetically',
         firstToLast: true,
         masculineCheck: true,
-        femaleCheck: true
-    } as ConsultParamsProps);
-    const [loading, setLoading] = useState(false);
-    const [typeSearch, setTypeSearch] = useState('people');
-    const [name, setName] = useState<string | null>(null);
+        femaleCheck: true,
+        durationMovie: null,
+        scoreMovie: null,
+        yearMovieRelease: null,
+        fromDurationMovie: false,
+        fromScoreMovie: false,
+        fromYearMovieRelease: false
+    };
+
+    const queryClient = useQueryClient();
+    const cacheDataGet: CacheData | undefined = queryClient.getQueryData('consult');
+    
+    const [consultParams, setConsultParams] = useState(
+        (cacheDataGet && cacheDataGet.consultParams) ? 
+        cacheDataGet.consultParams : 
+        paramsStandard as ConsultParamsProps
+    );
+    const [typeSearch, setTypeSearch] = useState(
+        (cacheDataGet && cacheDataGet.typeSearch) ?
+        cacheDataGet.typeSearch : 
+        'people'
+    );
+    const [name, setName] = useState<string | null>(
+        (cacheDataGet && cacheDataGet.name) ?
+        cacheDataGet.name : 
+        null
+    );
+    const [openModal, setOpenModal] = useState(false);
+    const [shouldFetchData, setShouldFetchData] = useState(false);
+
+    // make verifications to send a gender param
+    const mountGenderParam = () => {
+
+        if(consultParams.masculineCheck && consultParams.femaleCheck) return '';
+        if(!consultParams.masculineCheck && consultParams.femaleCheck) return 'F';
+        if(consultParams.masculineCheck && !consultParams.femaleCheck) return 'M';
+        return '?';
+
+    };
 
     async function consult() {
+        
+        const { data } = await axios.get(`/${typeSearch}`, {
+            params: { 
+                name,
+                gender: mountGenderParam(),
+                ...consultParams
+            }
+        });
 
-        // if loading => stop execution
-        if(loading) return;
-
-        // set state of loading
-        setLoading(true);
-
-        // make verifications to send a gender param
-        const mountGenderParam = () => {
-
-            if(consultParams.masculineCheck && consultParams.femaleCheck) return '';
-            if(!consultParams.masculineCheck && consultParams.femaleCheck) return 'F';
-            if(consultParams.masculineCheck && !consultParams.femaleCheck) return 'M';
-            return '?';
-
+        return {
+            ...data,
+            consultParams,
+            typeSearch,
+            name
         };
 
-        try {            
-
-            // make a requisition
-            const { data } = await axios.get(`/${typeSearch}`, {
-                params: { 
-                    name,
-                    gender: mountGenderParam(),
-                    ...consultParams
-                }
-            });
-
-            setData(data);            
-
-        } catch(e: any) {
-            console.error(e);
-
-            if(axios.isAxiosError(e) && e.response && e.response.data) {
-
-                const error = e.response.data;
-
-                
-
-            }
-
-        } finally {
-            setLoading(false);
-        }
-
     }
- 
-    function verifyComponentToRender() {
+
+    const handleConsult = () => {
+
+        const cacheData: CacheData | undefined = queryClient.getQueryData('consult');
         
-        if(data.total === 0 && !loading) {
+        if(cacheData) {
+
+            if(typeof cacheData.alreadyExecuted !== 'undefined' && cacheData.alreadyExecuted === false) {
+                return setShouldFetchData(true);
+            } 
+            
+            return refetch();
+
+        } else {
+
+            setShouldFetchData(true);
+
+        }        
+    }
+
+    const { 
+        isLoading, 
+        error, 
+        data,
+        refetch
+    } = useQuery<CacheData>('consult', consult, {
+        enabled: shouldFetchData,
+        initialData: {
+            records: [],
+            total: 0,
+            alreadyExecuted: false
+        }
+    });
+    
+    useEffect(() => {
+        if(!name) queryClient.setQueryData('consult', () => {
+            return {
+                records: [],
+                total: 0
+            }
+        });
+    }, [name]);
+    
+    useEffect(() => {
+        if(data && data.total > 0) handleConsult();
+    }, [consultParams]);        
+ 
+    function verifyComponentToRender() {        
+        if(data && data.total === 0 && !isLoading) {
             return <EmptyList />
-        } else if(loading) {
+        } else if(isLoading) {
             return <Loading />
-        } else if(data.total > 0) {            
+        } else if(data && data.total > 0) {            
             return <List 
                 recordsList={data.records}
                 type={typeSearch}
@@ -139,17 +201,25 @@ export default function Home() {
 
         return <></>
 
+    }      
+
+    if(error) {
+
+        console.error(error);
+
+        if(axios.isAxiosError(error) && error.response && error.response.data) {
+
+            const dataError = error.response.data;
+
+            
+
+        }
+
+        return <></>;
+
     }
-
-    useEffect(() => {
-        if(data.total > 0) consult();
-    }, [consultParams]);
-
-    useEffect(() => {
-        if(!name) setData({ records: [], total: 0 });
-    }, [name]);
-
-    return (
+    
+    return (<>
 
         <ContainerHome>            
             <ContainerStack>        
@@ -205,9 +275,11 @@ export default function Home() {
                                     </FormLabel>
                                     <RadioGroup 
                                         onChange={(nextValue) => {
-                                            setData({
-                                                records: [],
-                                                total: 0
+                                            queryClient.setQueryData('consult', () => {
+                                                return {
+                                                    records: [],
+                                                    total: 0
+                                                }
                                             });
                                             setName(null);
                                             setTypeSearch(nextValue);
@@ -255,12 +327,12 @@ export default function Home() {
                                             nameUpdate = null;
                                         }
 
-                                        setName(e.target.value);
+                                        setName(nameUpdate);
 
                                     }}
                                     onKeyDown={(e) => {
                                         if (e.key === "Enter") {
-                                            consult();
+                                            handleConsult();
                                         }
                                     }}
                                     _placeholder={{
@@ -283,7 +355,7 @@ export default function Home() {
                                             _hover={{
                                                 opacity: 0.5
                                             }}
-                                            onClick={consult}
+                                            onClick={() => handleConsult()}
                                         />
                                     </Tooltip>
                                     {(name && name.length > 0) && <Tooltip
@@ -319,7 +391,7 @@ export default function Home() {
                                 maxWidth={'100%'}
                                 w={'100%'}                            
                                 h={'100%'}
-                                justifyContent={data.total > 0 ? "flex-start" : "center"}
+                                justifyContent={data?.total! > 0 ? "flex-start" : "center"}
                                 flexDirection={"column"}
                                 bg={"transparent"}
                                 p={0}
@@ -346,21 +418,29 @@ export default function Home() {
                             </Container>
                         </Center>
                     </VStack>
-                    {(data.total > 0) && <ParamsList
+                    <ParamsList
                         typeList={typeSearch}
                         consultParams={consultParams}
+                        setOpenModal={setOpenModal}
                         setConsultParams={setConsultParams}
-                    />}
+                    />
                 </HStack>
                 <ContainerTextCount>
                     <CountUp 
-                        end={data.total}
+                        end={data?.total || 0}
                         duration={0.5}
                     />
                 </ContainerTextCount>
             </ContainerStack>
         </ContainerHome>
 
-    );
+        {openModal && <ModalParamsMovie 
+            setOpenModal={setOpenModal}
+            consultParams={consultParams}
+            setConsultParams={setConsultParams}
+            consultMovies={consult}
+        />}
+
+    </>);
 
 } 

@@ -131,7 +131,11 @@
         "release_date": "1991",
         "running_time": "118",
         "rt_score": "100",
-        "people": [""],
+        "people": [
+          "f17450b6-447d-4a84-a6b7-f97f59ce4c65",
+          "2fb89230-6d00-4d51-9a1b-30b7a630f76c",
+          "c8399ad4-899b-4e17-a27e-17892f2a5f1b"
+        ],
         "species": [
           "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2"
         ],
@@ -173,7 +177,11 @@
         "release_date": "1994",
         "running_time": "119",
         "rt_score": "78",
-        "people": [""],
+        "people": [
+          "a45ac9f8-97d7-4b7d-ae81-80e546ee29f7",
+          "294a4d04-6104-40a6-9fbe-76b105e4b654",
+          "18840a45-9c6c-4968-aed7-733755ec0b05"
+        ],
         "species": [
           "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2"
         ],
@@ -249,7 +257,13 @@
         "release_date": "1999",
         "running_time": "104",
         "rt_score": "75",
-        "people": [""],
+        "people": [
+          "485f5b5a-5247-4bdc-97ee-ab76cd22601b",
+          "bba42926-477e-48ac-ba3b-580d078695c3",
+          "3aa376f2-f258-4209-973a-0846e08d7686",
+          "4634977e-54d1-4839-8642-aeb0a50101e3",
+          "b474c02c-b70c-4317-b254-e3f2166ba4f8"
+        ],
         "species": [
           "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2"
         ],
@@ -271,7 +285,8 @@
         "running_time": "124",
         "rt_score": "97",
         "people": [
-          "8228751c-bdc1-4b8d-a6eb-ca0eb909568f"
+          "8228751c-bdc1-4b8d-a6eb-ca0eb909568f",
+          "267649ac-fb1b-11eb-9a03-0242ac130003"
         ],
         "species": [
           "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2"
@@ -293,7 +308,14 @@
         "release_date": "2002",
         "running_time": "75",
         "rt_score": "89",
-        "people": [""],
+        "people": [
+          "6b3facea-ea33-47b1-96ce-3fc737b119b8",
+          "3042818d-a8bb-4cba-8180-c19249822d57",
+          "58d1973f-f247-47d7-9358-e56cb0d2b5a6",
+          "a3d8e70f-46a0-4e5a-b850-db01620d6b92",
+          "fc196c4f-0201-4ed2-9add-c6403f7c4d32",
+          "466bc926-2024-4653-ac63-fe52f2dc8c7b"
+        ],
         "species": [
           "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2"
         ],
@@ -360,7 +382,10 @@
         "release_date": "2008",
         "running_time": "100",
         "rt_score": "92",
-        "people": [""],
+        "people": [
+          "a10f64f3-e0b6-4a94-bf30-87ad8bc51607",
+          "a2202ff4-9b97-47e5-b92d-c8c4526b893b"
+        ],
         "species": [
           "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2"
         ],
@@ -381,7 +406,11 @@
         "release_date": "2010",
         "running_time": "94",
         "rt_score": "95",
-        "people": [""],
+        "people": [
+          "b803d2a2-b2aa-4e70-be4e-d58d50af059f",
+          "be3fe3d4-9755-4d7d-a9ca-935f6487e918",
+          "89026b3a-abc4-4053-ab1a-c6d2eea68faa"
+        ],
         "species": [
           "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2"
         ],
@@ -402,7 +431,10 @@
         "release_date": "2011",
         "running_time": "91",
         "rt_score": "83",
-        "people": [""],
+        "people": [
+          "41012f3d-786e-4fa3-8ef2-68ce8fcb1449",
+          "72404d1a-93a3-45c2-848d-dfecf735651c"
+        ],
         "species": [
           "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2"
         ],
@@ -505,7 +537,14 @@
         "release_date": "2021",
         "running_time": "82",
         "rt_score": "30",
-        "people": [""],
+        "people": [
+          "2d66e2eb-5a74-4721-a5b3-c556497bdb66",
+          "56c94dae-3290-472f-ad2e-0a6444956b51",
+          "5caa6a3c-7d44-47d1-afc6-12fffad28889",
+          "374561e6-aa8e-4d20-8579-806e589c0f31",
+          "e9177769-9b6b-49c2-9820-d24f50b83ad9",
+          "835f8c7c-2fc6-4f54-b545-c02ab066cd69"
+        ],
         "species": [""],
         "locations": ["https://ghibliapi.herokuapp.com/locations/"],
         "vehicles": ["https://ghibliapi.herokuapp.com/vehicles/"],
@@ -513,6 +552,201 @@
       }
     ],
     "people": [
+      {
+        "id": "18840a45-9c6c-4968-aed7-733755ec0b05",
+        "name": "Gonta Takagamori",
+        "gender": "Male",
+        "age": "??",
+        "eye_color": "Black",
+        "hair_color": "Grey",
+        "films": [
+          "1b67aa9a-2e4a-45af-ac98-64d6ad15b16c"
+        ],
+        "species": "bc370e0e-9267-4aa8-b5fa-81f92f2ec6b6",
+        "url": "18840a45-9c6c-4968-aed7-733755ec0b05"
+      },
+      {
+        "id": "294a4d04-6104-40a6-9fbe-76b105e4b654",
+        "name": "Okiyo Enkiridera",
+        "gender": "Female",
+        "age": "??",
+        "eye_color": "Black",
+        "hair_color": "Brown",
+        "films": [
+          "1b67aa9a-2e4a-45af-ac98-64d6ad15b16c"
+        ],
+        "species": "bc370e0e-9267-4aa8-b5fa-81f92f2ec6b6",
+        "url": "294a4d04-6104-40a6-9fbe-76b105e4b654"
+      },
+      {
+        "id": "a45ac9f8-97d7-4b7d-ae81-80e546ee29f7",
+        "name": "Shoukichi Kagemori",
+        "gender": "Male",
+        "age": "??",
+        "eye_color": "Black",
+        "hair_color": "Brown",
+        "films": [
+          "1b67aa9a-2e4a-45af-ac98-64d6ad15b16c"
+        ],
+        "species": "bc370e0e-9267-4aa8-b5fa-81f92f2ec6b6",
+        "url": "a45ac9f8-97d7-4b7d-ae81-80e546ee29f7"
+      },
+      {
+        "id": "c8399ad4-899b-4e17-a27e-17892f2a5f1b",
+        "name": "Toshio",
+        "gender": "Male",
+        "age": "27",
+        "eye_color": "Black",
+        "hair_color": "Black",
+        "films": [
+          "4e236f34-b981-41c3-8c65-f8c9000b94e7"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "c8399ad4-899b-4e17-a27e-17892f2a5f1b"
+      },
+      {
+        "id": "2fb89230-6d00-4d51-9a1b-30b7a630f76c",
+        "name": "Yaeko Okajima",
+        "gender": "Female",
+        "age": "16",
+        "eye_color": "Black",
+        "hair_color": "Black",
+        "films": [
+          "4e236f34-b981-41c3-8c65-f8c9000b94e7"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "2fb89230-6d00-4d51-9a1b-30b7a630f76c"
+      },
+      {
+        "id": "f17450b6-447d-4a84-a6b7-f97f59ce4c65",
+        "name": "Taeko Okajima",
+        "gender": "Female",
+        "age": "27",
+        "eye_color": "Brown",
+        "hair_color": "Brown",
+        "films": [
+          "4e236f34-b981-41c3-8c65-f8c9000b94e7"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "f17450b6-447d-4a84-a6b7-f97f59ce4c65"
+      },
+      {
+        "id": "b474c02c-b70c-4317-b254-e3f2166ba4f8",
+        "name": "Shige Yamano",
+        "gender": "Female",
+        "age": "??",
+        "eye_color": "Black",
+        "hair_color": "Light Gray",
+        "films": [
+          "45204234-adfd-45cb-a505-a8e7a676b114"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "b474c02c-b70c-4317-b254-e3f2166ba4f8"
+      },
+      {
+        "id": "485f5b5a-5247-4bdc-97ee-ab76cd22601b",
+        "name": "Noboru Yamada",
+        "gender": "Male",
+        "age": "13",
+        "eye_color": "Brown",
+        "hair_color": "Black",
+        "films": [
+          "45204234-adfd-45cb-a505-a8e7a676b114"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "485f5b5a-5247-4bdc-97ee-ab76cd22601b"
+      },
+      {
+        "id": "4634977e-54d1-4839-8642-aeb0a50101e3",
+        "name": "Nonoko Yamada",
+        "gender": "Female",
+        "age": "7",
+        "eye_color": "Brown",
+        "hair_color": "Black",
+        "films": [
+          "45204234-adfd-45cb-a505-a8e7a676b114"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "4634977e-54d1-4839-8642-aeb0a50101e3"
+      },
+      {
+        "id": "3aa376f2-f258-4209-973a-0846e08d7686",
+        "name": "Takashi Yamada",
+        "gender": "Male",
+        "age": "??",
+        "eye_color": "Brown",
+        "hair_color": "Black",
+        "films": [
+          "45204234-adfd-45cb-a505-a8e7a676b114"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "3aa376f2-f258-4209-973a-0846e08d7686"
+      },
+      {
+        "id": "bba42926-477e-48ac-ba3b-580d078695c3",
+        "name": "Matsuko Yamada",
+        "gender": "Female",
+        "age": "39",
+        "eye_color": "Brown",
+        "hair_color": "Black",
+        "films": [
+          "45204234-adfd-45cb-a505-a8e7a676b114"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "bba42926-477e-48ac-ba3b-580d078695c3"
+      },
+      {
+        "id": "72404d1a-93a3-45c2-848d-dfecf735651c",
+        "name": "Shun Kazama",
+        "gender": "Male",
+        "age": "17",
+        "eye_color": "Black",
+        "hair_color": "Dark Brown",
+        "films": [
+          "45db04e4-304a-4933-9823-33f389e8d74d"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "72404d1a-93a3-45c2-848d-dfecf735651c"
+      },
+      {
+        "id": "41012f3d-786e-4fa3-8ef2-68ce8fcb1449",
+        "name": "Umi Matsuzaki",
+        "gender": "Female",
+        "age": "16",
+        "eye_color": "Dark brown",
+        "hair_color": "Dark Brown",
+        "films": [
+          "45db04e4-304a-4933-9823-33f389e8d74d"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "41012f3d-786e-4fa3-8ef2-68ce8fcb1449"
+      },
+      {
+        "id": "be3fe3d4-9755-4d7d-a9ca-935f6487e918",
+        "name": "Sho",
+        "gender": "Male",
+        "age": "??",
+        "eye_color": "Brown",
+        "hair_color": "Black",
+        "films": [
+          "2de9426b-914a-4a06-a3a0-5e6d9d3886f6"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "be3fe3d4-9755-4d7d-a9ca-935f6487e918"
+      },
+      {
+        "id": "b803d2a2-b2aa-4e70-be4e-d58d50af059f",
+        "name": "Arrietty",
+        "gender": "Female",
+        "age": "14",
+        "eye_color": "Black",
+        "hair_color": "Red",
+        "films": [
+          "2de9426b-914a-4a06-a3a0-5e6d9d3886f6"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "b803d2a2-b2aa-4e70-be4e-d58d50af059f"
+      },
       {
         "id": "a63996d4-fa38-4501-8035-afd917bcd12f",
         "name": "Calcifer",
@@ -1125,6 +1359,19 @@
         ],
         "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
         "url": "a10f64f3-e0b6-4a94-bf30-87ad8bc51607"
+      },
+      {
+        "id": "a2202ff4-9b97-47e5-b92d-c8c4526b893b",
+        "name": "Ponyo",
+        "gender": "Female",
+        "age": "5",
+        "eye_color": "Black",
+        "hair_color": "Red",
+        "films": [
+          "758bf02e-3122-46e0-884e-67cf83df1786"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "a2202ff4-9b97-47e5-b92d-c8c4526b893b"
       },
       {
         "id": "2409052a-9029-4e8d-bfaf-70fd82c8e48d",
@@ -1811,6 +2058,20 @@
         "films": [
           "dc2e6bd1-8156-4886-adff-b39e6043af0c",
           "2baf70d1-42bb-4437-b551-e5fed5a87abe"
+        ]
+      },
+      {
+        "id": "bc370e0e-9267-4aa8-b5fa-81f92f2ec6b6",
+        "name": "Tanuki",
+        "classification": "Tanuki",
+        "eye_colors": "Orange, Green, Red",
+        "hair_colors": "White, Green, Gray",
+        "url": "bc370e0e-9267-4aa8-b5fa-81f92f2ec6b6",
+        "people": [
+          ""
+        ],
+        "films": [
+          "1b67aa9a-2e4a-45af-ac98-64d6ad15b16c"
         ]
       }
     ],

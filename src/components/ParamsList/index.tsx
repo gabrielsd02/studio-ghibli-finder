@@ -8,6 +8,7 @@ import {
 import {
     FaMale,
     FaFemale,
+    FaEllipsisH,
     FaSortAlphaDown,
     FaSortAlphaDownAlt
 } from 'react-icons/fa';
@@ -16,12 +17,14 @@ import { ConsultParamsProps } from "../../pages/Home";
 interface ParamsListPeopleProps {
     typeList: string;
     consultParams: ConsultParamsProps;
+    setOpenModal(value: boolean): void;
     setConsultParams(value: ConsultParamsProps): void
 };
 
 export function ParamsList({
     typeList,
     consultParams,
+    setOpenModal,
     setConsultParams
 }: ParamsListPeopleProps) {
 
@@ -90,7 +93,7 @@ export function ParamsList({
             </VStack>
         </VStack>
     }
-
+    
     return <VStack
         alignItems={'flex-start'}
         justify={'flex-start'}
@@ -101,7 +104,7 @@ export function ParamsList({
         <Flex
             background={'rgba(0, 0, 0, 0.6)'}
             borderRadius={50}
-            ml={2}
+            ml={'0.5rem !important'}
             p={3}
             cursor={'pointer'}
             onClick={() => setConsultParams({ ...consultParams, firstToLast: !consultParams.firstToLast })}
@@ -116,9 +119,23 @@ export function ParamsList({
             />
         </Flex>
         {typeList === 'people' ? <ComponentToPeople />
-        : <>
-
-        </>}
+        : <Flex
+            background={'rgba(0, 0, 0, 0.6)'}
+            borderRadius={50}
+            ml={'0.5rem !important'}
+            p={3}
+            cursor={'pointer'}
+            onClick={() => setOpenModal(true)}
+            _hover={{
+                opacity: 0.7
+            }}            
+        >                        
+            <Icon
+                as={FaEllipsisH}
+                fontSize={'30px'}
+                color={'gray.200'}
+            />
+        </Flex>}
     </VStack>
 
 }

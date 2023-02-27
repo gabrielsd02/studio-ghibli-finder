@@ -45,7 +45,7 @@ export function List({
     return <>
 
         {records.map((record: any, index: number) => {        
-
+            
             return <Flex 
                 key={index}
                 w={"100%"}

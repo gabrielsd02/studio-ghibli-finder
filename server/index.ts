@@ -72,13 +72,25 @@ app.get("/films",
     async ({ query }, res) => {
 
         const name = query.name as string;
-        const firstToLast: boolean = query.firstToLast ? JSON.parse(query.firstToLast as string) : null;
+        const firstToLast: boolean | undefined = query.firstToLast ? JSON.parse(query.firstToLast as string) : undefined;
+        const yearMovieRelease: string | null = query.yearMovieRelease ? query.yearMovieRelease as string : null;
+        const durationMovie: string | null = query.durationMovie ? query.durationMovie as string : null; 
+        const scoreMovie: string | null = query.scoreMovie ? query.scoreMovie as string : null;
+        const fromDurationMovie: boolean | undefined = query.fromDurationMovie ? JSON.parse(query.fromDurationMovie as string) : undefined;
+        const fromYearMovieRelease: boolean | undefined = query.fromYearMovieRelease ? JSON.parse(query.fromYearMovieRelease as string) : undefined; 
+        const fromScoreMovie: boolean | undefined = query.fromScoreMovie ? JSON.parse(query.fromScoreMovie as string) : undefined;
 
         const result = await consultMovies({
             movies: films, 
             people, 
             firstToLast,
-            nameMovie: name
+            nameMovie: name,
+            yearMovieRelease,
+            durationMovie,
+            scoreMovie,
+            fromDurationMovie,
+            fromYearMovieRelease,
+            fromScoreMovie
         });
 
         res.json(result);

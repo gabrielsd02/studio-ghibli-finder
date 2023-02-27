@@ -200,7 +200,7 @@ export function DetailsMovie() {
                                     <ContainerTexts>
                                         <LabelContainer>
                                             <LabelInformation>
-                                                Producer:
+                                                Producer(s):
                                             </LabelInformation>
                                             {movieData.producer || ''}
                                         </LabelContainer>
