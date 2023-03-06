@@ -4,13 +4,15 @@ import {
     memo
 } from 'react';
 import {
-    Flex,
-    Text,
     Center,
     VStack,
     Container,
     Image,
     UnorderedList,
+    Card,
+    CardBody,
+    CardFooter,
+    CardHeader,
     ListItem,
     Tooltip
 } from "@chakra-ui/react";

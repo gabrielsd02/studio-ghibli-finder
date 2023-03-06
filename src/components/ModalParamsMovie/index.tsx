@@ -25,7 +25,7 @@ import { ConsultParamsProps } from '../../pages/Home';
 interface ModalParamsMovieProps {
     consultParams: ConsultParamsProps;
     setOpenModal(value: boolean): void;
-    consultMovies(value?: null | ConsultParamsProps): Promise<void>;
+    consultMovies(value?: null | ConsultParamsProps): void;
     setConsultParams(value: ConsultParamsProps): void
 }
 
@@ -49,8 +49,7 @@ export function ModalParamsMovie({
         fromYearMovieRelease: false
     };
 
-    const [paramsToChange, setParamsToChange] = useState(consultParams);
-    
+    const [paramsToChange, setParamsToChange] = useState(consultParams);    
     const [optionActive, setOptionActive] = useState("");
 
     const handleCloseModal = useCallback(() => {
@@ -74,6 +73,18 @@ export function ModalParamsMovie({
         
         handleCloseModal();
 
+    };
+
+    const handleCleanModal = () => {
+        setParamsToChange({
+            ...paramsToChange,
+            durationMovie: null,
+            scoreMovie: null,
+            yearMovieRelease: null,
+            fromDurationMovie: false,
+            fromScoreMovie: false,
+            fromYearMovieRelease: false
+        });
     };
 
     useEffect(() => {
@@ -124,7 +135,8 @@ export function ModalParamsMovie({
         isOpen 
         isCentered
         size={'xl'}        
-        onClose={handleCloseModal} 
+        onClose={handleCloseModal}   
+        motionPreset={'scale'}              
     >
         <ModalOverlay />
         <ModalContent 
@@ -132,14 +144,23 @@ export function ModalParamsMovie({
             background={'#1ca1d1'}
         >
             <ModalHeader
-                p={5}
+                pl={5}
+                borderBottomWidth={'1px'}
+                borderStyle={"solid"}
+                borderColor={"white"}
+                textShadow={'0px 0px 5px black'}
             >
                 More Options for Movies Listing
             </ModalHeader>
-            <ModalCloseButton />
+            <ModalCloseButton 
+                mt={'5px'}
+                mr={'2px'}
+            />
             <ModalBody 
-                pl={5}
-                pr={5}
+                p={5}
+                borderBottomWidth={'1px'}
+                borderStyle={"solid"}
+                borderColor={"white"}
             >
                 <VStack
                     w={'100%'}
@@ -366,21 +387,53 @@ export function ModalParamsMovie({
                 </VStack>           
             </ModalBody>
             <ModalFooter
-                p={3}
+                p={5}
+                pb={'1rem !important'}
             >
-                <Button 
-                    mr={3}
-                    colorScheme='red' 
-                    onClick={handleCloseModal}
+                <HStack
+                    justifyContent={'space-between'}
+                    align={'center'}
+                    w={'100%'}
                 >
-                    Close
-                </Button>
-                <Button 
-                    colorScheme='blue' 
-                    onClick={handleSaveModal}
-                >
-                    Save
-                </Button>
+                    <Flex
+                        align={'center'}
+                        justify={'center'}
+                    >
+                        <Button 
+                            mr={3}
+                            colorScheme='red' 
+                            onClick={handleCloseModal}
+                            _hover={{
+                                boxShadow: '0px 0px 5px red',
+                                opacity: 0.8
+                            }}
+                        >
+                            Close
+                        </Button>
+                        {(optionActive && optionActive.length > 0) && <Button 
+                            mr={3}
+                            colorScheme='white' 
+                            onClick={handleCleanModal}
+                            border={"1px solid white"}
+                            _hover={{
+                                boxShadow: '0px 0px 5px white',
+                                opacity: 0.8
+                            }}
+                        >
+                            Clean
+                        </Button>}
+                    </Flex>
+                    <Button 
+                        colorScheme='blue' 
+                        onClick={handleSaveModal}
+                        _hover={{
+                            boxShadow: '0px 0px 5px #3182ce',
+                            opacity: 0.8
+                        }}
+                    >
+                        Save
+                    </Button>
+                </HStack>
             </ModalFooter>
         </ModalContent>
     </Modal>

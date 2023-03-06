@@ -220,7 +220,7 @@ export default function Home() {
     }
     
     return (<>
-
+    
         <ContainerHome>            
             <ContainerStack>        
                 <Title>
@@ -353,7 +353,7 @@ export default function Home() {
                                             mr={2}
                                             ml={5}
                                             _hover={{
-                                                opacity: 0.5
+                                                opacity: 0.3
                                             }}
                                             onClick={() => handleConsult()}
                                         />
@@ -438,7 +438,7 @@ export default function Home() {
             setOpenModal={setOpenModal}
             consultParams={consultParams}
             setConsultParams={setConsultParams}
-            consultMovies={consult}
+            consultMovies={handleConsult}
         />}
 
     </>);

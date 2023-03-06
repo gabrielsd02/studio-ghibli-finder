@@ -29,13 +29,15 @@ export function ParamsList({
 }: ParamsListPeopleProps) {
 
     const ComponentToPeople = () => {
-        return <VStack                      
+        return <VStack           
+            w={'56px'}           
             align={'center'}
             justify={'center'}
             spacing={5}
-            ml={'1rem !important'}
+            ml={'0.55rem !important'}
         >
             <VStack
+                w={'100%'}
                 align={'center'}
                 justify={'center'}
             >
@@ -64,6 +66,7 @@ export function ParamsList({
                 />
             </VStack>
             <VStack
+                w={'100%'}
                 align={'center'}
                 justify={'center'}
             >
@@ -106,6 +109,8 @@ export function ParamsList({
             borderRadius={50}
             ml={'0.5rem !important'}
             p={3}
+            border={"1px solid black"}
+            boxShadow={'0px 0px 5px black'}
             cursor={'pointer'}
             onClick={() => setConsultParams({ ...consultParams, firstToLast: !consultParams.firstToLast })}
             _hover={{
