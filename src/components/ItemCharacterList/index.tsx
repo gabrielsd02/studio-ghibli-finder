@@ -258,7 +258,7 @@ export function ItemCharacterList({
                     <TextResults 
                         color={verifyColor(eyeColor)}
                         fontWeight={'bold'}
-                        textShadow={eyeColor === 'Black' ? '0px 0px 1px black' : '0px 0px 5px black'}
+                        textShadow={'-1px 1px 1px gray'}
                     >
                         {eyeColor ?? ''}
                     </TextResults>                           
@@ -274,7 +274,7 @@ export function ItemCharacterList({
                     <TextResults 
                         color={verifyColor(hairColor)}
                         fontWeight={'bold'}
-                        textShadow={hairColor === 'Black' ? '0px 0px 1px black' : '0px 0px 5px black'}
+                        textShadow={'-1px 1px 1px gray'}
                     >
                         {hairColor ?? ''}
                     </TextResults>

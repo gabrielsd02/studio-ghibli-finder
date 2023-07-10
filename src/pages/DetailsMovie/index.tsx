@@ -14,7 +14,13 @@ import {
     CardFooter,
     CardHeader,
     ListItem,
-    Tooltip
+    Tooltip,
+    Heading,
+    Text,
+    HStack,
+    Badge,
+    Flex,
+    Box
 } from "@chakra-ui/react";
 import {
     StarIcon,
@@ -53,6 +59,25 @@ export function DetailsMovie() {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [movieData, setMovieData] = useState({} as MoviesProps);
     const [characters, setCharacters] = useState<PeopleProps[]>([]);
+
+    function verifyColorScore(score: string) {
+        
+        const scoreInt = parseInt(score);
+        let color = '';
+
+        if(scoreInt < 40) {
+            color = 'red';
+        } else if(scoreInt >= 40 && scoreInt < 70) {
+            color = 'yellow';
+        } else if(scoreInt >= 70 && scoreInt < 80) {
+            color = 'orange';
+        } else {
+            color = 'green.600';
+        }
+
+        return color;
+
+    }
 
     async function consultMovie() {
 
@@ -101,146 +126,160 @@ export function DetailsMovie() {
             h={"100vh"}
             w={"100vw"}
             pos={"relative"}
+            overflowY={'auto'}
+            css={{
+                '&::-webkit-scrollbar': {
+                    width: '12px',
+                    height: '10px',
+                    backgroundColor: "rgba(0, 0, 0, 0.2)",
+                    borderRadius: "5px"
+                },
+                '&::-webkit-scrollbar-thumb': {
+                    height: '70px',
+                    background: "gray",
+                    borderRadius: '10px',
+                }
+            }}
         >
-            <VStack
+            <Flex
                 w={"100%"}
-                h={"90%"}
+                h={"95%"}
                 flex={1}
                 align={"center"}
                 justify={"center"}
-                backdropFilter={"blur(5px)"}
+                backdropFilter={"blur(5px)"}                                
             >
                 {(loading) ?
                     <Loading />
-                    : <>
-                        <TitleMovie>
-                            {movieData.title || ''}
-                        </TitleMovie>
+                    : <VStack
+                        h={'100%'}
+                        w={'100%'}
+                        spacing={5}                  
+                    >
+                        <Box margin={'auto'}>
+                            <TitleMovie>
+                                {movieData.title || ''}
+                            </TitleMovie>
+                        </Box>
                         <Center
                             flexGrow={1}
                             w={"60%"}
                             borderRadius={5}
-                            maxH={"90%"}
                         >
-                            <Container
-                                centerContent
-                                maxWidth={'100%'}
-                                w={'100%'}
-                                h={'100%'}
-                                justifyContent={"flex-start"}
-                                flexDirection={"column"}
-                                bg={"transparent"}
-                                p={1}
-                                mt={5}
-                                overflowX={"hidden"}
-                                overflowY={"auto"}
-                                css={{
-                                    '&::-webkit-scrollbar': {
-                                        width: '10px',
-                                        height: '10px',
-                                        backgroundColor: "rgba(0, 0, 0, 0.2)",
-                                        borderRadius: "5px"
-                                    },
-                                    '&::-webkit-scrollbar-thumb': {
-                                        height: '70px',
-                                        background: "black",
-                                        borderRadius: '10px',
-                                    }
-                                }}
+                            <Card 
+                                maxW={'4xl'} 
+                                backgroundColor={"rgba(0, 0, 0, 0.7)"}
+                                color={"white"}
+                                overflow={'auto'}
+                                maxH={'100%'}
+                                marginBottom={10}
                             >
-                                <VStack
-                                    w={"100%"}
-                                    h={'auto'}
-                                    backgroundColor={"rgba(0, 0, 0, 0.7)"}
-                                    color={"white"}
-                                    alignItems={"center"}
-                                    justifyContent={"flex-start"}
+                                <CardBody                                    
                                     borderRadius={5}
-                                    spacing={5}
-                                    pos={'relative'}
-                                    p={'10px'}
+                                    overflowX={"hidden"}
+                                    overflowY={"auto"}
+                                    p={5}                                    
                                 >
-                                    <ContainerImage>
-                                        <Image
-                                            alt={'Image Movie Banner'}
-                                            boxSize={'100%'}
-                                            objectFit={'fill'}
-                                            src={movieData.movieBanner}
-                                            borderRadius={5}
-                                            onLoad={() => setImageLoaded(true)}
-                                        />
-                                        {!imageLoaded && <Loading message={'Loading image...'} />}
-                                    </ContainerImage>
-                                    <ContainerTexts>
-                                        <LabelContainer>
-                                            <LabelInformation>
-                                                Original Title:
-                                            </LabelInformation>
-                                            {movieData.originalTitleRomanised || ''}
-                                        </LabelContainer>
-                                        <LabelContainer>
-                                            <LabelInformation>
-                                                Director:
-                                            </LabelInformation>
-                                            {movieData.director || ''}
-                                        </LabelContainer>
-                                    </ContainerTexts>
-                                    <ContainerTexts>
-                                        <LabelContainer>
-                                            <LabelInformation>
-                                                Running Time:
-                                            </LabelInformation>
-                                            {movieData.runningTime || '0'}min
-                                        </LabelContainer>
-                                        <LabelContainer>
-                                            <LabelInformation>
-                                                Release Date:
-                                            </LabelInformation>
-                                            {movieData.releaseDate || ''}
-                                        </LabelContainer>
-                                    </ContainerTexts>
-                                    <ContainerTexts>
-                                        <LabelContainer>
-                                            <LabelInformation>
-                                                Producer(s):
-                                            </LabelInformation>
-                                            {movieData.producer || ''}
-                                        </LabelContainer>
-                                        <LabelContainer>
-                                            <LabelInformation>
-                                                Rating:
-                                            </LabelInformation>
-                                            {movieData.rtScore || ''}
+                                    <Image
+                                        alt={'Image Movie Banner'}
+                                        boxSize={'100%'}
+                                        src={movieData.movieBanner}
+                                        borderRadius={5}
+                                        onLoad={() => setImageLoaded(true)}
+                                    />
+                                    {!imageLoaded && <Loading message={'Loading image...'} />}
+                                    <HStack 
+                                        w={'100%'} 
+                                        h={'50px'}
+                                        align={'center'} 
+                                        justify={'space-between'}
+                                        mt={3}
+                                    >
+                                        <HStack
+                                            flex={1}
+                                            spacing={3}
+                                        >               
+                                            <Text 
+                                                fontSize={'24px'}
+                                                border={'1px solid white'}
+                                                borderRadius={5}
+                                                background={verifyColorScore(movieData.rtScore)}
+                                                px={3}
+                                                py={1.5}
+                                            >
+                                                {movieData.rtScore || ''}                                            
+                                            </Text>        
                                             <StarIcon
                                                 color={'yellow'}
-                                                fontSize={'2xl'}
-                                                ml={1}
-                                            />
-                                        </LabelContainer>
-                                    </ContainerTexts>
-                                    <LabelDescriptionContainer>
-                                        <LabelInformation>
-                                            Description:
-                                        </LabelInformation>
-                                        {movieData.description || ''}
-                                    </LabelDescriptionContainer>
-                                    {(characters.length > 0) && <LabelContainer w={'100%'} flexDirection={'column'}>
-                                        <LabelInformation>
+                                                fontSize={'4xl'}
+                                                mb={1}
+                                            />                                                             
+                                        </HStack>
+                                        <HStack 
+                                            fontSize={'16px'}
+                                            align={'flex-start'}
+                                            h={'100%'}
+                                        >
+                                            <Badge 
+                                                variant={'solid'} 
+                                                colorScheme={'twitter'}
+                                                fontSize={'100%'}
+                                            >
+                                                {movieData.releaseDate || ''}
+                                            </Badge>
+                                            <Badge 
+                                                variant={'solid'}
+                                                colorScheme={'teal'}
+                                                fontSize={'100%'}
+                                            >
+                                                {movieData.runningTime || ''} min
+                                            </Badge>                                            
+                                        </HStack>                                                                                
+                                    </HStack>
+                                    <VStack mt={6} spacing={3}>
+                                        <Heading 
+                                            size={'lg'} 
+                                            w={'100%'} 
+                                            fontFamily={'cursive'}
+                                            textAlign={'left'}
+                                            textDecoration={'underline'}
+                                        >
+                                            Description
+                                        </Heading>
+                                        <Text 
+                                            textAlign={'left'}
+                                            fontSize={'16px'}
+                                        >
+                                            {movieData.description || ''}
+                                        </Text>
+                                    </VStack>
+                                    {(characters.length > 0) && <VStack mt={6} spacing={3}>
+                                        <Heading 
+                                            size={'lg'} 
+                                            w={'100%'} 
+                                            fontFamily={'cursive'}
+                                            textAlign={'left'}
+                                            textDecoration={'underline'}
+                                        >
                                             Characters:
-                                        </LabelInformation>
-                                        <UnorderedList spacing={3}>
+                                        </Heading>
+                                        <UnorderedList 
+                                            spacing={3}
+                                            w={'90%'}
+                                            textAlign={'left'}
+                                        >
                                             {characters.map((character, index) => (
                                                 <ListItem key={index} ml={5} mt={2}>
                                                     {character.name}
                                                 </ListItem>
                                             ))}
                                         </UnorderedList>
-                                    </LabelContainer>}
-                                </VStack>
-                            </Container>
+                                    </VStack>}
+                                </CardBody>
+                            </Card>
                         </Center>
-                    </>}
-            </VStack>
+                    </VStack>}
+            </Flex>
         </Center>
         <Tooltip
             label={"Back to home"}

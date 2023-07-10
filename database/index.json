@@ -156,7 +156,11 @@
         "release_date": "1992",
         "running_time": "93",
         "rt_score": "94",
-        "people": [""],
+        "people": [
+          "6a66c716-5c2d-41b9-9902-4390e0290b9b",
+          "90edfb69-6f3f-4e78-8267-ef70f4372405",
+          "cbf72068-d074-4a8f-b742-90257f910d32"
+        ],
         "species": [
           "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2"
         ],
@@ -202,7 +206,10 @@
         "release_date": "1995",
         "running_time": "111",
         "rt_score": "91",
-        "people": [""],
+        "people": [
+          "3306468a-1fd4-47f3-ab06-241b9a89b690",
+          "81539d27-7a31-4e1e-816c-b401da4d522d"
+        ],
         "species": [
           "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2"
         ],
@@ -361,7 +368,11 @@
         "release_date": "2006",
         "running_time": "116",
         "rt_score": "41",
-        "people": [""],
+        "people": [
+          "6a7e1967-dea1-4e4e-bd49-6a13e249272d",
+          "c2d8d854-1b7d-45d9-a563-5a8832a162cd",
+          "72521fc2-c059-4807-8266-c70a7808d34d"
+        ],
         "species": [
           "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2"
         ],
@@ -455,7 +466,10 @@
         "release_date": "2013",
         "running_time": "126",
         "rt_score": "89",
-        "people": [""],
+        "people": [
+          "dda0db92-fa2c-4d56-8f49-c645b65d92df",
+          "49ed8d5e-da44-42d1-b988-dc3bcf64af28"
+        ],
         "species": [
           "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2"
         ],
@@ -476,7 +490,10 @@
         "release_date": "2013",
         "running_time": "137",
         "rt_score": "100",
-        "people": [""],
+        "people": [
+          "cd329bf9-7e00-4dd2-96e1-57e1eadfb765",
+          "6e18abe9-11a8-4224-afb8-a89495e81aa4"
+        ],
         "species": [
           "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2"
         ],
@@ -497,7 +514,10 @@
         "release_date": "2014",
         "running_time": "103",
         "rt_score": "92",
-        "people": [""],
+        "people": [
+          "93a8b168-f0d7-4792-a563-c4c66a7fc7f3",
+          "3e55c03e-e2de-43c1-9958-8dc1371c2e20"
+        ],
         "species": [
           "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2"
         ],
@@ -518,8 +538,13 @@
         "release_date": "2016",
         "running_time": "80",
         "rt_score": "93",
-        "people": [""],
-        "species": [""],
+        "people": [
+          "d44e2f15-b5ef-4684-8433-f3b69c47eb22",
+          "19edc8b5-fd01-4be4-8393-e92785ab55e8"
+        ],
+        "species": [
+          "314671d4-abc5-466d-a7bc-9c23068d1525"
+        ],
         "locations": ["https://ghibliapi.herokuapp.com/locations/"],
         "vehicles": ["https://ghibliapi.herokuapp.com/vehicles/"],
         "url": "d868e6ec-c44a-405b-8fa6-f7f0f8cfb500"
@@ -1567,6 +1592,214 @@
         ],
         "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
         "url": "7b9e384c-cb73-4736-beec-109963d5c173"
+      },
+      {
+        "id": "90edfb69-6f3f-4e78-8267-ef70f4372405",
+        "name": "Fio Piccolo",
+        "gender": "Female",
+        "age": "17",
+        "eye_color": "Black",
+        "hair_color": "Orangered",
+        "films": [
+          "ebbb6b7c-945c-41ee-a792-de0e43191bd8"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "90edfb69-6f3f-4e78-8267-ef70f4372405"
+      },
+      {
+        "id": "cbf72068-d074-4a8f-b742-90257f910d32",
+        "name": "Donald Curtis",
+        "gender": "Male",
+        "age": "Adult",
+        "eye_color": "Black",
+        "hair_color": "Brown",
+        "films": [
+          "ebbb6b7c-945c-41ee-a792-de0e43191bd8"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "cbf72068-d074-4a8f-b742-90257f910d32"
+      },
+      {
+        "id": "6a66c716-5c2d-41b9-9902-4390e0290b9b",
+        "name": "Marco 'Porco' Porcolino",
+        "gender": "Male",
+        "age": "Adult",
+        "eye_color": "Black",
+        "hair_color": "Grey",
+        "films": [
+          "ebbb6b7c-945c-41ee-a792-de0e43191bd8"
+        ],
+        "species": "c1aa4145-bf71-4687-9b56-bafbaae406e5",
+        "url": "6a66c716-5c2d-41b9-9902-4390e0290b9b"
+      },
+      {
+        "id": "c2d8d854-1b7d-45d9-a563-5a8832a162cd",
+        "name": "Therru",
+        "gender": "Female",
+        "age": "17",
+        "eye_color": "Brown",
+        "hair_color": "Brown",
+        "films": [
+          "112c1e67-726f-40b1-ac17-6974127bb9b9"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "c2d8d854-1b7d-45d9-a563-5a8832a162cd"
+      },
+      {
+        "id": "72521fc2-c059-4807-8266-c70a7808d34d",
+        "name": "Arren",
+        "gender": "Male",
+        "age": "17",
+        "eye_color": "Black",
+        "hair_color": "Dark Brown",
+        "films": [
+          "112c1e67-726f-40b1-ac17-6974127bb9b9"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "72521fc2-c059-4807-8266-c70a7808d34d"
+      },
+      {
+        "id": "6a7e1967-dea1-4e4e-bd49-6a13e249272d",
+        "name": "Ged",
+        "gender": "Male",
+        "age": "Adult",
+        "eye_color": "Black",
+        "hair_color": "Black",
+        "films": [
+          "112c1e67-726f-40b1-ac17-6974127bb9b9"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "6a7e1967-dea1-4e4e-bd49-6a13e249272d"
+      },
+      {
+        "id": "19edc8b5-fd01-4be4-8393-e92785ab55e8",
+        "name": "Castaway",
+        "gender": "Male",
+        "age": "Adult",
+        "eye_color": "Black",
+        "hair_color": "Brown",
+        "films": [
+          "d868e6ec-c44a-405b-8fa6-f7f0f8cfb500"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "19edc8b5-fd01-4be4-8393-e92785ab55e8"
+      },
+      {
+        "id": "d44e2f15-b5ef-4684-8433-f3b69c47eb22",
+        "name": "Giant Turtle",
+        "gender": "Female",
+        "age": "Adult",
+        "eye_color": "Black",
+        "hair_color": "NA",
+        "films": [
+          "d868e6ec-c44a-405b-8fa6-f7f0f8cfb500"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "d44e2f15-b5ef-4684-8433-f3b69c47eb22"
+      },
+      {
+        "id": "cd329bf9-7e00-4dd2-96e1-57e1eadfb765",
+        "name": "Kaguya",
+        "gender": "Female",
+        "age": "??",
+        "eye_color": "Black",
+        "hair_color": "Black",
+        "films": [
+          "578ae244-7750-4d9f-867b-f3cd3d6fecf4"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "cd329bf9-7e00-4dd2-96e1-57e1eadfb765"
+      },
+      {
+        "id": "6e18abe9-11a8-4224-afb8-a89495e81aa4",
+        "name": "The Bamboo Cutter",
+        "gender": "Male",
+        "age": "??",
+        "eye_color": "Grey",
+        "hair_color": "Grey",
+        "films": [
+          "578ae244-7750-4d9f-867b-f3cd3d6fecf4"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "6e18abe9-11a8-4224-afb8-a89495e81aa4"
+      },
+      {
+        "id": "dda0db92-fa2c-4d56-8f49-c645b65d92df",
+        "name": "Jiro Horikoshi",
+        "gender": "Male",
+        "age": "42",
+        "eye_color": "Brown",
+        "hair_color": "Dark Brown",
+        "films": [
+          "67405111-37a5-438f-81cc-4666af60c800"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "dda0db92-fa2c-4d56-8f49-c645b65d92df"
+      },
+      {
+        "id": "49ed8d5e-da44-42d1-b988-dc3bcf64af28",
+        "name": "Naoko Satomi",
+        "gender": "Female",
+        "age": "Adult",
+        "eye_color": "Black",
+        "hair_color": "Black",
+        "films": [
+          "67405111-37a5-438f-81cc-4666af60c800"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "49ed8d5e-da44-42d1-b988-dc3bcf64af28"
+      },
+      {
+        "id": "3e55c03e-e2de-43c1-9958-8dc1371c2e20",
+        "name": "Anna Sasaki",
+        "gender": "Female",
+        "age": "12",
+        "eye_color": "Blue",
+        "hair_color": "Brown",
+        "films": [
+          "5fdfb320-2a02-49a7-94ff-5ca418cae602"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "3e55c03e-e2de-43c1-9958-8dc1371c2e20"
+      },
+      {
+        "id": "93a8b168-f0d7-4792-a563-c4c66a7fc7f3",
+        "name": "Marnie",
+        "gender": "Female",
+        "age": "12",
+        "eye_color": "Blue",
+        "hair_color": "Blonde",
+        "films": [
+          "5fdfb320-2a02-49a7-94ff-5ca418cae602"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "93a8b168-f0d7-4792-a563-c4c66a7fc7f3"
+      },
+      {
+        "id": "81539d27-7a31-4e1e-816c-b401da4d522d",
+        "name": "Shizuku Tsukishima",
+        "gender": "Female",
+        "age": "14",
+        "eye_color": "Black",
+        "hair_color": "Brown",
+        "films": [
+          "ff24da26-a969-4f0e-ba1e-a122ead6c6e3"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "81539d27-7a31-4e1e-816c-b401da4d522d"
+      },
+      {
+        "id": "3306468a-1fd4-47f3-ab06-241b9a89b690",
+        "name": "Seiji Amasawa",
+        "gender": "Male",
+        "age": "14",
+        "eye_color": "Brown",
+        "hair_color": "Black",
+        "films": [
+          "ff24da26-a969-4f0e-ba1e-a122ead6c6e3"
+        ],
+        "species": "af3910a6-429f-4c74-9ad5-dfe1c4aa04f2",
+        "url": "3306468a-1fd4-47f3-ab06-241b9a89b690"
       }
     ],
     "locations": [
@@ -2073,6 +2306,34 @@
         "films": [
           "1b67aa9a-2e4a-45af-ac98-64d6ad15b16c"
         ]
+      },
+      {
+        "id": "c1aa4145-bf71-4687-9b56-bafbaae406e5",
+        "name": "Pig",
+        "classification": "Animal",
+        "eye_colors": "Black, Blue, Brown, Grey, Green, Hazel",
+        "hair_colors": "Black, Blonde, Brown, Grey, White",
+        "people": [
+          "6a66c716-5c2d-41b9-9902-4390e0290b9b"
+        ],
+        "films": [
+          "ebbb6b7c-945c-41ee-a792-de0e43191bd8"
+        ],
+        "url": "c1aa4145-bf71-4687-9b56-bafbaae406e5"
+      },
+      {
+        "id": "314671d4-abc5-466d-a7bc-9c23068d1525",
+        "name": "Turtle",
+        "classification": "Animal",
+        "eye_colors": "Black, Blue, Brown, Grey, Green, Hazel",
+        "hair_colors": "Black, Blonde, Brown, Grey, White",
+        "people": [
+          ""
+        ],
+        "films": [
+          "d868e6ec-c44a-405b-8fa6-f7f0f8cfb500"
+        ],
+        "url": "314671d4-abc5-466d-a7bc-9c23068d1525"
       }
     ],
     "vehicles": [

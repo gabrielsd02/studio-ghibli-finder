@@ -74,8 +74,8 @@ export const LabelDescriptionContainer = chakra(Text, {
 export const BackButton = chakra(Flex, {
     baseStyle: {
         position: 'absolute',
-        left: 40,
-        top: '70px',
+        left: 75,
+        top: '48px',
         padding: 2,
         borderRadius: 50,
         backgroundColor: 'rgba(0, 0, 0, 0.7)',
