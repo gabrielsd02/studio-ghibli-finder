@@ -1,4 +1,4 @@
-import {
+import {    
     useState,
     useEffect,
     memo
@@ -6,13 +6,10 @@ import {
 import {
     Center,
     VStack,
-    Container,
     Image,
     UnorderedList,
     Card,
     CardBody,
-    CardFooter,
-    CardHeader,
     ListItem,
     Tooltip,
     Heading,
@@ -20,7 +17,9 @@ import {
     HStack,
     Badge,
     Flex,
-    Box
+    Box,
+    useMediaQuery,
+    Stack
 } from "@chakra-ui/react";
 import {
     StarIcon,
@@ -30,7 +29,8 @@ import {
     useParams,
     useNavigate
 } from 'react-router-dom';
-import axios from 'axios';
+import { motion } from 'framer-motion';
+import axios, { AxiosResponse } from 'axios';
 import useIsMounted from 'ismounted';
 
 import {
@@ -49,14 +49,21 @@ import {
 import ImageBackground from '../../assets/images/image-background.jpg';
 import Loading from '../../components/Loading';
 
+interface MovieDetailResponse {
+    film: MoviesProps | null;
+    characters: PeopleProps[] | null;
+}
+
 export function DetailsMovie() {
 
     const navigate = useNavigate();
     const props = useParams();
     const isMounted = useIsMounted();
 
+    const [isMobile] = useMediaQuery('(max-width: 900px)');    
     const [loading, setLoading] = useState(false);
-    const [imageLoaded, setImageLoaded] = useState(false);
+    const [imageLoaded, setImageLoaded] = useState(false);    
+    const [numberStars, setNumberStars] = useState<number[]>([]);
     const [movieData, setMovieData] = useState({} as MoviesProps);
     const [characters, setCharacters] = useState<PeopleProps[]>([]);
 
@@ -91,10 +98,23 @@ export function DetailsMovie() {
 
         try {
 
-            const { data }: any = await axios.get(`/films/${id}`);
+            const { data }: AxiosResponse<MovieDetailResponse> = await axios.get(`/films/${id}`);
 
-            if (data.film) setMovieData(data.film);
             if (data.characters && data.characters.length > 0) setCharacters(data.characters);
+            if (data.film) {
+
+                setMovieData(data.film);
+
+                let score = parseInt(data.film.rtScore);
+                let index = 1;
+                score = Math.floor(score / 20);                           
+                setLoading(false);
+                for (index; index <= score; index++) {                    
+                    await new Promise(resolve => setTimeout(resolve, 600));    
+                    setNumberStars(Array.from({ length: index }, (_, index) => index + 1));
+                }
+
+            }                        
 
         } catch (e: any) {
             console.error(e);
@@ -126,10 +146,12 @@ export function DetailsMovie() {
             h={"100vh"}
             w={"100vw"}
             pos={"relative"}
+            pt={isMobile ? 14 : 0}
             overflowY={'auto'}
+            overflowX={'hidden'}
             css={{
                 '&::-webkit-scrollbar': {
-                    width: '12px',
+                    width: isMobile ? '8px' : '12px',
                     height: '10px',
                     backgroundColor: "rgba(0, 0, 0, 0.2)",
                     borderRadius: "5px"
@@ -143,7 +165,7 @@ export function DetailsMovie() {
         >
             <Flex
                 w={"100%"}
-                h={"95%"}
+                h={isMobile ? "100%" : "95%"}
                 flex={1}
                 align={"center"}
                 justify={"center"}
@@ -154,7 +176,7 @@ export function DetailsMovie() {
                     : <VStack
                         h={'100%'}
                         w={'100%'}
-                        spacing={5}                  
+                        spacing={isMobile ? 0 : 5}                  
                     >
                         <Box margin={'auto'}>
                             <TitleMovie>
@@ -162,45 +184,45 @@ export function DetailsMovie() {
                             </TitleMovie>
                         </Box>
                         <Center
-                            flexGrow={1}
-                            w={"60%"}
+                            w={!isMobile ? "55vw" : "100vw"}
                             borderRadius={5}
                         >
                             <Card 
-                                maxW={'4xl'} 
+                                maxW={['3xl','4xl']} 
                                 backgroundColor={"rgba(0, 0, 0, 0.7)"}
                                 color={"white"}
-                                overflow={'auto'}
-                                maxH={'100%'}
-                                marginBottom={10}
+                                overflow={'auto'}                                
+                                marginBottom={isMobile ? 0 : 10}
                             >
                                 <CardBody                                    
                                     borderRadius={5}
                                     overflowX={"hidden"}
                                     overflowY={"auto"}
-                                    p={5}                                    
+                                    p={!isMobile ? 5 : 3}                                    
                                 >
                                     <Image
                                         alt={'Image Movie Banner'}
                                         boxSize={'100%'}
+                                        h={'auto'}
                                         src={movieData.movieBanner}
                                         borderRadius={5}
                                         onLoad={() => setImageLoaded(true)}
                                     />
                                     {!imageLoaded && <Loading message={'Loading image...'} />}
-                                    <HStack 
+                                    <Stack 
                                         w={'100%'} 
-                                        h={'50px'}
-                                        align={'center'} 
-                                        justify={'space-between'}
-                                        mt={3}
+                                        h={'80px'}
+                                        direction={isMobile ? 'column' : 'row'}
+                                        align={isMobile ? 'start' : 'center'} 
+                                        justify={'start'}
+                                        my={2}
                                     >
                                         <HStack
                                             flex={1}
                                             spacing={3}
                                         >               
                                             <Text 
-                                                fontSize={'24px'}
+                                                fontSize={['16px', '20px', '24px']}
                                                 border={'1px solid white'}
                                                 borderRadius={5}
                                                 background={verifyColorScore(movieData.rtScore)}
@@ -208,20 +230,44 @@ export function DetailsMovie() {
                                                 py={1.5}
                                             >
                                                 {movieData.rtScore || ''}                                            
-                                            </Text>        
-                                            <StarIcon
-                                                color={'yellow'}
-                                                fontSize={'4xl'}
-                                                mb={1}
-                                            />                                                             
+                                            </Text> 
+                                            <>
+                                            {numberStars.map((number) => (                                                                
+                                                <motion.div
+                                                    key={number}
+                                                    initial={{ 
+                                                        scale: 3, 
+                                                        marginLeft: -100, 
+                                                        marginTop: -130 
+                                                    }}                                                
+                                                    animate={{ 
+                                                        scale: 1, 
+                                                        rotate: 360, 
+                                                        marginLeft: 10, 
+                                                        marginTop: 0 
+                                                    }}
+                                                    transition={{ 
+                                                        duration: 0.8, 
+                                                        ease: 'easeInOut' 
+                                                    }} 
+                                                >
+                                                    <StarIcon
+                                                        color={'yellow'}
+                                                        fontSize={['3xl', '4xl']}
+                                                        mb={1}                                                
+                                                    />                                                             
+                                                </motion.div>                                                
+                                            ))}
+                                            </>
                                         </HStack>
                                         <HStack 
-                                            fontSize={'16px'}
+                                            fontSize={['sm', 'md']}
                                             align={'flex-start'}
                                             h={'100%'}
                                         >
                                             <Badge 
                                                 variant={'solid'} 
+                                                cursor={'default'}
                                                 colorScheme={'twitter'}
                                                 fontSize={'100%'}
                                             >
@@ -235,8 +281,8 @@ export function DetailsMovie() {
                                                 {movieData.runningTime || ''} min
                                             </Badge>                                            
                                         </HStack>                                                                                
-                                    </HStack>
-                                    <VStack mt={6} spacing={3}>
+                                    </Stack>
+                                    <VStack spacing={3}>
                                         <Heading 
                                             size={'lg'} 
                                             w={'100%'} 
@@ -253,7 +299,7 @@ export function DetailsMovie() {
                                             {movieData.description || ''}
                                         </Text>
                                     </VStack>
-                                    {(characters.length > 0) && <VStack mt={6} spacing={3}>
+                                    {(characters.length > 0) && <VStack mt={4} spacing={3}>
                                         <Heading 
                                             size={'lg'} 
                                             w={'100%'} 
@@ -261,7 +307,7 @@ export function DetailsMovie() {
                                             textAlign={'left'}
                                             textDecoration={'underline'}
                                         >
-                                            Characters:
+                                            Characters
                                         </Heading>
                                         <UnorderedList 
                                             spacing={3}
@@ -288,13 +334,14 @@ export function DetailsMovie() {
             placement='top'
         >
             <BackButton
+                isMobile={isMobile}
                 onClick={() => navigate('/')}
                 _hover={{
                     opacity: 0.7
                 }}
             >
                 <ArrowBackIcon
-                    fontSize={'5xl'}
+                    fontSize={['3xl', '4xl', '5xl']}
                     color={'white'}
                 />
             </BackButton>

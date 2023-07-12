@@ -1,8 +1,10 @@
 import { 
+    forwardRef,
     chakra, 
     Text, 
     Box, 
-    Flex 
+    Flex, 
+    FlexProps
 } from '@chakra-ui/react';
 
 export const ContainerTexts = chakra(Flex, {
@@ -31,8 +33,8 @@ export const ContainerImage = chakra(Box, {
 });
 
 export const TitleMovie = chakra(Text, {
-    baseStyle: {
-        fontSize: '6xl',
+    baseStyle: { 
+        fontSize: ["3xl", "5xl", "6xl"],
         fontWeight: 'bold',
         color: 'white',
         fontFamily: "cursive",
@@ -71,14 +73,20 @@ export const LabelDescriptionContainer = chakra(Text, {
     }
 });
 
-export const BackButton = chakra(Flex, {
-    baseStyle: {
-        position: 'absolute',
-        left: 75,
-        top: '48px',
-        padding: 2,
-        borderRadius: 50,
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        cursor: 'pointer'
+export const BackButton = forwardRef<FlexProps & { isMobile: boolean }, 'div'>(
+    (
+        { isMobile, children }
+    ) => {
+        return <Flex 
+            position={'absolute'}
+            left={isMobile ? 2 : 75}
+            top= {isMobile ? 2 : '48px'}
+            padding={2}
+            borderRadius={50}
+            backgroundColor='rgba(0, 0, 0, 0.7)'
+            cursor='pointer'
+        >
+            {children}
+        </Flex>
     }
-});
+)
