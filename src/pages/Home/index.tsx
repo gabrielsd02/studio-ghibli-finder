@@ -15,10 +15,12 @@ import {
     InputGroup,
     FormControl,
     InputRightElement,
+    useMediaQuery,
     Flex,
     Container,
     RadioGroup,
-    Radio
+    Radio,
+    Stack
 } from "@chakra-ui/react";
 import { 
     Search2Icon, 
@@ -92,6 +94,7 @@ export default function Home() {
 
     const queryClient = useQueryClient();
     const cacheDataGet: CacheData | undefined = queryClient.getQueryData('consult');
+    const [isMobile] = useMediaQuery('(max-width: 900px)');
     
     const [consultParams, setConsultParams] = useState(
         (cacheDataGet && cacheDataGet.consultParams) ? 
@@ -188,11 +191,14 @@ export default function Home() {
  
     function verifyComponentToRender() {        
         if(data && data.total === 0 && !isLoading) {
-            return <EmptyList />
+            return <EmptyList   
+                isMobile={isMobile} 
+            />
         } else if(isLoading) {
             return <Loading />
         } else if(data && data.total > 0) {            
             return <List 
+                isMobile={isMobile}
                 recordsList={data.records}
                 type={typeSearch}
                 navigate={navigate}
@@ -220,31 +226,44 @@ export default function Home() {
     }
     
     return (<>
-    
         <ContainerHome>            
-            <ContainerStack>        
+            <ContainerStack isMobile={isMobile}>        
                 <Title>
                     Studio Ghibli Finder
                 </Title>   
-                <HStack
-                    h={'700px'}
-                    w={'65%'}
+                <Stack
+                    flexGrow={isMobile ? 1 : 0}
+                    h={isMobile ? 'auto' : '700px'}
+                    w={isMobile ? '100%' : '60%'}
+                    p={isMobile ? 1 : 2}
+                    direction={isMobile ? 'column' : 'row-reverse'}
                     align={'center'}
                     justify={'center'}
+                    overflow={'hidden'}
                 >
+                    <ParamsList
+                        isMobile={isMobile}
+                        typeList={typeSearch}
+                        consultParams={consultParams}
+                        setOpenModal={setOpenModal}
+                        setConsultParams={setConsultParams}
+                    />
                     <VStack
+                        w={'100%'}
                         h={'100%'}
-                        flex={1}
                         background={'#1ca0d15e'}
-                        borderRadius={"50px"}
+                        borderRadius={isMobile ? 5 : "50px"}
                         boxShadow={'0px 0px 10px black'}
-                        p={10}
+                        p={isMobile ? 0 : 10}
+                        pb={'20px'}                        
                         pos={"relative"}
                         overflow={'hidden'}
                     >
                         <FormControl 
                             fontFamily={"sans-serif"} 
                             w={'100%'}
+                            p={isMobile ? 5 : 0}
+                            pb={0}
                             justifyContent={'center'}
                             alignItems={'center'}
                         >
@@ -252,12 +271,13 @@ export default function Home() {
                                 align={"center"}
                                 justify={"center"}
                                 w={"100%"}
-                                whiteSpace={'nowrap'}
+                                whiteSpace={isMobile ? 'break-spaces' : 'nowrap'}
                             >
-                                <HStack
+                                <Stack
                                     w={'100%'}
                                     align={'center'}
                                     pos={'relative'}
+                                    direction={isMobile ? 'column' : 'row'}
                                     m={'auto'}
                                     justifyContent={'space-between'}
                                     p={'0px 5px'}          
@@ -266,10 +286,12 @@ export default function Home() {
                                     <FormLabel 
                                         fontWeight={'bold'} 
                                         flex={1} 
+                                        display={'inline'}
                                         mb={0}
+                                        noOfLines={2}
                                         textDecoration={'underline'}
                                         textShadow={'1px 0px black'}
-                                        fontSize={'lg'}
+                                        fontSize={['md','lg']}
                                     >
                                         {`Search any ${typeSearch === 'people' ? 'character' : 'movie'} from Studio Ghibli`}
                                     </FormLabel>
@@ -304,7 +326,7 @@ export default function Home() {
                                             </Radio>
                                         </HStack>
                                     </RadioGroup>
-                                </HStack>
+                                </Stack>
                             </Flex>
                             <InputGroup>
                                 <Input
@@ -313,7 +335,7 @@ export default function Home() {
                                     overflow={'hidden'}                       
                                     htmlSize={5}
                                     color={"black"}
-                                    pl={2}
+                                    px={2}
                                     borderColor={"black"}
                                     focusBorderColor={"black"}
                                     placeholder={"Press Enter to search ;)"}                                
@@ -384,7 +406,10 @@ export default function Home() {
                             w={"100%"}
                             borderRadius={5}       
                             maxH={"90%"}      
-                            m={'auto'}                                   
+                            m={'auto'}   
+                            mt={0}    
+                            pb={1}
+                            overflow={'hidden'}
                         >                        
                             <Container
                                 centerContent
@@ -394,8 +419,8 @@ export default function Home() {
                                 justifyContent={data?.total! > 0 ? "flex-start" : "center"}
                                 flexDirection={"column"}
                                 bg={"transparent"}
-                                p={0}
-                                mt={5}                                        
+                                px={2}
+                                mt={2}                                        
                                 overflowX={"hidden"}
                                 overflowY={"auto"}                                  
                                 css={{
@@ -412,20 +437,14 @@ export default function Home() {
                                     }
                                 }}           
                             >
-                                <ContainerList w={'100%'} pr={2} mr={2}>
+                                <ContainerList>
                                     {verifyComponentToRender()}
                                 </ContainerList>
                             </Container>
                         </Center>
-                    </VStack>
-                    <ParamsList
-                        typeList={typeSearch}
-                        consultParams={consultParams}
-                        setOpenModal={setOpenModal}
-                        setConsultParams={setConsultParams}
-                    />
-                </HStack>
-                <ContainerTextCount>
+                    </VStack>                    
+                </Stack>
+                <ContainerTextCount isMobile={isMobile}>
                     <CountUp 
                         end={data?.total || 0}
                         duration={0.5}
@@ -433,14 +452,12 @@ export default function Home() {
                 </ContainerTextCount>
             </ContainerStack>
         </ContainerHome>
-
         {openModal && <ModalParamsMovie 
             setOpenModal={setOpenModal}
             consultParams={consultParams}
             setConsultParams={setConsultParams}
             consultMovies={handleConsult}
         />}
-
     </>);
 
 } 

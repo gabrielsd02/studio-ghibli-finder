@@ -7,8 +7,14 @@ import {
 import ImageListVoid from '../../assets/images/character-spirited-away.png';
 import './style.scss';
 
-export default function EmptyList() {
+interface EmptyListProps {
+    isMobile?: boolean;
+}
 
+export default function EmptyList({
+    isMobile = false
+}: EmptyListProps) {
+    
     return <Fade 
         in={true} 
         transition={{
@@ -31,11 +37,12 @@ export default function EmptyList() {
             <Image
                 alt={"Image character from Spirited Away"}
                 borderRadius={"5px"}
-                boxSize={'420px'}              
+                boxSize={isMobile ? '225px' : '420px'}              
                 src={ImageListVoid}
             />
-            <h1>
-                <span className="left">Not found </span><span className="right"> records:(</span>
+            <h1 className={isMobile ? "mobile" : "web"}>
+                <span className={"left"}>Not found </span>
+                <span className={"right"}> records:(</span>
             </h1>            
         </VStack>
     </Fade>

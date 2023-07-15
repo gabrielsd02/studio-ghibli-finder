@@ -5,7 +5,8 @@ $font:"Rationale", sans-serif;
 $width:400px;
 $height:100px;
 
-h1 { 
+.web {
+
   display:flex;
   position:absolute;
   bottom:130px;
@@ -29,6 +30,52 @@ h1 {
     font-size: 30px;
     text-shadow: 2px 1px #000;
   }
+
+  .text-small {
+    font-size: 20px;
+  }  
+
+  .left {
+    width: 100%;
+    border-right-width:0px;
+    transform:rotateY(-$angle) translateX(50%-(math.cos($angle)*50%) + .5);
+  }
+
+  .right {
+    width: 100%;
+    border-left-width:0px;
+    transform:rotateY($angle) translateX(-50%+(math.cos($angle)*50%) - .5);
+  }
+
+  &:hover {
+    animation: anim 2s ease 0s infinite;
+  }
+
+}
+
+.mobile {
+
+  display:flex;
+  position:absolute;
+  top:40%;
+  width:210px;
+  height:$height; 
+  text-align:center;
+  font-family:$font;
+  font-weight: bold;
+  color:#000;
+  perspective:250px;
+  justify-content: center;
+  align-items: center;
+  
+  span {
+    display:inline-block;
+    letter-spacing: 2px;
+    font-stretch: ultra-expanded;
+    font-weight: bold;
+    font-size: 18px;
+    text-shadow: 2px 1px #000;
+  } 
 
   .left {
     width: 100%;

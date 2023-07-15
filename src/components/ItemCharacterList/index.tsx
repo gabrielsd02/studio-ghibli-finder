@@ -1,35 +1,25 @@
 import React from 'react';
 import { 
-    VStack,
     Text,
-    Flex,
-    HStack,
-    Divider,
     Tooltip
 } from '@chakra-ui/react';
-import { NavigateFunction } from 'react-router-dom';
 
 import { 
+    MovieTextName,
+    ContainerMovies,
+    ContainerTitle,
+    ContainerTitleInfo,
+    ContainerInformations,
+    ContainerCharacter,
     TextContainer, 
-    TextResults 
-} from '../List/styles';
-import { 
-    MoviesProps, 
-    SpeciesProps 
-} from '../../interfaces';
-
-interface ItemCharacterListProps {
-    name: string;
-    age: string | null;
-    gender: string;
-    species: SpeciesProps[];
-    eyeColor: string;
-    hairColor: string;
-    movies: MoviesProps[];
-    navigate?: NavigateFunction
-}
+    LabelInformation,
+    TextResults,
+    TitleName
+} from './styles';
+import { ItemCharacterListProps } from './interface';
 
 export function ItemCharacterList({
+    isMobile = false,
     name,
     age,
     gender,
@@ -97,96 +87,49 @@ export function ItemCharacterList({
 
     }    
     
-    return <VStack 
-        flex={1}
-        p={'0px 10px'}
-        w={"60%"}
-        h={"100%"} 
-        fontFamily={"cursive"}
-        align={"center"}
-        justify={"flex-start"}
-        marginInlineEnd={'0.5rem !important'}
-    >
-        <VStack 
-            h={"100%"} 
-            w={"100%"} 
-            align={"flex-start"} 
-            justify={"flex-start"}
-            overflow={'hidden'}
-        >
-            <VStack
-                w={'100%'}
-                h={'60%'}
-                align={'center'}
-                justify={'center'}
-                borderBottomWidth={1}
-                borderColor={"white"}
-                fontFamily={"cursive"}     
-                whiteSpace={"nowrap"}
-                overflow={"hidden"}
-                spacing={'0px'}
+    return <ContainerCharacter>
+        <ContainerTitleInfo>
+            <ContainerTitle
+                isMobile={isMobile}
             >
-                <Text
-                    fontSize={'3xl'}
-                    textOverflow={'ellipsis'}
-                    fontWeight={'bold'}
-                    textShadow={'0px 0px 5px black'}
+                <Tooltip
+                    label={name}
+                    fontSize={"md"}
+                    hasArrow
+                    placement='top'
                 >
-                    {name}
-                </Text>
-                <Flex
-                    align={'center'}
-                    justify={'center'}
-                    fontSize={'lg'}
-                >
+                    <TitleName isTruncated>
+                        {name}
+                    </TitleName>
+                </Tooltip>
+                <ContainerMovies>
                     <Text 
-                        overflow={"hidden"} 
-                        textOverflow={"ellipsis"} 
                         fontWeight={"bold"}
                     >
-                        Movie(s):
+                        Movie:
                     </Text>             
                     {movies.map((item, key: number) => {     
                         
                         const title = (movies.length - 1) === key ? item.title : `${item.title} |`;
 
-                        return <Text
+                        return <MovieTextName
                             key={key} 
-                            overflow={"hidden"} 
-                            textOverflow={"ellipsis"} 
-                            ml={2}
-                            pt={'3px'}                            
-                            textDecoration={'underline'}
-                            fontFamily={"emoji"}
-                            cursor={'pointer'}
+                            isMobile={isMobile}
                             onClick={() => {
                                 if(navigate) navigate(`movie-details/${item.id}`)
                             }}
                         >
                             {title}
-                        </Text>
+                        </MovieTextName>
 
                     })}
-                </Flex>
-            </VStack>
-            <HStack
-                w={'100%'}
-                h={'40%'}
-                justify={'space-between'}
-                align={'center'}
-                fontSize={'xl'}
-                divider={<Divider orientation='vertical' borderWidth={'1px'} />}
-            >
-                <TextContainer
-                    w={'auto'}
-                    minW={'100px'}
-                >
-                    <Text 
-                        fontWeight={'bold'} 
-                        textOverflow={'ellipsis'}
-                    >                                        
+                </ContainerMovies>
+            </ContainerTitle>
+            <ContainerInformations isMobile={isMobile}>
+                <TextContainer isMobile={isMobile}>
+                    <LabelInformation isMobile={isMobile}>                                        
                         Age
-                    </Text> 
+                    </LabelInformation> 
                     <Tooltip
                         label={
                             (!age || age === "" || age === 'NA') ? 
@@ -197,7 +140,7 @@ export function ItemCharacterList({
                         hasArrow
                         placement='top'
                     >
-                        <TextResults>
+                        <TextResults isMobile={isMobile}>
                             {                   
                                 (
                                     !age || 
@@ -211,13 +154,10 @@ export function ItemCharacterList({
                         </TextResults>
                     </Tooltip>
                 </TextContainer>
-                <TextContainer>
-                    <Text 
-                        fontWeight={'bold'} 
-                        textOverflow={'ellipsis'}
-                    >
+                <TextContainer isMobile={isMobile}>
+                    <LabelInformation isMobile={isMobile}>
                         Gender
-                    </Text>
+                    </LabelInformation>
                     <TextResults 
                         color={
                             gender === 'Male' 
@@ -229,18 +169,18 @@ export function ItemCharacterList({
                             )
                         }
                         fontWeight={'bold'}
+                        isMobile={isMobile}
                     >                        
                         {gender === "NA" ? '?' : gender}
                     </TextResults>                           
                 </TextContainer>
-                <TextContainer>
-                    <Text 
-                        fontWeight={'bold'} 
-                        textOverflow={'ellipsis'}
-                    >
+                <TextContainer isMobile={isMobile}>
+                    <LabelInformation isMobile={isMobile}>
                         Specie
-                    </Text> 
-                    <TextResults>
+                    </LabelInformation> 
+                    <TextResults 
+                        isMobile={isMobile}
+                    >
                         {
                             species && species.length > 0 ? 
                             species[0].name : 
@@ -248,40 +188,35 @@ export function ItemCharacterList({
                         }
                     </TextResults>
                 </TextContainer>
-                <TextContainer>
-                    <Text 
-                        fontWeight={'bold'} 
-                        textOverflow={'ellipsis'}
-                    >
+                <TextContainer isMobile={isMobile}>
+                    <LabelInformation isMobile={isMobile}>
                         Eye Color 
-                    </Text>
+                    </LabelInformation>
                     <TextResults 
                         color={verifyColor(eyeColor)}
                         fontWeight={'bold'}
                         textShadow={'-1px 1px 1px gray'}
+                        isMobile={isMobile}
                     >
                         {eyeColor ?? ''}
                     </TextResults>                           
                 </TextContainer>
-                <TextContainer>
-                    <Text 
-                        fontWeight={'bold !important'} 
-                        textOverflow={'ellipsis'} 
-                        textDecoration={'none'}
-                    >
+                <TextContainer isMobile={isMobile}>
+                    <LabelInformation isMobile={isMobile}>
                         Hair Color
-                    </Text>
+                    </LabelInformation>
                     <TextResults 
                         color={verifyColor(hairColor)}
                         fontWeight={'bold'}
                         textShadow={'-1px 1px 1px gray'}
+                        isMobile={isMobile}
                     >
                         {hairColor ?? ''}
                     </TextResults>
                 </TextContainer>
-            </HStack>
-        </VStack>
-    </VStack>   
+            </ContainerInformations>
+        </ContainerTitleInfo>
+    </ContainerCharacter>   
 
 }
 

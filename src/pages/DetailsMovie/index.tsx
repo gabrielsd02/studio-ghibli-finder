@@ -207,6 +207,10 @@ export function DetailsMovie() {
                                         src={movieData.movieBanner}
                                         borderRadius={5}
                                         onLoad={() => setImageLoaded(true)}
+                                        onClick={() => window.open(movieData.movieBanner)}
+                                        _hover={{
+                                            opacity: 0.3
+                                        }} 
                                     />
                                     {!imageLoaded && <Loading message={'Loading image...'} />}
                                     <Stack 
@@ -327,25 +331,25 @@ export function DetailsMovie() {
                     </VStack>}
             </Flex>
         </Center>
-        <Tooltip
-            label={"Back to home"}
-            fontSize={"md"}
-            hasArrow
-            placement='top'
+        <BackButton
+            isMobile={isMobile}
+            onClick={() => navigate('/')}
+            _hover={{
+                opacity: 0.7
+            }}
         >
-            <BackButton
-                isMobile={isMobile}
-                onClick={() => navigate('/')}
-                _hover={{
-                    opacity: 0.7
-                }}
+            <Tooltip
+                label={"Back to home"}
+                fontSize={"md"}
+                hasArrow
+                placement='top'
             >
                 <ArrowBackIcon
                     fontSize={['3xl', '4xl', '5xl']}
                     color={'white'}
                 />
-            </BackButton>
-        </Tooltip>
+            </Tooltip>
+        </BackButton>            
     </>)
 
 }

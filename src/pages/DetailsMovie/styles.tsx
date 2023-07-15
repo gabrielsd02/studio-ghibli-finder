@@ -38,6 +38,7 @@ export const TitleMovie = chakra(Text, {
         fontWeight: 'bold',
         color: 'white',
         fontFamily: "cursive",
+        mb: 2,
         width: 'auto',
         textShadow: "5px 2px black",
         textDecoration: 'underline'
@@ -74,19 +75,18 @@ export const LabelDescriptionContainer = chakra(Text, {
 });
 
 export const BackButton = forwardRef<FlexProps & { isMobile: boolean }, 'div'>(
-    (
-        { isMobile, children }
-    ) => {
+    (props, ref) => {
         return <Flex 
             position={'absolute'}
-            left={isMobile ? 2 : 75}
-            top= {isMobile ? 2 : '48px'}
+            left={props.isMobile ? 2 : 75}
+            top= {props.isMobile ? 2 : '48px'}
             padding={2}
             borderRadius={50}
             backgroundColor='rgba(0, 0, 0, 0.7)'
             cursor='pointer'
+            {...props}
         >
-            {children}
+            {props.children}
         </Flex>
     }
 )
