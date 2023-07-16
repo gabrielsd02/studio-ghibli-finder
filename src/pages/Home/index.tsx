@@ -33,10 +33,11 @@ import {
 import CountUp from 'react-countup';
 import axios from 'axios';
 
-import { 
-    MoviesProps, 
-    PeopleProps 
-} from '../../interfaces';
+import {
+    CacheData,
+    ConsultParamsProps,
+    RecordsProps
+} from './interface';
 import {
     Title,
     ContainerList,
@@ -49,31 +50,6 @@ import EmptyList from '../../components/EmptyList';
 import Loading from '../../components/Loading';
 import ParamsList from '../../components/ParamsList';
 import ModalParamsMovie from '../../components/ModalParamsMovie';
-
-interface RecordsProps {
-    records: PeopleProps[] | MoviesProps[];
-    total: number;
-}
-
-interface CacheData extends RecordsProps {
-    alreadyExecuted?: boolean;
-    consultParams?: ConsultParamsProps;
-    typeSearch?: string;
-    name?: string | null;
-}
-
-export interface ConsultParamsProps {
-    order: string;
-    firstToLast: boolean;
-    masculineCheck: boolean;
-    femaleCheck: boolean;
-    yearMovieRelease: string | null;
-    fromYearMovieRelease: boolean;
-    durationMovie: string | null;
-    fromDurationMovie: boolean;
-    scoreMovie: string | null;
-    fromScoreMovie: boolean;
-}
 
 export default function Home() {
 

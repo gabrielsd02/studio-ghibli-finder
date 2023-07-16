@@ -20,7 +20,7 @@ import {
     VStack,
     Flex
 } from '@chakra-ui/react';
-import { ConsultParamsProps } from '../../pages/Home';
+import { ConsultParamsProps } from '../../pages/Home/interface';
 
 interface ModalParamsMovieProps {
     consultParams: ConsultParamsProps;

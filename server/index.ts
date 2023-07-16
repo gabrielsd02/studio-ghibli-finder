@@ -37,7 +37,7 @@ app.get("/people",
         
         const result = await consultPeople({
             people, 
-            movies: films , 
+            movies: films, 
             species, 
             gender,
             firstToLast,
@@ -109,13 +109,11 @@ app.get("/films/:id",
             characters: people,
             returnCharacters: true
         });
+        
+        if(!result.film) {
 
-        if(!result) {
-
-            res.status(400);
-            res.render("error", {
-                films: "Movie not found"
-            });
+            res.status(400).json('Movie not found');
+            return;
 
         }
 

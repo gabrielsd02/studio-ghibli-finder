@@ -1,4 +1,4 @@
-import { ConsultParamsProps } from "../../pages/Home";
+import { ConsultParamsProps } from "../../pages/Home/interface";
 
 export interface ParamsListPeopleProps {
     isMobile?: boolean;

@@ -38,21 +38,26 @@ import {
     PeopleProps
 } from '../../interfaces';
 import {
+    TextScore,
     TitleMovie,
+    BadgeMovie,
     BackButton,
-    ContainerImage,
-    ContainerTexts,
-    LabelContainer,
-    LabelInformation,
-    LabelDescriptionContainer
+    ListCharacters,
+    TextDescription,
+    ContainerBadges,
+    HeadingMovieInfo,
+    ImageBannerMovie,
+    CardMovieDetails,
+    ContainerCardMovie,
+    ContainerTitleCard,
+    ContainerBackground,
+    CardBodyMovieDetails,
+    ContainerDetailsMovie,
+    ContainerInformationsMovie
 } from './styles';
+import { MovieDetailsResponse } from './interface';
 import ImageBackground from '../../assets/images/image-background.jpg';
 import Loading from '../../components/Loading';
-
-interface MovieDetailResponse {
-    film: MoviesProps | null;
-    characters: PeopleProps[] | null;
-}
 
 export function DetailsMovie() {
 
@@ -62,7 +67,8 @@ export function DetailsMovie() {
 
     const [isMobile] = useMediaQuery('(max-width: 900px)');    
     const [loading, setLoading] = useState(false);
-    const [imageLoaded, setImageLoaded] = useState(false);    
+    const [imageLoaded, setImageLoaded] = useState(false);
+    const [error, setError] = useState('');    
     const [numberStars, setNumberStars] = useState<number[]>([]);
     const [movieData, setMovieData] = useState({} as MoviesProps);
     const [characters, setCharacters] = useState<PeopleProps[]>([]);
@@ -98,8 +104,8 @@ export function DetailsMovie() {
 
         try {
 
-            const { data }: AxiosResponse<MovieDetailResponse> = await axios.get(`/films/${id}`);
-
+            const { data }: AxiosResponse<MovieDetailsResponse> = await axios.get(`/films/${id}`);
+            
             if (data.characters && data.characters.length > 0) setCharacters(data.characters);
             if (data.film) {
 
@@ -117,13 +123,11 @@ export function DetailsMovie() {
             }                        
 
         } catch (e: any) {
-            console.error(e);
 
             if (axios.isAxiosError(e) && e.response && e.response.data) {
 
                 const error = e.response.data;
-
-
+                setError(error)
 
             }
 
@@ -140,197 +144,110 @@ export function DetailsMovie() {
     if (!isMounted.current) return <Loading />
     
     return (<>
-        <Center
+        <ContainerDetailsMovie
             bgImage={ImageBackground}
-            backgroundSize={"cover"}
-            h={"100vh"}
-            w={"100vw"}
-            pos={"relative"}
-            pt={isMobile ? 14 : 0}
-            overflowY={'auto'}
-            overflowX={'hidden'}
-            css={{
-                '&::-webkit-scrollbar': {
-                    width: isMobile ? '8px' : '12px',
-                    height: '10px',
-                    backgroundColor: "rgba(0, 0, 0, 0.2)",
-                    borderRadius: "5px"
-                },
-                '&::-webkit-scrollbar-thumb': {
-                    height: '70px',
-                    background: "gray",
-                    borderRadius: '10px',
-                }
-            }}
+            isMobile={isMobile}
         >
-            <Flex
-                w={"100%"}
-                h={isMobile ? "100%" : "95%"}
-                flex={1}
-                align={"center"}
-                justify={"center"}
-                backdropFilter={"blur(5px)"}                                
-            >
+            <ContainerBackground isMobile={isMobile}>
                 {(loading) ?
                     <Loading />
-                    : <VStack
-                        h={'100%'}
-                        w={'100%'}
-                        spacing={isMobile ? 0 : 5}                  
-                    >
+                    : <ContainerTitleCard isMobile={isMobile}>
                         <Box margin={'auto'}>
                             <TitleMovie>
                                 {movieData.title || ''}
                             </TitleMovie>
                         </Box>
-                        <Center
-                            w={!isMobile ? "55vw" : "100vw"}
-                            borderRadius={5}
-                        >
-                            <Card 
-                                maxW={['3xl','4xl']} 
-                                backgroundColor={"rgba(0, 0, 0, 0.7)"}
-                                color={"white"}
-                                overflow={'auto'}                                
-                                marginBottom={isMobile ? 0 : 10}
-                            >
-                                <CardBody                                    
-                                    borderRadius={5}
-                                    overflowX={"hidden"}
-                                    overflowY={"auto"}
-                                    p={!isMobile ? 5 : 3}                                    
-                                >
-                                    <Image
-                                        alt={'Image Movie Banner'}
-                                        boxSize={'100%'}
-                                        h={'auto'}
-                                        src={movieData.movieBanner}
-                                        borderRadius={5}
-                                        onLoad={() => setImageLoaded(true)}
-                                        onClick={() => window.open(movieData.movieBanner)}
-                                        _hover={{
-                                            opacity: 0.3
-                                        }} 
-                                    />
-                                    {!imageLoaded && <Loading message={'Loading image...'} />}
-                                    <Stack 
-                                        w={'100%'} 
-                                        h={'80px'}
-                                        direction={isMobile ? 'column' : 'row'}
-                                        align={isMobile ? 'start' : 'center'} 
-                                        justify={'start'}
-                                        my={2}
-                                    >
-                                        <HStack
-                                            flex={1}
-                                            spacing={3}
-                                        >               
-                                            <Text 
-                                                fontSize={['16px', '20px', '24px']}
-                                                border={'1px solid white'}
-                                                borderRadius={5}
-                                                background={verifyColorScore(movieData.rtScore)}
-                                                px={3}
-                                                py={1.5}
-                                            >
-                                                {movieData.rtScore || ''}                                            
-                                            </Text> 
-                                            <>
-                                            {numberStars.map((number) => (                                                                
-                                                <motion.div
-                                                    key={number}
-                                                    initial={{ 
-                                                        scale: 3, 
-                                                        marginLeft: -100, 
-                                                        marginTop: -130 
-                                                    }}                                                
-                                                    animate={{ 
-                                                        scale: 1, 
-                                                        rotate: 360, 
-                                                        marginLeft: 10, 
-                                                        marginTop: 0 
-                                                    }}
-                                                    transition={{ 
-                                                        duration: 0.8, 
-                                                        ease: 'easeInOut' 
-                                                    }} 
+                        <ContainerCardMovie isMobile={isMobile}>
+                            <CardMovieDetails isMobile={isMobile}>
+                                <CardBodyMovieDetails isMobile={isMobile}>
+                                    {(movieData && Object.keys(movieData).length > 0) ? <>
+                                        <ImageBannerMovie                                           
+                                            src={movieData.movieBanner}
+                                            onLoad={() => setImageLoaded(true)}
+                                            onClick={() => window.open(movieData.movieBanner)}
+                                        />
+                                        {!imageLoaded && <Loading message={'Loading image...'} />}
+                                        <ContainerInformationsMovie isMobile={isMobile}>
+                                            <HStack
+                                                flex={1}
+                                                spacing={3}
+                                            >               
+                                                <TextScore 
+                                                    background={verifyColorScore(movieData.rtScore)}
                                                 >
-                                                    <StarIcon
-                                                        color={'yellow'}
-                                                        fontSize={['3xl', '4xl']}
-                                                        mb={1}                                                
-                                                    />                                                             
-                                                </motion.div>                                                
-                                            ))}
-                                            </>
-                                        </HStack>
-                                        <HStack 
-                                            fontSize={['sm', 'md']}
-                                            align={'flex-start'}
-                                            h={'100%'}
-                                        >
-                                            <Badge 
-                                                variant={'solid'} 
-                                                cursor={'default'}
-                                                colorScheme={'twitter'}
-                                                fontSize={'100%'}
-                                            >
-                                                {movieData.releaseDate || ''}
-                                            </Badge>
-                                            <Badge 
-                                                variant={'solid'}
-                                                colorScheme={'teal'}
-                                                fontSize={'100%'}
-                                            >
-                                                {movieData.runningTime || ''} min
-                                            </Badge>                                            
-                                        </HStack>                                                                                
-                                    </Stack>
-                                    <VStack spacing={3}>
-                                        <Heading 
-                                            size={'lg'} 
-                                            w={'100%'} 
-                                            fontFamily={'cursive'}
-                                            textAlign={'left'}
-                                            textDecoration={'underline'}
-                                        >
-                                            Description
-                                        </Heading>
-                                        <Text 
-                                            textAlign={'left'}
-                                            fontSize={'16px'}
-                                        >
-                                            {movieData.description || ''}
-                                        </Text>
-                                    </VStack>
-                                    {(characters.length > 0) && <VStack mt={4} spacing={3}>
-                                        <Heading 
-                                            size={'lg'} 
-                                            w={'100%'} 
-                                            fontFamily={'cursive'}
-                                            textAlign={'left'}
-                                            textDecoration={'underline'}
-                                        >
-                                            Characters
-                                        </Heading>
-                                        <UnorderedList 
-                                            spacing={3}
-                                            w={'90%'}
-                                            textAlign={'left'}
-                                        >
-                                            {characters.map((character, index) => (
-                                                <ListItem key={index} ml={5} mt={2}>
-                                                    {character.name}
-                                                </ListItem>
-                                            ))}
-                                        </UnorderedList>
-                                    </VStack>}
-                                </CardBody>
-                            </Card>
-                        </Center>
-                    </VStack>}
-            </Flex>
-        </Center>
+                                                    {movieData.rtScore || ''}                                            
+                                                </TextScore> 
+                                                <>
+                                                    {numberStars.map((number) => (                                                                
+                                                        <motion.div
+                                                            key={number}
+                                                            initial={{ 
+                                                                scale: 3, 
+                                                                marginLeft: -100, 
+                                                                marginTop: -130 
+                                                            }}                                                
+                                                            animate={{ 
+                                                                scale: 1, 
+                                                                rotate: 360, 
+                                                                marginLeft: 10, 
+                                                                marginTop: 0 
+                                                            }}
+                                                            transition={{ 
+                                                                duration: 0.8, 
+                                                                ease: 'easeInOut' 
+                                                            }} 
+                                                        >
+                                                            <StarIcon
+                                                                color={'yellow'}
+                                                                fontSize={['3xl', '4xl']}
+                                                                mb={1}                                                
+                                                            />                                                             
+                                                        </motion.div>                                                
+                                                    ))}
+                                                </>
+                                            </HStack>
+                                            <ContainerBadges>
+                                                <BadgeMovie 
+                                                    colorScheme={'twitter'}
+                                                >
+                                                    {movieData.releaseDate || ''}
+                                                </BadgeMovie>
+                                                <BadgeMovie 
+                                                    colorScheme={'teal'}
+                                                >
+                                                    {movieData.runningTime || ''} min
+                                                </BadgeMovie>                                            
+                                            </ContainerBadges>                                                                                
+                                        </ContainerInformationsMovie>
+                                        <VStack spacing={3}>
+                                            <HeadingMovieInfo>
+                                                Description
+                                            </HeadingMovieInfo>
+                                            <TextDescription>
+                                                {movieData.description || ''}
+                                            </TextDescription>
+                                        </VStack>
+                                        {(characters.length > 0) && <VStack mt={4} spacing={3}>
+                                            <HeadingMovieInfo>
+                                                Characters
+                                            </HeadingMovieInfo>
+                                            <ListCharacters>
+                                                {characters.map((character, index) => (
+                                                    <ListItem key={index} ml={5} mt={2}>
+                                                        {character.name}
+                                                    </ListItem>
+                                                ))}
+                                            </ListCharacters>
+                                        </VStack>}
+                                    </> : <Text fontSize={'5xl'}>
+                                        {error}
+                                    </Text>}
+                                </CardBodyMovieDetails>
+                            </CardMovieDetails>
+                        </ContainerCardMovie>
+                    </ContainerTitleCard>}
+            </ContainerBackground>
+        </ContainerDetailsMovie>
         <BackButton
             isMobile={isMobile}
             onClick={() => navigate('/')}
