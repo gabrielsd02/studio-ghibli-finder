@@ -5,8 +5,8 @@ This project is avaliable in https://studio-ghibli-finder.onrender.com.
 
 ## Database
 
-I get the datas with the developer (janaipakos)[https://github.com/janaipakos], which he have already done a website in the heroku, but they started charging for the maintain the website, then, he archived the project. 
-Your project is avaliable (here)[https://github.com/janaipakos/ghibliapi]
+I get the datas with the developer [janaipakos](https://github.com/janaipakos), which he have already done a website in the heroku, but they started charging for the maintain the website, then, he archived the project. 
+Your project is avaliable [here)](https://github.com/janaipakos/ghibliapi)
 
 ## Server
 
