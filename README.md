@@ -14,7 +14,7 @@ The server of this project was made with NodeJS with Typescript.
 
 ## Front-end
 
-The front-end was made with ReactJS and Typescript.
+The front-end was made with ReactJS, Chakra UI and Typescript.
 
 ## Conclusion
 
