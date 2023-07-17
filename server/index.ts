@@ -16,7 +16,7 @@ import {
   SpeciesProps
 } from '../src/interfaces';
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 const people: PeopleProps[] = camelizeKeys(datas.people);
 const films: MoviesProps[] = camelizeKeys(datas.films);
