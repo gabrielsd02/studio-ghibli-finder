@@ -1,41 +1,17 @@
 import { camelCase } from "lodash";
+
+import { 
+    RecordMovieProps,
+    RecordPeopleProps,
+    ConsultMoviesProps,
+    ConsultPeopleProps, 
+    ConsultMoviesIdProps
+} from './interface';
 import { 
     MoviesProps, 
     PeopleProps,
     SpeciesProps 
 } from "../src/interfaces";
-
-interface ConsultMoviesIdProps {
-    movies: MoviesProps[]; 
-    id: string;
-    characters?: PeopleProps[];
-    returnCharacters?: boolean;
-}
-
-interface ConsultPeopleProps {
-    people: PeopleProps[]; 
-    movies?: MoviesProps[]; 
-    species?: SpeciesProps[]; 
-    nameCharacter?: string
-    firstToLast?: boolean;
-    gender?: string | null;
-}
-
-interface ConsultMoviesProps {
-    movies: MoviesProps[]; 
-    people?: PeopleProps[]; 
-    firstToLast?: boolean;
-    nameMovie?: string;   
-    yearMovieRelease?: string | null;
-    fromYearMovieRelease?: boolean;
-    durationMovie?: string | null;
-    fromDurationMovie?: boolean;
-    scoreMovie?: string | null;
-    fromScoreMovie?: boolean; 
-}
-
-type RecordMovieProps = MoviesProps & { characters: PeopleProps[] };
-type RecordPeopleProps = PeopleProps & { films: MoviesProps[]; species: SpeciesProps[] };
 
 function isEmpty(str: string): boolean {
     return (!str || str.length === 0);
