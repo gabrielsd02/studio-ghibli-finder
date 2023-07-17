@@ -21,3 +21,7 @@ The front-end was made with ReactJS, Chakra UI and Typescript.
 This project aims to show my skills, have avaliable a project done by me alone and because I really like Studio Ghibli. 
 
 Thats its all! 
+
+<div style="align-items: center; justify-content: center;">
+  <img align="center" src="https://media.tenor.com/EzTlZIYCcwAAAAAC/spirited-away-train.gif">
+</div>
