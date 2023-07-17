@@ -22,6 +22,6 @@ This project aims to show my skills, have avaliable a project done by me alone a
 
 Thats its all! 
 
-<div style="align-items: center; justify-content: center;">
-  <img align="center" src="https://media.tenor.com/EzTlZIYCcwAAAAAC/spirited-away-train.gif">
-</div>
+<p align="center" width="100%">
+  <img align="center" src="https://media.tenor.com/EzTlZIYCcwAAAAAC/spirited-away-train.gif" style="display: inline-block; margin: 0 auto; width: 500px">
+</p>
