@@ -10,6 +10,7 @@ import {
     Input,
     Center,
     VStack,
+    useToast,
     Tooltip,
     FormLabel,
     InputGroup,
@@ -68,9 +69,10 @@ export default function Home() {
         fromYearMovieRelease: false
     };
 
+    const toast = useToast();
     const queryClient = useQueryClient();
     const cacheDataGet: CacheData | undefined = queryClient.getQueryData('consult');
-    const [isMobile] = useMediaQuery('(max-width: 900px)');
+    const [isMobile] = useMediaQuery('(max-width: 1000px)');
     
     const [consultParams, setConsultParams] = useState(
         (cacheDataGet && cacheDataGet.consultParams) ? 
@@ -188,11 +190,19 @@ export default function Home() {
     if(error) {
 
         console.error(error);
+        const { response } = error as { response: { data: string } };
+        
+        if(response && response.data) {
 
-        if(axios.isAxiosError(error) && error.response && error.response.data) {
-
-            const dataError = error.response.data;
-
+            const dataError = response.data;
+            toast({
+                title: 'Error',
+                description: dataError,
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+                position: 'top-right'
+            })
             
 
         }

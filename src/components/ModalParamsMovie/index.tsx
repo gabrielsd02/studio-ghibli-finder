@@ -1,7 +1,8 @@
 import React, {
+    useRef,
     useState, 
     useEffect,
-    useCallback 
+    useCallback
 } from 'react';
 import { 
     Modal, 
@@ -14,20 +15,14 @@ import {
     ModalCloseButton,
     Checkbox,
     Text,
+    StackProps,
     NumberInput,
     NumberInputField,
     HStack,
     VStack,
     Flex
 } from '@chakra-ui/react';
-import { ConsultParamsProps } from '../../pages/Home/interface';
-
-interface ModalParamsMovieProps {
-    consultParams: ConsultParamsProps;
-    setOpenModal(value: boolean): void;
-    consultMovies(value?: null | ConsultParamsProps): void;
-    setConsultParams(value: ConsultParamsProps): void
-}
+import { ModalParamsMovieProps } from './interface';
 
 export function ModalParamsMovie({
     consultParams,
@@ -35,6 +30,10 @@ export function ModalParamsMovie({
     consultMovies,
     setConsultParams
 }: ModalParamsMovieProps) {
+
+    const refInputOne = useRef<HTMLInputElement>(null);
+    const refInputTwo = useRef<HTMLInputElement>(null);
+    const refInputThree = useRef<HTMLInputElement>(null);
 
     const paramsStandard = {
         order: 'alphabetically',
@@ -50,19 +49,25 @@ export function ModalParamsMovie({
     };
 
     const [paramsToChange, setParamsToChange] = useState(consultParams);    
-    const [optionActive, setOptionActive] = useState("");
+    const [optionActive, setOptionActive] = useState(
+        consultParams.yearMovieRelease ? 'year' : (
+            consultParams.durationMovie ? 'duration' : (
+                consultParams.scoreMovie ? 'score' : ""
+            )
+        )
+    );
 
     const handleCloseModal = useCallback(() => {
         setOptionActive('');
         setOpenModal(false);
     }, []);
-
+    
     const handleSaveModal = () => {
         
         if(optionActive === "") {
             
-            setConsultParams(paramsStandard);            
-            consultMovies(paramsStandard);
+            setConsultParams(Object.assign(consultParams, paramsStandard));            
+            consultMovies(Object.assign(consultParams, paramsStandard));
 
         } else {
             
@@ -85,50 +90,17 @@ export function ModalParamsMovie({
             fromScoreMovie: false,
             fromYearMovieRelease: false
         });
+        if(refInputOne.current) refInputOne.current.value = "";
+        if(refInputTwo.current) refInputTwo.current.value = "";
+        if(refInputThree.current) refInputThree.current.value = "";
     };
 
     useEffect(() => {
-
         if(
-            paramsToChange.yearMovieRelease && 
-            paramsToChange.yearMovieRelease.length > 0
-        ) {
-            setOptionActive('year');
-            setParamsToChange({
-                ...paramsToChange,
-                durationMovie: null,
-                scoreMovie: null,
-                fromDurationMovie: false,
-                fromScoreMovie: false
-            });
-        } else if(
-            paramsToChange.durationMovie && 
-            paramsToChange.durationMovie.length > 0
-        ) {
-            setOptionActive('duration');
-            setParamsToChange({
-                ...paramsToChange,
-                yearMovieRelease: null,
-                scoreMovie: null,
-                fromScoreMovie: false,
-                fromYearMovieRelease: false
-            });
-        } else if(
-            paramsToChange.scoreMovie &&
-            paramsToChange.scoreMovie.length > 0
-        ) {
-            setOptionActive('score');
-            setParamsToChange({
-                ...paramsToChange,
-                yearMovieRelease: null,
-                durationMovie: null,
-                fromDurationMovie: false,
-                fromYearMovieRelease: false
-            });
-        } else {
-            setOptionActive('');
-        }        
-
+            !paramsToChange.yearMovieRelease &&
+            !paramsToChange.durationMovie &&
+            !paramsToChange.scoreMovie
+        ) setOptionActive('');          
     }, [paramsToChange]);
     
     return <Modal 
@@ -183,9 +155,10 @@ export function ModalParamsMovie({
                             <NumberInput
                                 variant='flushed'
                                 focusBorderColor={"black"}   
-                                value={paramsToChange.yearMovieRelease || ''}                              
+                                value={paramsToChange.yearMovieRelease || ''}                                                        
                             >
                                 <NumberInputField
+                                    ref={refInputOne}                                          
                                     h={'auto'}                            
                                     textOverflow={'ellipsis'}         
                                     overflow={'hidden'}    
@@ -206,10 +179,15 @@ export function ModalParamsMovie({
                                         if(yearMovie === "") {
                                             yearMovie = null;
                                         }
-
+                                        
+                                        setOptionActive('year');
                                         setParamsToChange({
                                             ...paramsToChange,
-                                            yearMovieRelease: yearMovie
+                                            yearMovieRelease: yearMovie,
+                                            durationMovie: null,
+                                            scoreMovie: null,
+                                            fromDurationMovie: false,
+                                            fromScoreMovie: false
                                         });
 
                                     }}
@@ -256,6 +234,7 @@ export function ModalParamsMovie({
                                 focusBorderColor={"black"}
                                 textAlign={'center'}
                                 value={paramsToChange.durationMovie || ''}   
+                                ref={refInputTwo}  
                             >
                                 <NumberInputField
                                     h={'auto'}
@@ -278,10 +257,15 @@ export function ModalParamsMovie({
                                         if(durationMovie === "") {
                                             durationMovie = null;
                                         }
-
+                                        
+                                        setOptionActive('duration');
                                         setParamsToChange({
                                             ...paramsToChange,
-                                            durationMovie
+                                            durationMovie,
+                                            yearMovieRelease: null,
+                                            scoreMovie: null,
+                                            fromScoreMovie: false,
+                                            fromYearMovieRelease: false
                                         });
 
                                     }}
@@ -329,6 +313,7 @@ export function ModalParamsMovie({
                                 focusBorderColor={"black"}
                                 textAlign={'center'}
                                 value={paramsToChange.scoreMovie || ''}     
+                                ref={refInputThree}
                             >
                                 <NumberInputField
                                     h={'auto'}
@@ -351,10 +336,15 @@ export function ModalParamsMovie({
                                         if(scoreMovie === "") {
                                             scoreMovie = null;
                                         }
-
+                                        
+                                        setOptionActive('score');
                                         setParamsToChange({
                                             ...paramsToChange,
-                                            scoreMovie
+                                            scoreMovie,
+                                            yearMovieRelease: null,
+                                            durationMovie: null,
+                                            fromDurationMovie: false,
+                                            fromYearMovieRelease: false
                                         });
 
                                     }}

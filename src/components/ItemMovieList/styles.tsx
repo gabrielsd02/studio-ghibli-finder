@@ -51,6 +51,7 @@ export const CharacterName = chakra(Text, {
 export const ContainerLabelValue = chakra(Flex, {
     baseStyle: {
         overflow: 'hidden',
+        w: 'inherit',
         justifyContent: 'center'
     }
 });
@@ -59,8 +60,8 @@ export const Label = chakra(Text, {
     baseStyle: {
         fontFamily: 'cursive', 
         lineHeight: '1rem',
-        fontSize: ['xs','sm','md'],
-        fontWeight: "bold"   
+        fontSize: ['xs','sm','sm','md'],
+        fontWeight: "bold"    
     }
 });
 
@@ -70,7 +71,7 @@ export const TextValue = chakra(Text, {
         textOverflow: "ellipsis",
         fontFamily: "cursive",
         lineHeight: '1rem',
-        fontSize: ['xs','sm','md'],
+        fontSize: ['xs','sm','sm','md'],
         fontWeight: '100',
         ml: 2,
     }
@@ -129,9 +130,10 @@ export const BoxTitleInformations  = forwardRef<FlexProps & { isMobile: boolean 
 export const Title = forwardRef<TextProps & { isMobile: boolean }, 'p'>(
     (props, ref) => (
         <Text
-            fontSize={['xl','2xl','3xl']}
+            fontSize={['xl','2xl','2xl','3xl']}
             textOverflow={'ellipsis'}
             fontWeight={'bold'}
+            lineHeight={props.isMobile ? '2rem' : 'auto'}
             textShadow={'0px 0px 5px black'}
             isTruncated
             w={'100%'}
@@ -153,7 +155,7 @@ export const ContainerInformationsMovie = forwardRef<StackProps & { isMobile: bo
             align={props.isMobile ? 'start' : 'center'}
             justify={'center'}
             direction={props.isMobile ? 'column' : 'row'}
-            fontSize={['2xs','xs','sm', 'md']}
+            fontSize={['2xs','xs','sm','md']}
             spacing={props.isMobile ? 0 : '0.5rem'}                        
             divider={props.isMobile ? undefined : <Divider orientation="vertical" borderWidth={1} />}
             {...props}

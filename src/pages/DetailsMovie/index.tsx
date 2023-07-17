@@ -209,6 +209,7 @@ export function DetailsMovie() {
                                             <ContainerBadges>
                                                 <BadgeMovie 
                                                     colorScheme={'twitter'}
+                                                    color={'#234E52'}
                                                 >
                                                     {movieData.releaseDate || ''}
                                                 </BadgeMovie>

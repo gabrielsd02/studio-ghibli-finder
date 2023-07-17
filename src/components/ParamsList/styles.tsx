@@ -41,6 +41,7 @@ export const ButtonFilter = forwardRef<ButtonProps & { isMobile: boolean }, 'but
             _hover={{
                 opacity: 0.7
             }} 
+            {...props}
         >
             {props.children}
         </Button>

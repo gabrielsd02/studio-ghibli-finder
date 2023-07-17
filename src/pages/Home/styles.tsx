@@ -73,6 +73,7 @@ export const Title = chakra(Text, {
         fontSize: ['3xl','5xl','6xl'],
         fontWeight: 'bold',
         color: 'white',
+        letterSpacing: '-3px',
         fontFamily: "cursive",
         flexDirection: 'row',
         display: "flex",
