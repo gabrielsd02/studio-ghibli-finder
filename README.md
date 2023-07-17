@@ -1,46 +1,23 @@
-# Getting Started with Create React App
+# Studio Ghibli Finder
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Exists many APIs that can to make available the informations of movies and many other things from Studio Ghibli, but my proposal is not only consult and have a static page, I wanted create a server part too, to have a back-end side in this project.
+This project is avaliable in https://studio-ghibli-finder.onrender.com.
 
-## Available Scripts
+## Database
 
-In the project directory, you can run:
+I get the datas with the developer (janaipakos)[https://github.com/janaipakos], which he have already done a website in the heroku, but they started charging for the maintain the website, then, he archived the project. 
+Your project is avaliable (here)[https://github.com/janaipakos/ghibliapi]
 
-### `yarn start`
+## Server
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The server of this project was made with NodeJS with Typescript.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Front-end
 
-### `yarn test`
+The front-end was made with ReactJS and Typescript.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Conclusion
 
-### `yarn build`
+This project aims to show my skills, have avaliable a project done by me alone and because I really like Studio Ghibli. 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Thats it! 
