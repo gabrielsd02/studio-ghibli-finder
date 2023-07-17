@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import datas from '../database/index.json' assert { type: 'json' };
+import datas from '../database/index.json';
 
 import { 
   camelizeKeys, 
