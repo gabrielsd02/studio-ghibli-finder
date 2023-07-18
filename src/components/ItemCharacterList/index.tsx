@@ -104,7 +104,9 @@ export function ItemCharacterList({
                 </Tooltip>
                 <ContainerMovies>
                     <Text 
+                        h={'full'}
                         fontWeight={"bold"}
+                        lineHeight={'1rem'}
                     >
                         Movie:
                     </Text>             

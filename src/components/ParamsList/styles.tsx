@@ -1,9 +1,7 @@
 import { 
     forwardRef,
-    chakra, 
     Text, 
     Stack, 
-    Flex,
     Button, 
     ButtonProps,
     StackProps
@@ -16,6 +14,7 @@ export const ContainerParams = forwardRef<StackProps & { isMobile: boolean }, 'd
             justify={props.isMobile ? 'end' : 'start'}
             w={props.isMobile ? '100%' : 'auto'}
             h={props.isMobile ? 'auto' : '85%'}
+            minH={'50px'}
             direction={props.isMobile ? 'row' : 'column'}
             ml={props.isMobile ? 0 : '0.7rem !important'}
             spacing={5}

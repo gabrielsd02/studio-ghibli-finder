@@ -18,7 +18,7 @@ export const ContainerTitleInformations = chakra(VStack, {
         h: '100%',
         align: 'center',
         justify: 'center',
-        fontFamily: "cursive",
+        fontFamily: "Fira Sans Condensed, sans-serif",
         whiteSpace: "nowrap",
         overflow: "hidden",
     }
@@ -58,7 +58,7 @@ export const ContainerLabelValue = chakra(Flex, {
 
 export const Label = chakra(Text, {
     baseStyle: {
-        fontFamily: 'cursive', 
+        fontFamily: "Fira Sans Condensed, sans-serif",
         lineHeight: '1rem',
         fontSize: ['xs','sm','sm','md'],
         fontWeight: "bold"    
@@ -69,7 +69,7 @@ export const TextValue = chakra(Text, {
     baseStyle: {
         overflow: "hidden",
         textOverflow: "ellipsis",
-        fontFamily: "cursive",
+        fontFamily: "Fira Sans Condensed, sans-serif",
         lineHeight: '1rem',
         fontSize: ['xs','sm','sm','md'],
         fontWeight: '100',
@@ -93,7 +93,7 @@ export const ContainerInformations = forwardRef<StackProps & { isMobile: boolean
             flex={1}
             w={"60%"}
             h={"100%"} 
-            fontFamily={"cursive"}
+            fontFamily={"Fira Sans Condensed, sans-serif"}
             p={1}
             align={"center"}
             justify={"flex-start"}

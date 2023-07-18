@@ -25,7 +25,7 @@ export const ContainerCharacter = chakra(VStack, {
         p: '0px 10px',
         w: "60%",
         h: "100%",
-        fontFamily: "cursive",
+        fontFamily: "Fira Sans Condensed, sans-serif",
         alignItems: "center",
         justifyContent: "flex-start",
         marginInlineEnd: '0.5rem !important'
@@ -92,15 +92,16 @@ export const ContainerTitle = forwardRef<StackProps & { isMobile: boolean }, 'di
         <VStack
             w={'100%'}
             h={props.isMobile ? 'auto' : '60%'}
+            flexGrow={props.isMobile ? 1 : 0}
             align={'center'}
             justify={'center'}
             borderBottomWidth={props.isMobile ? 0 : 1}
             borderColor={"white"}
-            fontFamily={"cursive"}     
+            fontFamily={"Fira Sans Condensed, sans-serif"}
             whiteSpace={"nowrap"}
             overflow={"hidden"}
             spacing={0}
-            mt={0}
+            mt={props.isMobile ? 2 : 0}
         >
             {props.children}
         </VStack>
@@ -110,6 +111,8 @@ export const ContainerTitle = forwardRef<StackProps & { isMobile: boolean }, 'di
 export const MovieTextName = forwardRef<TextProps & { isMobile: boolean }, 'span'>(
     (props, ref) => (
         <Text
+            mt={'-2px'}
+            h={'full'}
             ml={props.isMobile ? '1px' : 2}
             isTruncated
             lineHeight={'1rem'}                          

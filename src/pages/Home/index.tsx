@@ -44,7 +44,9 @@ import {
     ContainerList,
     ContainerHome,
     ContainerStack,
-    ContainerTextCount
+    ContainerTextCount,
+    ContainerListAndParams,
+    ContainerSearchButtons
 } from './styles';
 import { List } from '../../components/List';
 import EmptyList from '../../components/EmptyList';
@@ -213,20 +215,15 @@ export default function Home() {
     
     return (<>
         <ContainerHome>            
-            <ContainerStack isMobile={isMobile}>        
-                <Title>
+            <ContainerStack isMobile={isMobile}>       
+                <Title 
+                    ml={isMobile ? '0px' : '-60px'} 
+                    noOfLines={2}
+                    minH={isMobile ? '40px' : '60px'}
+                >
                     Studio Ghibli Finder
                 </Title>   
-                <Stack
-                    flexGrow={isMobile ? 1 : 0}
-                    h={isMobile ? 'auto' : '700px'}
-                    w={isMobile ? '100%' : '60%'}
-                    p={isMobile ? 1 : 2}
-                    direction={isMobile ? 'column' : 'row-reverse'}
-                    align={'center'}
-                    justify={'center'}
-                    overflow={'hidden'}
-                >
+                <ContainerListAndParams isMobile={isMobile}>
                     <ParamsList
                         isMobile={isMobile}
                         typeList={typeSearch}
@@ -234,17 +231,7 @@ export default function Home() {
                         setOpenModal={setOpenModal}
                         setConsultParams={setConsultParams}
                     />
-                    <VStack
-                        w={'100%'}
-                        h={'100%'}
-                        background={'#1ca0d15e'}
-                        borderRadius={isMobile ? 5 : "50px"}
-                        boxShadow={'0px 0px 10px black'}
-                        p={isMobile ? 0 : 10}
-                        pb={'20px'}                        
-                        pos={"relative"}
-                        overflow={'hidden'}
-                    >
+                    <ContainerSearchButtons isMobile={isMobile}>
                         <FormControl 
                             fontFamily={"sans-serif"} 
                             w={'100%'}
@@ -361,8 +348,11 @@ export default function Home() {
                                             mr={2}
                                             ml={5}
                                             _hover={{
-                                                opacity: 0.3
+                                                opacity: isMobile ? 1 : 0.5
                                             }}
+                                            _active={{
+                                                opacity: 0.3
+                                            }}                                        
                                             onClick={() => handleConsult()}
                                         />
                                     </Tooltip>
@@ -392,6 +382,7 @@ export default function Home() {
                             w={"100%"}
                             borderRadius={5}       
                             maxH={"90%"}      
+                            minH={'240px'}
                             m={'auto'}   
                             mt={0}    
                             pb={1}
@@ -428,12 +419,15 @@ export default function Home() {
                                 </ContainerList>
                             </Container>
                         </Center>
-                    </VStack>                    
-                </Stack>
+                    </ContainerSearchButtons>                    
+                </ContainerListAndParams>
                 <ContainerTextCount isMobile={isMobile}>
                     <CountUp 
                         end={data?.total || 0}
                         duration={0.5}
+                        style={{
+                            marginLeft: isMobile ? '0px' : '-90px'
+                        }}
                     />
                 </ContainerTextCount>
             </ContainerStack>

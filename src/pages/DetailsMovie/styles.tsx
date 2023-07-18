@@ -25,7 +25,7 @@ export const TitleMovie = chakra(Text, {
         fontSize: ["3xl", "5xl", "6xl"],
         fontWeight: 'bold',
         color: 'white',
-        fontFamily: "cursive",
+        fontFamily: "Fira Sans Condensed, sans-serif",
         mb: 2,
         width: 'auto',
         textShadow: "5px 2px black",
@@ -82,7 +82,7 @@ export const HeadingMovieInfo = chakra(Heading, {
     baseStyle: {
         size: 'lg',
         w: '100%',
-        fontFamily: 'cursive',
+        fontFamily: "Fira Sans Condensed, sans-serif",
         textAlign: 'left',
         textDecoration: 'underline'
     }
