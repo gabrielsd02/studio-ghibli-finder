@@ -35,7 +35,7 @@ export function List({
         {records.map((record: any, index: number) => (                 
             <ContainerList isMobile={isMobile}>            
                 <ContainerItemList>
-                    <ContainerImage>
+                    <ContainerImage isMobile={isMobile}>
                         <ImageItem                             
                             src={isPeople ? record[typeContrary][0].image : record.image}
                             onClick={() => {

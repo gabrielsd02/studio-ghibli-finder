@@ -7,7 +7,8 @@ import {
     ImageProps,
     FlexProps,
     HStack,
-    Box
+    Box,
+    BoxProps
 } from '@chakra-ui/react';
 
 export const ContainerList = forwardRef<FlexProps & { isMobile: boolean }, 'div'>(
@@ -45,6 +46,24 @@ export const ImageItem = forwardRef<ImageProps & { isPeople: boolean }, 'div'>(
     )
 ); 
 
+export const ContainerImage = forwardRef<BoxProps & { isMobile: boolean }, 'div'>(
+    (props, ref) => (
+        <Box
+            h={'full'}
+            minW={props.isMobile ? '120px' : '133px'}
+            maxW={props.isMobile ? '120px' : '133px'}
+            alignItems={"center"}
+            justifyContent={"center"}
+            borderRightWidth={1}
+            borderColor={"gray"}
+            overflow={"hidden"}
+            {...props}
+        >
+            {props.children}
+        </Box>
+    )
+); 
+
 export const ContainerItemList = chakra(HStack, {
     baseStyle: {
         align: "flex-start", 
@@ -52,17 +71,6 @@ export const ContainerItemList = chakra(HStack, {
         w: "100%",
         h: "100%",
         pos: "relative"
-    }
-});
-
-export const ContainerImage = chakra(Box, {
-    baseStyle: {
-        h: 'full',
-        alignItems: "center", 
-        justifyContent: "center",
-        borderRightWidth: 1,
-        borderColor: "gray", 
-        overflow: "hidden"
     }
 });
 
