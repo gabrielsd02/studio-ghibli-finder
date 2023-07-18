@@ -396,7 +396,9 @@ export default function Home() {
                                 justifyContent={data?.total! > 0 ? "flex-start" : "center"}
                                 flexDirection={"column"}
                                 bg={"transparent"}
-                                px={2}
+                                px={isMobile ? 5 : 2}
+                                pr={isMobile ? 2 : 2}
+                                mr={isMobile ? 2 : 0}
                                 mt={2}                                        
                                 overflowX={"hidden"}
                                 overflowY={"auto"}                                  
@@ -414,7 +416,7 @@ export default function Home() {
                                     }
                                 }}           
                             >
-                                <ContainerList>
+                                <ContainerList isMobile={isMobile}>
                                     {verifyComponentToRender()}
                                 </ContainerList>
                             </Container>

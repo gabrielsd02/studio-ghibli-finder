@@ -187,9 +187,10 @@ export const CardMovieDetails = forwardRef<CardProps & { isMobile: boolean }, 'd
     (props, ref) => (
         <Card 
             maxW={['3xl','4xl']} 
+            minH={'500px'}
+            flexGrow={1}
             backgroundColor={"rgba(0, 0, 0, 0.7)"}
-            color={"white"}
-            overflow={'auto'}                                
+            color={"white"}                             
             marginBottom={props.isMobile ? 0 : 10}
             {...props}
         >

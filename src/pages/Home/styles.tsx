@@ -27,6 +27,7 @@ export const ContainerTextCount = forwardRef<TextProps & { isMobile: boolean }, 
         <Text
             fontSize={['3xl', '4xl']}
             fontWeight={'bold'}
+            minH={'40px'}
             color={'white'}            
             fontFamily={"Fira Sans Condensed, sans-serif"}
             textShadow={"2px 1px black"}
@@ -66,6 +67,7 @@ export const ContainerStack = forwardRef<StackProps & { isMobile: boolean }, 'di
             alignItems={"center"}
             position={'relative'}
             justifyContent={"center"}
+            overflow={'hidden'}
             backdropFilter={"blur(5px)"}
             pt={5}
             pb={props.isMobile ? 1 : 5}
@@ -97,18 +99,23 @@ export const ContainerSearchButtons = forwardRef<StackProps & { isMobile: boolea
     )
 );
 
-export const ContainerList = chakra(VStack, {
-    baseStyle: {
-        display: "flex",                                                       
-        alignItems: "center",
-        justifyContent: "flex-start" ,
-        maxHeight: "100%",
-        spacing: "4",
-        w: '100%', 
-        pr: 1, 
-        mr: 1
-    }
-}); 
+export const ContainerList = forwardRef<StackProps & { isMobile: boolean }, 'div'>(
+    (props) => (
+        <VStack 
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"flex-start" }
+            maxHeight={"100%"}
+            spacing={"4"}
+            w={'100%' }
+            pr={props.isMobile ? 0 : 1}
+            mr={props.isMobile ? 0 : 1}
+            {...props}
+        >
+            {props.children}
+        </VStack>
+    )
+);
 
 export const Title = chakra(Text, {
     baseStyle: {
