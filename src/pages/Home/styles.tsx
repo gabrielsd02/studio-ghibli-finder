@@ -121,6 +121,7 @@ export const Title = chakra(Text, {
     baseStyle: {
         fontSize: ['4xl','5xl','6xl'],
         fontWeight: 'bold',
+        overflow: 'auto',
         color: 'white',
         letterSpacing: '1px',
         fontStyle: 'italic',
