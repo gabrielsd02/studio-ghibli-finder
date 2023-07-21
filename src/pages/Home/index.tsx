@@ -143,7 +143,7 @@ export default function Home() {
     }
 
     const { 
-        isLoading, 
+        isFetching,
         error, 
         data,
         refetch
@@ -170,11 +170,11 @@ export default function Home() {
     }, [consultParams]);        
  
     function verifyComponentToRender() {        
-        if(data && data.total === 0 && !isLoading) {
+        if(data && data.total === 0 && !isFetching) {
             return <EmptyList   
                 isMobile={isMobile} 
             />
-        } else if(isLoading) {
+        } else if(isFetching) {
             return <Loading />
         } else if(data && data.total > 0) {            
             return <List 
@@ -185,7 +185,7 @@ export default function Home() {
             />
         }
 
-        return <></>
+        return <></>;
 
     }      
 
