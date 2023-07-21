@@ -25,10 +25,22 @@ export const ContainerCharacter = chakra(VStack, {
         p: '0px 10px',
         w: "60%",
         h: "100%",
+        pos: 'relative',
         fontFamily: "Fira Sans Condensed, sans-serif",
         alignItems: "center",
         justifyContent: "flex-start",
-        marginInlineEnd: '0.5rem !important'
+        marginInlineEnd: '0.5rem !important',
+        _before: {
+            content: `""`, 
+            position: "absolute", 
+            top: 0,
+            right: '-8px',
+            bottom: 0,
+            left: '-8px',
+            borderEndRadius: 10,
+            backgroundColor: "rgb(0, 0, 0)", 
+            zIndex: -1
+        }
     }
 });
 
@@ -152,7 +164,7 @@ export const ContainerInformations = forwardRef<StackProps & { isMobile: boolean
         <Stack
             w={'full'}
             flexGrow={props.isMobile ? 1 : 0}
-            h={props.isMobile ? 'auto' : '40%'}
+            h={props.isMobile ? 'auto' : '40%'}            
             direction={props.isMobile ? 'column' : 'row'}
             justifyContent={'space-between'}
             alignItems={'center'}

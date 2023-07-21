@@ -95,6 +95,7 @@ export const ContainerInformations = forwardRef<StackProps & { isMobile: boolean
             h={"100%"} 
             fontFamily={"Fira Sans Condensed, sans-serif"}
             p={1}
+            pos={'relative'}
             align={"center"}
             justify={"flex-start"}
             marginInlineEnd={0}
@@ -104,6 +105,17 @@ export const ContainerInformations = forwardRef<StackProps & { isMobile: boolean
                 borderColor={'white'} 
             />}
             _active={props.isMobile ? { opacity: 0.3 } : {}}
+            _before={{
+                content: `""`, 
+                position: "absolute", 
+                top: 0,
+                right: props.isMobile ? 0 : '-8px',
+                bottom: 0,
+                left: '-8px',
+                borderEndRadius: props.isMobile ? 10 : 0,
+                backgroundColor: "rgb(0, 0, 0)", 
+                zIndex: -1
+            }}
             {...props}
         >
             {props.children}

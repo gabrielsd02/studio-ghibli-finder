@@ -219,6 +219,7 @@ export default function Home() {
                 <Title 
                     ml={isMobile ? '0px' : '-60px'} 
                     noOfLines={2}
+                    overflow={'unset !important'}
                     minH={isMobile ? '40px' : '60px'}
                 >
                     Studio Ghibli Finder
@@ -396,8 +397,8 @@ export default function Home() {
                                 justifyContent={data?.total! > 0 ? "flex-start" : "center"}
                                 flexDirection={"column"}
                                 bg={"transparent"}
-                                px={isMobile ? 5 : 2}
-                                pr={isMobile ? 2 : 2}
+                                pl={isMobile ? 5 : 0}
+                                pr={2}
                                 mr={isMobile ? 2 : 0}
                                 mt={2}                                        
                                 overflowX={"hidden"}

@@ -15,8 +15,7 @@ export const ContainerList = forwardRef<FlexProps & { isMobile: boolean }, 'div'
     (props, ref) => (
         <Flex
             w={"100%"}
-            h={props.isMobile ? 180 : 200}
-            backgroundColor={"rgba(0, 0, 0, 0.7)"}
+            h={props.isMobile ? 180 : 200}            
             color={"white"}
             alignItems={"center"}
             justifyContent={"center"}
@@ -66,8 +65,7 @@ export const ContainerImage = forwardRef<BoxProps & { isMobile: boolean }, 'div'
 
 export const ContainerItemList = chakra(HStack, {
     baseStyle: {
-        align: "flex-start", 
-        justify: "center",
+        justifyContent: "flex-start",
         w: "100%",
         h: "100%",
         pos: "relative"
